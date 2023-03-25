@@ -12,7 +12,7 @@
         android:theme="@style/Theme.SuperLock"
         tools:targetApi="31">
         <activity
-            android:name=".BaseActivity"
+            android:name=".activity.BaseActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ConfigurationActivity"
