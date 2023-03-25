@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/nav_title_home" />
+
+    <item
+        android:id="@+id/nav_security"
+        android:icon="@drawable/ic_security"
+        android:title="@string/nav_title_security" />
+
+    <item
+        android:id="@+id/nav_all_applications"
+        android:icon="@drawable/ic_applications"
+        android:title="@string/nav_title_applications" />
+
+    <item
+        android:id="@+id/nav_safe_zones"
+        android:icon="@drawable/ic_location"
+        android:title="@string/nav_title_safe_zones" />
+
+    <item
+        android:id="@+id/nav_about_us"
+        android:icon="@drawable/ic_about_us"
+        android:title="@string/nav_title_about_us" />
+
+</menu>

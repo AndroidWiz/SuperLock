@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+w
     <color name="colorIcon">#D3DAE1</color>
     <color name="colorIconSelected">#E6676C</color>
     <color name="colorLogoBlue">#DDE7FC</color>
@@ -22,5 +22,8 @@
     <color name="colorPrimary">#D3DAE1</color>
     <color name="colorPrimaryDark">#D3DAE1</color>
     <color name="colorAccent">#D3DAE1</color>
+
+    <color name="colorSnackBarError">#F72400</color>
+    <color name="colorSnackBarSuccess">#8BC34A</color>
 
 </resources>

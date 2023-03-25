@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">SuperLock</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+    <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
+
+    <string name="loading">Loading</string>
+    <string name="user_image">user image</string>
+    <string name="username">Username</string>
+    <string name="user_email">deyvi@company.com</string>
+    <string name="nav_title_home">Home</string>
+    <string name="nav_title_security">Security</string>
+    <string name="nav_title_applications">Applications</string>
+    <string name="nav_title_safe_zones">Safe Zones</string>
+    <string name="nav_title_about_us">About Us</string>
+    <string name="about_us_fragment">About Us Fragment</string>
+    <string name="applications_fragment">Applications Fragment</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="safe_zones_fragment">Safe Zones Fragment</string>
+    <string name="security_fragment">Security Fragment</string>
+    <string name="clicked">Clicked</string>
 </resources>

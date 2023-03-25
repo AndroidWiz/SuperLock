@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SuperLock</string>
+    <string name="open_drawer">Cajón Abierto</string>
+    <string name="close_drawer">Cerrar cajón</string>
+    <string name="please_click_back_again_to_exit">Vuelva a hacer clic en Atrás para salir.</string>
+
+    <string name="loading">Cargando</string>
+    <string name="user_image">imagen de usuario</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="user_email">deyvi@empresa.com</string>
+    <string name="nav_title_home">Inicio</string>
+    <string name="nav_title_security">Seguridad</string>
+    <string name="nav_title_applications">Aplicaciones</string>
+    <string name="nav_title_safe_zones">Zonas seguras</string>
+    <string name="nav_title_about_us">Sobre nosotros</string>
+    <string name="about_us_fragment">Sobre nosotros fragmento</string>
+    <string name="applications_fragment">Aplicaciones fragmento</string>
+    <string name="home_fragment">Inicio fragmento</string>
+    <string name="safe_zones_fragment">Zonas seguras fragmento</string>
+    <string name="security_fragment">Seguridad fragmento</string>
+    <string name="clicked">Hizo clic</string>
+</resources>
