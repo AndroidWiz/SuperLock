@@ -13,6 +13,7 @@
     <string name="nav_title_applications">Applications</string>
     <string name="nav_title_safe_zones">Safe Zones</string>
     <string name="nav_title_about_us">About Us</string>
+    <string name="nav_title_configuration">Configuration</string>
     <string name="about_us_fragment">About Us Fragment</string>
     <string name="applications_fragment">Applications Fragment</string>
     <string name="home_fragment">Home Fragment</string>

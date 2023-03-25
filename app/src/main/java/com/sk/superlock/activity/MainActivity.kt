@@ -1,5 +1,6 @@
 package com.sk.superlock.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -27,6 +28,11 @@ class MainActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setUpNavBar()
         setFragment(HomeFragment())
+
+        // button configuration
+        binding.btnNavConfiguration.setOnClickListener {
+            startActivity(Intent(this, ConfigurationActivity::class.java))
+        }
 
     }
 

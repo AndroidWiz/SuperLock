@@ -14,6 +14,7 @@
     <string name="nav_title_applications">Aplicaciones</string>
     <string name="nav_title_safe_zones">Zonas seguras</string>
     <string name="nav_title_about_us">Sobre nosotros</string>
+    <string name="nav_title_configuration">Configuración</string>
     <string name="about_us_fragment">Sobre nosotros fragmento</string>
     <string name="applications_fragment">Aplicaciones fragmento</string>
     <string name="home_fragment">Inicio fragmento</string>
