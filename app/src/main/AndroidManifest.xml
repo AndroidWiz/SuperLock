@@ -12,6 +12,12 @@
         android:theme="@style/Theme.SuperLock"
         tools:targetApi="31">
         <activity
+            android:name=".activity.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SuperLock.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".activity.BaseActivity"
             android:exported="false" />
         <activity
@@ -22,7 +28,8 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.SuperLock">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

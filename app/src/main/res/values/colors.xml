@@ -12,6 +12,7 @@ w
     <color name="colorIconSelected">#E6676C</color>
     <color name="colorLogoBlue">#DDE7FC</color>
     <color name="colorLogoRed">#CE8A80</color>
+    <color name="colorLogoBg">#CFCFCF</color>
     <color name="colorButtonRed">#E6696E</color>
     <color name="colorTabSelected">#E6E6E6</color>
     <color name="colorSearchBg">#EEF0F2</color>
@@ -27,5 +28,7 @@ w
     <color name="colorSnackBarSuccess">#8BC34A</color>
 
     <color name="transparent">#00000000</color>
+    <color name="toolbarColor">#D3DAE1</color>
+<!--    <color name="toolbarColor">#CFCFCF</color>-->
 
 </resources>

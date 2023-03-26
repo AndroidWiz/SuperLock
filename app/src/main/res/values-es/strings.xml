@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SuperLock</string>
+<!--    <string name="app_name">SuperLock</string>-->
+    <string name="app_name">Key Face</string>
     <string name="open_drawer">Cajón Abierto</string>
     <string name="close_drawer">Cerrar cajón</string>
     <string name="please_click_back_again_to_exit">Vuelva a hacer clic en Atrás para salir.</string>
