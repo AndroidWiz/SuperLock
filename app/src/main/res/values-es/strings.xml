@@ -31,4 +31,15 @@
     <string name="btn_continue">Continuar</string>
     <string name="already_have_an_account">¿Ya tienes una cuenta?</string>
     <string name="login">Iniciar sesión</string>
+    <string name="welcome">¡BIENVENIDO!</string>
+    <string name="hello_nice_to_see_you_again">¡Hola! Qué gusto verte de nuevo.</string>
+    <string name="camera">Cámara</string>
+    <string name="forgot_password">¿Has olvidado tu contraseña?</string>
+    <string name="title_forgot_password">Recuperación de contraseña</string>
+    <string name="send">Enviar</string>
+    <string name="forgot_password_title_description">Ingrese su dirección de correo electrónico, le enviaremos un correo electrónico para restablecer su contraseña</string>
+    <string name="don_t_have_an_account">¿No tienes una cuenta?</string>
+    <string name="logo_image">logo image</string>
+
+
 </resources>

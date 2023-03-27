@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".fragment.LoginUsernameFragment">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:hint="@string/email"
+        android:paddingBottom="@dimen/layout_padding"
+        android:textColorHint="@color/colorButtonRed"
+        app:boxBackgroundColor="@color/transparent"
+        app:hintTextColor="@color/colorButtonRed">
+
+        <com.sk.superlock.util.CustomEditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black"
+            android:textColorHint="@color/transparent"
+            android:textSize="@dimen/et_textSize" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:hint="@string/password"
+        android:paddingBottom="@dimen/layout_padding"
+        android:textColorHint="@color/colorButtonRed"
+        app:boxBackgroundColor="@color/transparent"
+        app:hintTextColor="@color/colorButtonRed"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorButtonRed">
+
+        <com.sk.superlock.util.CustomEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textColorHint="@color/transparent"
+            android:textSize="@dimen/et_textSize" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
