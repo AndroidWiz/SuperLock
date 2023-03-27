@@ -22,4 +22,12 @@
     <string name="security_fragment">Security Fragment</string>
     <string name="clicked">Clicked</string>
     <string name="create_a_new_account">Create a new account</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="email">Email</string>
+    <string name="i_agree_to_the_terms_of_service_and_privacy_policy">I agree to the Terms of Service and Privacy Policy</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_continue">Continue</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login">Login</string>
 </resources>

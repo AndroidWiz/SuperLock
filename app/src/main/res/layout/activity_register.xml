@@ -15,12 +15,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <com.sk.superlock.util.CustomTextViewBold
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="?android:attr/actionBarSize"
-            android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:text="@string/create_a_new_account"
             android:textColor="@color/black"
@@ -36,15 +35,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_register_activity">
 
-        <!-- <com.google.android.material.textfield.TextInputEditText
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-             android:hint="@string/username"
-             android:textSize="@dimen/et_textSize" />-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_username"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/et_margin"
@@ -52,25 +45,174 @@
             android:layout_marginEnd="@dimen/et_margin"
             android:background="@color/transparent"
             android:hint="@string/username"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:paddingBottom="@dimen/layout_padding"
             android:textColorHint="@color/colorButtonRed"
-            app:boxStrokeWidth="1dp"
             app:boxBackgroundColor="@color/transparent"
             app:hintTextColor="@color/colorButtonRed">
-<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--            app:boxStrokeColor="@drawable/edit_text_box_stroke"-->
 
-            <EditText
+            <com.sk.superlock.util.CustomEditText
                 android:id="@+id/et_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
                 android:inputType="text"
-                android:padding="@dimen/et_padding"
                 android:textColor="@color/black"
+                android:textColorHint="@color/transparent"
                 android:textSize="@dimen/et_textSize" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/et_margin"
+            android:layout_marginTop="@dimen/et_margin"
+            android:layout_marginEnd="@dimen/et_margin"
+            android:background="@color/transparent"
+            android:hint="@string/email"
+            android:paddingBottom="@dimen/layout_padding"
+            android:textColorHint="@color/colorButtonRed"
+            app:boxBackgroundColor="@color/transparent"
+            app:hintTextColor="@color/colorButtonRed">
+
+            <com.sk.superlock.util.CustomEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+                android:textColorHint="@color/transparent"
+                android:textSize="@dimen/et_textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/et_margin"
+            android:layout_marginTop="@dimen/et_margin"
+            android:layout_marginEnd="@dimen/et_margin"
+            android:background="@color/transparent"
+            android:hint="@string/password"
+            android:paddingBottom="@dimen/layout_padding"
+            android:textColorHint="@color/colorButtonRed"
+            app:boxBackgroundColor="@color/transparent"
+            app:hintTextColor="@color/colorButtonRed"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorButtonRed">
+
+            <com.sk.superlock.util.CustomEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/transparent"
+                android:textSize="@dimen/et_textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_repeat_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/et_margin"
+            android:layout_marginTop="@dimen/et_margin"
+            android:layout_marginEnd="@dimen/et_margin"
+            android:background="@color/transparent"
+            android:hint="@string/repeat_password"
+            android:paddingBottom="@dimen/layout_padding"
+            android:textColorHint="@color/colorButtonRed"
+            app:boxBackgroundColor="@color/transparent"
+            app:hintTextColor="@color/colorButtonRed"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorButtonRed">
+
+            <com.sk.superlock.util.CustomEditText
+                android:id="@+id/et_repeat_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/repeat_password"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/transparent"
+                android:textSize="@dimen/et_textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/et_margin"
+            android:layout_marginTop="@dimen/et_margin"
+            android:layout_marginEnd="@dimen/et_margin"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <!--            android:layout_marginTop="25dp"-->
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_terms_and_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:checked="false" />
+
+            <com.sk.superlock.util.CustomTextView
+                android:id="@+id/tv_terms_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/txt_terms_condition_marginStart"
+                android:text="@string/i_agree_to_the_terms_of_service_and_privacy_policy"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="@dimen/txt_terms_and_condition_textSize" />
+        </LinearLayout>
+
+        <com.sk.superlock.util.CustomButton
+            android:id="@+id/btn_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/button_background_red"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingTop="@dimen/btn_padding"
+            android:paddingBottom="@dimen/btn_padding"
+            android:text="@string/btn_continue"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/btn_textSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.sk.superlock.util.CustomTextView
+                android:id="@+id/tv_already_have_an_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/clickable_text_view_padding"
+                android:text="@string/already_have_an_account"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="@dimen/lbl_text_view_textSize" />
+
+            <com.sk.superlock.util.CustomTextViewBold
+                android:id="@+id/tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/clickable_text_view_padding"
+                android:text="@string/login"
+                android:textColor="@color/colorButtonRed"
+                android:textSize="@dimen/lbl_text_view_textSize" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

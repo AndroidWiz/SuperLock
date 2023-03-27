@@ -1,5 +1,6 @@
 package com.sk.superlock.activity
 
+import android.content.Intent
 import android.os.Bundle
 import com.sk.superlock.databinding.ActivityRegisterBinding
 
@@ -13,5 +14,18 @@ class RegisterActivity : BaseActivity() {
         setContentView(binding.root)
 
         setUpToolbar(binding.toolbarRegisterActivity)
+
+        // button login
+        binding.tvLogin.setOnClickListener {
+            startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+            finish()
+        }
+
+        // button continue
+        binding.btnContinue.setOnClickListener {
+            // TODO: check validations before continue
+            startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+            finish()
+        }
     }
 }
