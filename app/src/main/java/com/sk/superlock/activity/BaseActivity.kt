@@ -6,6 +6,7 @@ import android.os.Handler
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.sk.superlock.R
@@ -85,6 +86,20 @@ open class BaseActivity : AppCompatActivity() {
 
         @Suppress("DEPRECATION")
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    // set up toolbar
+    protected fun setUpToolbar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_button)
+        }
+
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+
     }
 
 }

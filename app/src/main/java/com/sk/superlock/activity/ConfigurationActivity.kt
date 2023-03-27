@@ -1,7 +1,6 @@
 package com.sk.superlock.activity
 
 import android.os.Bundle
-import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityConfigurationBinding
 
 class ConfigurationActivity : BaseActivity() {
@@ -13,19 +12,8 @@ class ConfigurationActivity : BaseActivity() {
         binding = ActivityConfigurationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUpToolbar()
+        setUpToolbar(binding.toolbarConfigurationActivity)
     }
 
 
-    // set up toolbar
-    private fun setUpToolbar() {
-        setSupportActionBar(binding.toolbarConfigurationActivity)
-
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_button)
-        }
-        binding.toolbarConfigurationActivity.setNavigationOnClickListener { onBackPressed() }
-    }
 }

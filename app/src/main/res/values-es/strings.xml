@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <string name="app_name">SuperLock</string>-->
+    <!--    <string name="app_name">SuperLock</string>-->
     <string name="app_name">Key Face</string>
     <string name="open_drawer">Cajón Abierto</string>
     <string name="close_drawer">Cerrar cajón</string>
@@ -22,4 +22,5 @@
     <string name="safe_zones_fragment">Zonas seguras fragmento</string>
     <string name="security_fragment">Seguridad fragmento</string>
     <string name="clicked">Hizo clic</string>
+    <string name="create_a_new_account">Crear Nueva cuenta</string>
 </resources>

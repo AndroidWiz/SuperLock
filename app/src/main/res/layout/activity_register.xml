@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RegisterActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_register_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="?android:attr/actionBarSize"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:text="@string/create_a_new_account"
+            android:textColor="@color/black"
+            android:textSize="@dimen/toolbar_title_text_size" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_register_activity">
+
+        <!-- <com.google.android.material.textfield.TextInputEditText
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+             android:hint="@string/username"
+             android:textSize="@dimen/et_textSize" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/et_margin"
+            android:layout_marginTop="@dimen/et_margin"
+            android:layout_marginEnd="@dimen/et_margin"
+            android:background="@color/transparent"
+            android:hint="@string/username"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:textColorHint="@color/colorButtonRed"
+            app:boxStrokeWidth="1dp"
+            app:boxBackgroundColor="@color/transparent"
+            app:hintTextColor="@color/colorButtonRed">
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            app:boxStrokeColor="@drawable/edit_text_box_stroke"-->
+
+            <EditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:inputType="text"
+                android:padding="@dimen/et_padding"
+                android:textColor="@color/black"
+                android:textSize="@dimen/et_textSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

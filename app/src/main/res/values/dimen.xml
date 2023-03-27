@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="layout_padding">8dp</dimen>
+
     <dimen name="progress_bar_padding">10dp</dimen>
     <dimen name="progress_bar_size">50dp</dimen>
     <dimen name="progress_dialog_margin">16dp</dimen>
@@ -7,4 +9,9 @@
 
     <dimen name="toolbar_title_paddingStart">-25dp</dimen>
     <dimen name="toolbar_title_text_size">18sp</dimen>
+
+    <dimen name="et_padding">16dp</dimen>
+    <dimen name="et_margin">16dp</dimen>
+    <dimen name="et_box_stroke">1dp</dimen>
+    <dimen name="et_textSize">16sp</dimen>
 </resources>
