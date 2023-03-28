@@ -14,29 +14,16 @@
     <color name="colorLogoRed">#CE8A80</color>
     <color name="colorLogoBg">#CFCFCF</color>
     <color name="colorLogoText">#3F849C</color>
-<!--    <color name="colorButtonRed">#E6696E</color>-->
-<!--    <color name="colorButtonRed">#02F0F9</color>-->
     <color name="colorTabSelected">#E6E6E6</color>
     <color name="colorSearchBg">#EEF0F2</color>
 
     <color name="colorTextPrimary">#384249</color>
     <color name="colorTextSecondary">#AEB7BE</color>
 
-<!--    <color name="colorPrimary">#D3DAE1</color>-->
-<!--    <color name="colorPrimaryDark">#D3DAE1</color>-->
-<!--    <color name="colorAccent">#D3DAE1</color>-->
-
- <!--   <color name="colorPrimary">#02F0F9</color>
-    <color name="colorPrimaryDark">#02F0F9</color>
-    <color name="colorAccent">#D3DAE1</color>-->
-
     <color name="colorSnackBarError">#F72400</color>
     <color name="colorSnackBarSuccess">#8BC34A</color>
 
     <color name="transparent">#00000000</color>
-<!--    <color name="toolbarColor">#02F0F9</color>-->
-<!--    <color name="toolbarColor">#D3DAE1</color>-->
-    <!--    <color name="toolbarColor">#CFCFCF</color>-->
     <color name="colorLogoLightBlue">#02F0F9</color>
     <color name="colorLogoBlack">#030507</color>
     <color name="colorLogoLight">#CAC9C8</color>
