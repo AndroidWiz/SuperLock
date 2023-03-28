@@ -17,9 +17,6 @@
     <color name="colorTabSelected">#E6E6E6</color>
     <color name="colorSearchBg">#EEF0F2</color>
 
-    <color name="colorTextPrimary">#384249</color>
-    <color name="colorTextSecondary">#AEB7BE</color>
-
     <color name="colorSnackBarError">#F72400</color>
     <color name="colorSnackBarSuccess">#8BC34A</color>
 
@@ -27,7 +24,6 @@
     <color name="colorLogoLightBlue">#02F0F9</color>
     <color name="colorLogoBlack">#030507</color>
     <color name="colorLogoLight">#CAC9C8</color>
-
 
 <!--    new color scheme to be tested-->
     <color name="colorPrimary">#2196F3</color>

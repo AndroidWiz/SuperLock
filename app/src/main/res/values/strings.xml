@@ -39,4 +39,5 @@
     <string name="forgot_password_title_description">Enter your e-mail address we\'ll send you a email to reset your password</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="logo_image">logo image</string>
+    <string name="available_app_name">Available App Name</string>
 </resources>

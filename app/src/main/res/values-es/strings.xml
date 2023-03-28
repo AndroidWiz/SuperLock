@@ -40,6 +40,7 @@
     <string name="forgot_password_title_description">Ingrese su dirección de correo electrónico, le enviaremos un correo electrónico para restablecer su contraseña</string>
     <string name="don_t_have_an_account">¿No tienes una cuenta?</string>
     <string name="logo_image">logo image</string>
+    <string name="available_app_name">Nombre de la aplicación disponible</string>
 
 
 </resources>
