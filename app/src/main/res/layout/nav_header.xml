@@ -15,24 +15,22 @@
         android:paddingTop="15dp"
         android:src="@drawable/ic_user" />
 
-    <TextView
+    <com.sk.superlock.util.CustomTextViewBold
         android:id="@+id/tv_username_nav_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
         android:paddingTop="5dp"
         android:text="@string/username"
-        android:textColor="@color/black"
+        android:textColor="@color/textColorPrimary"
         android:textSize="18sp" />
 
-    <TextView
+    <com.sk.superlock.util.CustomTextView
         android:id="@+id/tv_user_email_nav_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_regular"
         android:paddingTop="5dp"
         android:text="@string/user_email"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/textColorSecondary"
         android:textSize="14sp" />
 
 </LinearLayout>

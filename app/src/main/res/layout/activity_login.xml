@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/welcome"
-            android:textColor="@color/colorTextPrimary"
+            android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/login_title_text_size" />
 
         <com.sk.superlock.util.CustomTextView
@@ -62,7 +62,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/hello_nice_to_see_you_again"
-            android:textColor="@color/colorTextSecondary"
+            android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/login_semi_title_text_size" />
 
         <RadioGroup
@@ -124,7 +124,7 @@
             android:paddingBottom="@dimen/btn_padding"
             android:text="@string/login"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="@dimen/btn_textSize" />
 
         <com.sk.superlock.util.CustomTextViewBold
@@ -136,7 +136,7 @@
             android:layout_marginTop="@dimen/et_margin"
             android:layout_marginEnd="@dimen/et_margin"
             android:text="@string/forgot_password"
-            android:textColor="@color/colorTextSecondary"
+            android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/et_textSize" />
 
         <LinearLayout
@@ -154,7 +154,7 @@
                 android:gravity="center"
                 android:padding="@dimen/clickable_text_view_padding"
                 android:text="@string/don_t_have_an_account"
-                android:textColor="@color/colorTextSecondary"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/lbl_text_view_textSize" />
 
             <com.sk.superlock.util.CustomTextViewBold
@@ -166,7 +166,7 @@
                 android:gravity="center"
                 android:padding="@dimen/clickable_text_view_padding"
                 android:text="@string/btn_register"
-                android:textColor="@color/colorButtonRed"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/lbl_text_view_textSize" />
         </LinearLayout>
 

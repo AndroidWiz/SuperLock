@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".fragment.LoginUsernameFragment">
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
@@ -16,9 +15,9 @@
         android:background="@color/transparent"
         android:hint="@string/email"
         android:paddingBottom="@dimen/layout_padding"
-        android:textColorHint="@color/colorButtonRed"
+        android:textColorHint="@color/colorPrimary"
         app:boxBackgroundColor="@color/transparent"
-        app:hintTextColor="@color/colorButtonRed">
+        app:hintTextColor="@color/colorPrimary">
 
         <com.sk.superlock.util.CustomEditText
             android:id="@+id/et_email"
@@ -26,7 +25,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:textColor="@color/black"
+            android:textColor="@color/textColorPrimary"
             android:textColorHint="@color/transparent"
             android:textSize="@dimen/et_textSize" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -39,11 +38,11 @@
         android:background="@color/transparent"
         android:hint="@string/password"
         android:paddingBottom="@dimen/layout_padding"
-        android:textColorHint="@color/colorButtonRed"
+        android:textColorHint="@color/colorPrimary"
         app:boxBackgroundColor="@color/transparent"
-        app:hintTextColor="@color/colorButtonRed"
+        app:hintTextColor="@color/colorPrimary"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorButtonRed">
+        app:passwordToggleTint="@color/colorPrimary">
 
         <com.sk.superlock.util.CustomEditText
             android:id="@+id/et_password"
@@ -51,7 +50,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColor="@color/black"
+            android:textColor="@color/textColorPrimary"
             android:textColorHint="@color/transparent"
             android:textSize="@dimen/et_textSize" />
     </com.google.android.material.textfield.TextInputLayout>

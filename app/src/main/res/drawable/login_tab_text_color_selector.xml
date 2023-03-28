@@ -3,6 +3,6 @@
 
     <item android:color="@color/white" android:state_checked="true" />
 
-    <item android:color="@color/colorTextPrimary"
+    <item android:color="@color/textColorSecondary"
         android:state_checked="false" />
 </selector>

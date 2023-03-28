@@ -5,7 +5,7 @@
     <gradient
         android:angle="360"
         android:endColor="@color/toolbarColor"
-        android:startColor="@color/colorLogoLightBlue"
+        android:startColor="@color/toolbarColor"
         android:type="linear" />
 
 </shape>

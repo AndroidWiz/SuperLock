@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_register_activity"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/transparent"
+        android:background="@color/toolbarColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +22,7 @@
             android:layout_marginEnd="?android:attr/actionBarSize"
             android:gravity="center"
             android:text="@string/create_a_new_account"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/toolbar_title_text_size" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -36,9 +36,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:orientation="vertical"
-            android:padding="@dimen/layout_padding">
+            android:paddingHorizontal="@dimen/layout_padding">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_username"
@@ -51,9 +50,9 @@
                 android:background="@color/transparent"
                 android:hint="@string/username"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorButtonRed"
+                android:textColorHint="@color/colorPrimary"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorButtonRed">
+                app:hintTextColor="@color/colorPrimary">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_username"
@@ -61,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
                     android:inputType="text"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPrimary"
                     android:textColorHint="@color/transparent"
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -77,9 +76,9 @@
                 android:background="@color/transparent"
                 android:hint="@string/email"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorButtonRed"
+                android:textColorHint="@color/colorPrimary"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorButtonRed">
+                app:hintTextColor="@color/colorPrimary">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_email"
@@ -87,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPrimary"
                     android:textColorHint="@color/transparent"
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -103,11 +102,11 @@
                 android:background="@color/transparent"
                 android:hint="@string/password"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorButtonRed"
+                android:textColorHint="@color/colorPrimary"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorButtonRed"
+                app:hintTextColor="@color/colorPrimary"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorButtonRed">
+                app:passwordToggleTint="@color/colorPrimary">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_password"
@@ -115,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPrimary"
                     android:textColorHint="@color/transparent"
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -131,11 +130,11 @@
                 android:background="@color/transparent"
                 android:hint="@string/repeat_password"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorButtonRed"
+                android:textColorHint="@color/colorPrimary"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorButtonRed"
+                app:hintTextColor="@color/colorPrimary"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorButtonRed">
+                app:passwordToggleTint="@color/colorPrimary">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_repeat_password"
@@ -143,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/repeat_password"
                     android:inputType="textPassword"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColorPrimary"
                     android:textColorHint="@color/transparent"
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -156,13 +155,12 @@
                 android:layout_marginEnd="@dimen/et_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
-                <!--            android:layout_marginTop="25dp"-->
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/cb_terms_and_condition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorButtonRed"
+                    android:buttonTint="@color/colorPrimary"
                     tools:checked="false" />
 
                 <com.sk.superlock.util.CustomTextView
@@ -171,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/txt_terms_condition_marginStart"
                     android:text="@string/i_agree_to_the_terms_of_service_and_privacy_policy"
-                    android:textColor="@color/colorTextPrimary"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/txt_terms_and_condition_textSize" />
             </LinearLayout>
 
@@ -190,7 +188,7 @@
                 android:paddingBottom="@dimen/btn_padding"
                 android:text="@string/btn_continue"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textSize="@dimen/btn_textSize" />
 
             <LinearLayout
@@ -206,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/clickable_text_view_padding"
                     android:text="@string/already_have_an_account"
-                    android:textColor="@color/colorTextSecondary"
+                    android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/lbl_text_view_textSize" />
 
                 <com.sk.superlock.util.CustomTextViewBold
@@ -216,7 +214,7 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:padding="@dimen/clickable_text_view_padding"
                     android:text="@string/login"
-                    android:textColor="@color/colorButtonRed"
+                    android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/lbl_text_view_textSize" />
             </LinearLayout>
         </LinearLayout>
