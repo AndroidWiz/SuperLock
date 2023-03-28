@@ -41,6 +41,7 @@
     <string name="don_t_have_an_account">¿No tienes una cuenta?</string>
     <string name="logo_image">logo image</string>
     <string name="available_app_name">Nombre de la aplicación disponible</string>
+    <string name="hint_search">Buscar aplicación</string>
 
 
 </resources>

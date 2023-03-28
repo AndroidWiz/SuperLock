@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ItemAvailableAppBinding
 
-class AvailableAppListAdapter(private val context: Context, private val availableAppList: MutableList<String>): RecyclerView.Adapter<AvailableAppListAdapter.MyHolder>() {
+class AvailableAppListAdapter(private val context: Context, private var availableAppList: MutableList<String>): RecyclerView.Adapter<AvailableAppListAdapter.MyHolder>() {
 //class AvailableAppListAdapter(private val context: Context, private val availableAppList: MutableList<ApplicationInfo>): RecyclerView.Adapter<AvailableAppListAdapter.MyHolder>() {
 
     class MyHolder(binding: ItemAvailableAppBinding): RecyclerView.ViewHolder(binding.root){
@@ -33,7 +33,7 @@ class AvailableAppListAdapter(private val context: Context, private val availabl
         // setting the icon to the button depending on if added or not
         var isAdded = false
         holder.appStatus.setOnClickListener {
-            // TODO: add the app to use lock and unlock method
+            //TODO: add the app to use lock and unlock method
             isAdded = !isAdded // toggle the value of isAdded
             if(isAdded){
 //                isAdded = true
@@ -46,4 +46,12 @@ class AvailableAppListAdapter(private val context: Context, private val availabl
             }
         }
     }
+
+    // update list according to search
+    fun updateList(newList: List<String>) {
+        availableAppList = mutableListOf()
+        availableAppList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
 }

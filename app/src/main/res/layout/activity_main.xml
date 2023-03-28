@@ -16,8 +16,8 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:padding="@dimen/layout_padding"
             android:layout_height="match_parent"
+            android:padding="@dimen/layout_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,10 +52,10 @@
                 android:background="@color/transparent"
                 android:text="@string/nav_title_configuration"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/textColorPrimary"
                 app:icon="@drawable/ic_configuration"
                 app:iconSize="24dp"
-                app:iconTint="@color/colorPrimary" />
+                app:iconTint="@color/colorPrimaryDark" />
 
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>

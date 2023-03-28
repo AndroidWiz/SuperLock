@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ApplicationsFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/search_view_bg"
+        android:focusedByDefault="false"
+        app:iconifiedByDefault="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryBackground="@color/transparent"
+        app:queryHint="@string/hint_search" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_app_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
