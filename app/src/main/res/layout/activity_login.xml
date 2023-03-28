@@ -8,25 +8,6 @@
     android:orientation="vertical"
     tools:context=".activity.LoginActivity">
 
-    <!--    <androidx.cardview.widget.CardView
-            android:id="@+id/cv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="35dp"
-            app:cardCornerRadius="55dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/img_logo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_launcher_round" />
-        </androidx.cardview.widget.CardView>-->
-
     <FrameLayout
         android:id="@+id/fl_header_image"
         android:layout_width="match_parent"
@@ -40,7 +21,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/logo_image"
             android:scaleType="fitXY"
-            android:src="@color/colorLogoBg" />
+            android:src="@drawable/toolbar_background" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
@@ -53,17 +34,9 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/ic_launcher_round" />
+                android:src="@drawable/logo" />
         </androidx.cardview.widget.CardView>
 
-        <!-- <com.sk.superlock.util.CustomTextViewBold
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center"
-             android:layout_marginTop="20dp"
-             android:text="@string/welcome"
-             android:textColor="@color/colorTextPrimary"
-             android:textSize="@dimen/login_title_text_size" />-->
     </FrameLayout>
 
     <LinearLayout

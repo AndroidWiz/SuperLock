@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/colorLogoBg"
+    android:background="@color/white"
     tools:context=".activity.SplashActivity">
+    <!--    android:background="@color/colorLogoBg"-->
+<!--    android:background="@drawable/toolbar_background"-->
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -20,7 +22,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_launcher_round" />
+            android:src="@drawable/logo" />
 
     </androidx.cardview.widget.CardView>
 
@@ -31,8 +33,9 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/app_name"
-        android:textColor="@color/colorLogoText"
+        android:textColor="@color/colorLogoLightBlue"
         android:textSize="@dimen/splash_title_text_size" />
+    <!--    android:textColor="@color/colorLogoText"-->
 
 
 </RelativeLayout>

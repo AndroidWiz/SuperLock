@@ -30,7 +30,7 @@ class MainActivity : BaseActivity() {
 
         // navigation drawer
         toggle = ActionBarDrawerToggle(this, binding.root, R.string.open_drawer, R.string.close_drawer)
-        toggle.drawerArrowDrawable.color = ContextCompat.getColor(this, R.color.black)
+        toggle.drawerArrowDrawable.color = ContextCompat.getColor(this, R.color.white)
 //        toggle.drawerArrowDrawable.color = ContextCompat.getColor(this, R.color.colorButtonRed)
         binding.root.addDrawerListener(toggle)
         toggle.syncState()
@@ -43,7 +43,7 @@ class MainActivity : BaseActivity() {
             spannableString.setSpan(
                 ForegroundColorSpan(
 //                    ContextCompat.getColor(this, R.color.colorButtonRed)), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                    ContextCompat.getColor(this, R.color.black)), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    ContextCompat.getColor(this, R.color.white)), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             spannableString.setSpan(
                 StyleSpan(Typeface.BOLD), 0, title.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

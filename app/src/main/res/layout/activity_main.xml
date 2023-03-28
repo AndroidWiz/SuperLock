@@ -34,7 +34,7 @@
         app:headerLayout="@layout/nav_header"
         app:itemIconSize="24dp"
         app:itemIconTint="@color/colorPrimary"
-        app:itemRippleColor="@color/colorLogoRed"
+        app:itemRippleColor="@color/colorButtonRed"
         app:itemTextColor="@color/black"
         app:menu="@menu/side_nav_menu">
 
