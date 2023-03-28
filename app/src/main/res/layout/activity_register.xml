@@ -50,9 +50,9 @@
                 android:background="@color/transparent"
                 android:hint="@string/username"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorPrimary">
+                app:hintTextColor="@color/colorPrimaryDark">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_username"
@@ -76,9 +76,9 @@
                 android:background="@color/transparent"
                 android:hint="@string/email"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorPrimary">
+                app:hintTextColor="@color/colorPrimaryDark">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_email"
@@ -102,11 +102,11 @@
                 android:background="@color/transparent"
                 android:hint="@string/password"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorPrimary"
+                app:hintTextColor="@color/colorPrimaryDark"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorPrimary">
+                app:passwordToggleTint="@color/colorPrimaryDark">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_password"
@@ -130,11 +130,11 @@
                 android:background="@color/transparent"
                 android:hint="@string/repeat_password"
                 android:paddingBottom="@dimen/layout_padding"
-                android:textColorHint="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimaryDark"
                 app:boxBackgroundColor="@color/transparent"
-                app:hintTextColor="@color/colorPrimary"
+                app:hintTextColor="@color/colorPrimaryDark"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorPrimary">
+                app:passwordToggleTint="@color/colorPrimaryDark">
 
                 <com.sk.superlock.util.CustomEditText
                     android:id="@+id/et_repeat_password"
@@ -160,7 +160,7 @@
                     android:id="@+id/cb_terms_and_condition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorPrimary"
+                    android:buttonTint="@color/colorPrimaryDark"
                     tools:checked="false" />
 
                 <com.sk.superlock.util.CustomTextView

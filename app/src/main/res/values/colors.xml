@@ -37,5 +37,5 @@
     <color name="textColorSecondary">#757575</color>
     <color name="colorAccent">#FF4081</color>
     <color name="toolbarColor">#0D47A1</color>
-    <color name="colorButtonRed">#0D47A1</color>
+    <color name="colorButton">#0D47A1</color>
 </resources>

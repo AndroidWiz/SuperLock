@@ -3,7 +3,7 @@
     <item android:state_checked="true">
         <shape android:shape="rectangle">
 
-            <solid android:color="@color/colorButtonRed" />
+            <solid android:color="@color/colorButton" />
 
             <corners
                 android:topLeftRadius="@dimen/login_radio_button_radius"

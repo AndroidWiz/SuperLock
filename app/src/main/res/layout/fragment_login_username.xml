@@ -15,9 +15,9 @@
         android:background="@color/transparent"
         android:hint="@string/email"
         android:paddingBottom="@dimen/layout_padding"
-        android:textColorHint="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimaryDark"
         app:boxBackgroundColor="@color/transparent"
-        app:hintTextColor="@color/colorPrimary">
+        app:hintTextColor="@color/colorPrimaryDark">
 
         <com.sk.superlock.util.CustomEditText
             android:id="@+id/et_email"
@@ -38,11 +38,11 @@
         android:background="@color/transparent"
         android:hint="@string/password"
         android:paddingBottom="@dimen/layout_padding"
-        android:textColorHint="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimaryDark"
         app:boxBackgroundColor="@color/transparent"
-        app:hintTextColor="@color/colorPrimary"
+        app:hintTextColor="@color/colorPrimaryDark"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary">
+        app:passwordToggleTint="@color/colorPrimaryDark">
 
         <com.sk.superlock.util.CustomEditText
             android:id="@+id/et_password"
