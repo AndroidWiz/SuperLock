@@ -86,6 +86,8 @@ class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
         allAppList.add(Applications("WeChat"))
         allAppList.add(Applications("Fiverr"))
         allAppList.add(Applications("Upwork"))
+
+        appsAdapter.notifyDataSetChanged()
     }
 
 

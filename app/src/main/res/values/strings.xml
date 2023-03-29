@@ -43,6 +43,21 @@
     <string name="hint_search">Search application</string>
     <string name="all_apps">All Apps</string>
     <string name="added_apps">Added Apps</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_version">App Version</string>
+    <string name="v1_0">1.0</string>
+    <string name="about_app">About App</string>
+    <string name="app_description"><![CDATA[
+
+    <p>If you want to secure your apps in device, Key Face is the best way to do it. It\'s easy to use.</p>
+
+    <p>You can set face-detection lock with the Key Face app.</p>
+
+    <p>Key Face allows you to secure available apps on your device and provides you with the option to keep your data safe.<br />
+    <br />
+    <strong>Features:</strong><br />
+    &bull; Face-detection.<br />
+    &bull; Secure your safe perimeter to unlock your apps.<br />
+
+    ]]></string>
+
 </resources>

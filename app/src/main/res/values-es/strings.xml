@@ -42,8 +42,24 @@
     <string name="logo_image">logo image</string>
     <string name="available_app_name">Nombre de la aplicación disponible</string>
     <string name="hint_search">Buscar aplicación</string>
-    <string name="all_apps">All Apps</string>
-    <string name="added_apps">Added Apps</string>
+    <string name="all_apps">Todas las aplicaciones</string>
+    <string name="added_apps">Aplicaciones añadidas</string>
+    <string name="app_version">Version de aplicacion</string>
+    <string name="v1_0">1.0</string>
+    <string name="about_app">Acerca de la aplicación</string>
+    <string name="app_description"><![CDATA[
+
+    <p>Si desea proteger sus aplicaciones en el dispositivo, Key Face es la mejor manera de hacerlo. Es fácil de usar.</p>
+
+    <p>Puede configurar el bloqueo de detección de rostros con la aplicación Key Face.</p>
+
+    <p>Key Face le permite proteger las aplicaciones disponibles en su dispositivo y le brinda la opción de mantener sus datos seguros.<br />
+    <br />
+    <strong>Características:</strong><br />
+    &bull; Detección de rostro.<br />
+    &bull; Asegure su perímetro seguro para desbloquear sus aplicaciones.<br />
+
+    ]]></string>
 
 
 </resources>
