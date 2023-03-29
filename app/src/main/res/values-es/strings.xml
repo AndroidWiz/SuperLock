@@ -42,6 +42,8 @@
     <string name="logo_image">logo image</string>
     <string name="available_app_name">Nombre de la aplicación disponible</string>
     <string name="hint_search">Buscar aplicación</string>
+    <string name="all_apps">All Apps</string>
+    <string name="added_apps">Added Apps</string>
 
 
 </resources>

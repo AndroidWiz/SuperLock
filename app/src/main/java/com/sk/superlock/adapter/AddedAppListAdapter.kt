@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ItemAvailableAppBinding
 
-class AvailableAppListAdapter(
+class AddedAppListAdapter(
     private val context: Context,
-    private var allAppList: MutableList<String>,
-) : RecyclerView.Adapter<AvailableAppListAdapter.MyHolder>() {
+    private var addedAppList: MutableList<String>,
+) : RecyclerView.Adapter<AddedAppListAdapter.MyHolder>() {
 
     class MyHolder(binding: ItemAvailableAppBinding) : RecyclerView.ViewHolder(binding.root) {
         val appIcon = binding.ivAvailableApp
@@ -30,34 +30,38 @@ class AvailableAppListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return allAppList.size
+        return addedAppList.size
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        val model = allAppList[position]
+        val model = addedAppList[position]
 
         holder.appName.text = model
 
         // setting the icon to the button depending on if added or not
-        var isAdded = false
+//        var isAdded = false
+        var isAdded = addedAppList.contains(model)
         holder.appStatus.setOnClickListener {
             //TODO: add the app to use lock and unlock method
             isAdded = !isAdded // toggle the value of isAdded
             if (isAdded) {
-                holder.appStatus.setImageResource(R.drawable.ic_added)
-                Toast.makeText(context, "$model added", Toast.LENGTH_SHORT).show()
-            } else {
+                addedAppList.remove(model)
                 holder.appStatus.setImageResource(R.drawable.ic_add)
                 Toast.makeText(context, "$model removed", Toast.LENGTH_SHORT).show()
+            } else {
+                addedAppList.add(model)
+                holder.appStatus.setImageResource(R.drawable.ic_added)
+                Toast.makeText(context, "$model added", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     // update list according to search
     fun updateList(newList: List<String>) {
-        allAppList = mutableListOf()
-        allAppList.addAll(newList)
+        addedAppList = mutableListOf()
+        addedAppList.addAll(newList)
         notifyDataSetChanged()
     }
+
 
 }
