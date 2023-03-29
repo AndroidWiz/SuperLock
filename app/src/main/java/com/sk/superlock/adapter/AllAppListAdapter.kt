@@ -3,15 +3,22 @@ package com.sk.superlock.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ItemAvailableAppBinding
+import com.sk.superlock.model.Applications
 
-class AvailableAppListAdapter(
+class AllAppListAdapter(
     private val context: Context,
-    private var allAppList: MutableList<String>,
-) : RecyclerView.Adapter<AvailableAppListAdapter.MyHolder>() {
+    private var allAppList: MutableList<Applications>,
+    private val addedAppList: MutableList<Applications>,
+    private val onAppAddedListener: OnAppAddedListener
+) : RecyclerView.Adapter<AllAppListAdapter.MyHolder>() {
+
+    interface OnAppAddedListener {
+        fun onAppAdded(app: Applications)
+        fun onAppRemoved(app: Applications)
+    }
 
     class MyHolder(binding: ItemAvailableAppBinding) : RecyclerView.ViewHolder(binding.root) {
         val appIcon = binding.ivAvailableApp
@@ -36,28 +43,26 @@ class AvailableAppListAdapter(
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val model = allAppList[position]
 
-        holder.appName.text = model
+        holder.appName.text = model.appName
 
-        // setting the icon to the button depending on if added or not
-        var isAdded = false
+        // check if app has already been added
+        if (addedAppList.contains(model)) {
+            holder.appStatus.setImageResource(R.drawable.ic_added)
+        } else {
+            holder.appStatus.setImageResource(R.drawable.ic_add)
+        }
+
+        // add the app to use lock and unlock method
         holder.appStatus.setOnClickListener {
-            //TODO: add the app to use lock and unlock method
-            isAdded = !isAdded // toggle the value of isAdded
-            if (isAdded) {
-                holder.appStatus.setImageResource(R.drawable.ic_added)
-                Toast.makeText(context, "$model added", Toast.LENGTH_SHORT).show()
-            } else {
+            if (addedAppList.contains(model)) {
+                // remove app from addedAppList
                 holder.appStatus.setImageResource(R.drawable.ic_add)
-                Toast.makeText(context, "$model removed", Toast.LENGTH_SHORT).show()
+                onAppAddedListener.onAppRemoved(model)
+            } else {
+                // add app to addedAppList
+                holder.appStatus.setImageResource(R.drawable.ic_added)
+                onAppAddedListener.onAppAdded(model)
             }
         }
     }
-
-    // update list according to search
-    fun updateList(newList: List<String>) {
-        allAppList = mutableListOf()
-        allAppList.addAll(newList)
-        notifyDataSetChanged()
-    }
-
 }

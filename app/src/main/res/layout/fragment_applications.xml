@@ -19,7 +19,6 @@
         app:queryBackground="@color/transparent"
         app:queryHint="@string/hint_search" />
 
-
     <RadioGroup
         android:id="@+id/rg_app_type"
         android:layout_width="match_parent"
@@ -67,20 +66,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rg_app_type" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--    <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />-->
-
-
-    <!--  <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/rv_app_list"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tabs_layout" />-->

@@ -28,13 +28,6 @@ class ApplicationsFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 // handle query text changes
                 filteredApList = mutableListOf()
-//                if(newText != null){
-//                    val userInput = newText.lowercase()
-//                    for(app in allAppList){
-//                        if(app.lowercase().contains(userInput)) filteredApList.add(app)
-//                    }
-//                    appsAdapter.updateList(filteredApList)
-//                }
                 return true
             }
 
