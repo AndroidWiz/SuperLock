@@ -3,8 +3,8 @@
     android:id="@+id/item_slider"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
-<!--    android:background="@color/colorPrimaryDark">-->
+    android:background="@color/colorPrimaryDark">
+<!--    android:background="@color/colorPrimary">-->
 
     <com.sk.superlock.util.CustomTextViewBold
         android:id="@+id/tv_slider_title"
