@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.sk.superlock"
-        minSdk 21
+        minSdk 23
         targetSdk 33
         versionCode 3
         versionName "1.2"
@@ -21,8 +21,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            android.applicationVariants.all{ variant ->
-                variant.outputs.all{
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
                     outputFileName = "Key Face_${defaultConfig.versionName}.apk"
                 }
             }
@@ -37,7 +37,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding  true
+        viewBinding true
     }
 }
 

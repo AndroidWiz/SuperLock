@@ -94,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="@string/v1_0"
-                            android:textColor="@color/textColorSecondary"
+                            android:textColor="@color/colorAboutUsText"
                             android:textSize="@dimen/txt_terms_and_condition_textSize" />
                     </LinearLayout>
                 </LinearLayout>

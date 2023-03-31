@@ -60,6 +60,10 @@
     &bull; Asegure su perímetro seguro para desbloquear sus aplicaciones.<br />
 
     ]]></string>
+    <string name="permission_required_to_make_sure_key_face_works_properly">Permission required to make sure Key Face works properly</string>
+    <string name="protected_apps">Protected Apps</string>
+    <string name="auto_start">Auto Start</string>
+    <string name="lock_image">lock image</string>
 
 
 </resources>

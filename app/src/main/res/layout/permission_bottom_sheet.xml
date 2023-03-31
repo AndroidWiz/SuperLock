@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/lock_image"
+        android:src="@drawable/ic_lock"
+        app:tint="@color/colorPrimary" />
+
+    <com.sk.superlock.util.CustomTextViewBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/permission_required_to_make_sure_key_face_works_properly"
+        android:textAlignment="center"
+        android:textSize="@dimen/bottom_sheet_title_text_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/bottom_sheet_marginStartEnd">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/bottom_sheet_marginStartEnd"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.sk.superlock.util.CustomTextView
+                android:id="@+id/tv_protected_apps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:text="@string/protected_apps"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bottom_sheet_subtitle_text_size"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_security"
+                tools:ignore="RelativeOverlap" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_protected_apps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:buttonTint="@color/colorPrimaryDark"
+                tools:checked="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/bottom_sheet_marginStartEnd">
+
+            <com.sk.superlock.util.CustomTextView
+                android:id="@+id/tv_auto_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:text="@string/auto_start"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/bottom_sheet_subtitle_text_size"
+                android:textStyle="bold"
+                app:drawableLeftCompat="@drawable/ic_auto_start"
+                tools:ignore="RelativeOverlap" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_auto_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:buttonTint="@color/colorPrimaryDark"
+                tools:checked="false" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

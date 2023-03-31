@@ -34,4 +34,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="toolbarColor">#0D47A1</color>
     <color name="colorButton">#0D47A1</color>
+
+    <color name="colorAboutUsText">#D1D1D1</color>
 </resources>

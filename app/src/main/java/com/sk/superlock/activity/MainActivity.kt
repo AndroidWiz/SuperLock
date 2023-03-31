@@ -10,8 +10,10 @@ import android.text.style.StyleSpan
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityMainBinding
 import com.sk.superlock.fragment.*
@@ -52,6 +54,7 @@ class MainActivity : BaseActivity() {
 
         setUpNavBar()
         setFragment(HomeFragment())
+        showBottomSheetDialog()
 
         // button configuration
         binding.btnNavConfiguration.setOnClickListener {
@@ -87,6 +90,18 @@ class MainActivity : BaseActivity() {
             }
             true
         }
+    }
+
+    // setup custom bottom sheet dialog
+    private fun showBottomSheetDialog(){
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialog)
+        val dialogView = layoutInflater.inflate(R.layout.permission_bottom_sheet, null)
+        bottomSheetDialog.setContentView(dialogView)
+
+        val cbProtectedApps = dialogView.findViewById<AppCompatCheckBox>(R.id.cb_protected_apps)
+        val cbAutoStart = dialogView.findViewById<AppCompatCheckBox>(R.id.cb_auto_start)
+
+        bottomSheetDialog.show()
     }
 
     // set default fragment
