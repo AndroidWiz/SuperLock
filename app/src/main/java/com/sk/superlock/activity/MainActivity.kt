@@ -101,6 +101,8 @@ class MainActivity : BaseActivity() {
         val cbProtectedApps = dialogView.findViewById<AppCompatCheckBox>(R.id.cb_protected_apps)
         val cbAutoStart = dialogView.findViewById<AppCompatCheckBox>(R.id.cb_auto_start)
 
+        //TODO:work on updating the preferences to system settings
+
         bottomSheetDialog.show()
     }
 

@@ -28,9 +28,8 @@ class IntroActivity : BaseActivity() {
         viewpager = binding.introViewPager
         indicatorTextViews = listOf(binding.tvSlide1, binding.tvSlide2, binding.tvSlide3)
 
-        // button skip takes to MainActivity
+        // button skip takes to LoginActivity
         binding.btnSkipIntro.setOnClickListener {
-//            startActivity(Intent(this@IntroActivity, MainActivity::class.java))
             startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
         }
 
@@ -73,7 +72,7 @@ class IntroActivity : BaseActivity() {
 
 
         // adapter class
-        sliderAdapter = SliderAdapter(this@IntroActivity, sliderList) // modify this line
+        sliderAdapter = SliderAdapter(this@IntroActivity, sliderList)
         viewpager.adapter = sliderAdapter
         viewpager.registerOnPageChangeCallback(viewListener)
     }
@@ -86,7 +85,6 @@ class IntroActivity : BaseActivity() {
                     textView.setTextColor(
                         ContextCompat.getColor(
                             this@IntroActivity,
-//                            if (position == index) R.color.white else R.color.colorPrimaryDark
                             if (position == index) R.color.white else R.color.colorPrimary
                         )
                     )
@@ -100,7 +98,6 @@ class IntroActivity : BaseActivity() {
             textView.setTextColor(
                 ContextCompat.getColor(
                     this@IntroActivity,
-//                    if (viewpager.currentItem == index) R.color.white else R.color.colorPrimaryDark
                     if (viewpager.currentItem == index) R.color.white else R.color.colorPrimary
                 )
             )

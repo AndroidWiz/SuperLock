@@ -22,7 +22,6 @@ open class BaseActivity : AppCompatActivity() {
 
     // set language according to local settings of device
     fun setLocale(){
-//        val locale = Locale("es")
         val locale = Locale.getDefault()
         Locale.setDefault(locale)
         val config = Configuration()

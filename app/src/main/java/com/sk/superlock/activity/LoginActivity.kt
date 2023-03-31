@@ -35,7 +35,6 @@ class LoginActivity : BaseActivity() {
         // button login
         binding.btnLogin.setOnClickListener {
             // TODO: check from which radio button
-//            startActivity(Intent(this@LoginActivity, IntroActivity::class.java))
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
 //            finish()
         }

@@ -17,10 +17,7 @@ import com.sk.superlock.util.Constants
 class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
 
     private lateinit var binding: FragmentAllAppsBinding
-
-    //    private var allAppList: MutableList<Applications> = mutableListOf()
     private lateinit var appsAdapter: AllAppListAdapter
-//    private var addedAppList: MutableList<Applications> = mutableListOf()
 
     companion object {
         var allAppList: MutableList<Applications> = mutableListOf()

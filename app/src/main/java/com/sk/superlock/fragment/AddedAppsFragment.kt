@@ -17,7 +17,6 @@ import com.sk.superlock.util.Constants
 class AddedAppsFragment : Fragment() {
 
     private lateinit var binding: FragmentAddedAppsBinding
-    //    private var addedAppList: MutableList<Applications> = mutableListOf()
     private lateinit var appsAdapter: AddedAppListAdapter
 
     companion object {

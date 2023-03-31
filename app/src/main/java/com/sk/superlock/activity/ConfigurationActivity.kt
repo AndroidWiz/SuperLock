@@ -1,5 +1,6 @@
 package com.sk.superlock.activity
 
+import android.content.Intent
 import android.os.Bundle
 import com.sk.superlock.databinding.ActivityConfigurationBinding
 
@@ -13,6 +14,11 @@ class ConfigurationActivity : BaseActivity() {
         setContentView(binding.root)
 
         setUpToolbar(binding.toolbarConfigurationActivity)
+
+        // button change pin
+        binding.rlChangePin.setOnClickListener {
+            startActivity(Intent(this@ConfigurationActivity, ChangePinActivity::class.java))
+        }
     }
 
 

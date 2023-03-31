@@ -119,6 +119,9 @@
                 android:background="@color/colorPrimaryLight" />
 
             <RelativeLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/rl_change_pin"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center">

@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.sk.superlock.databinding.FragmentSafeZonesBinding
+import com.sk.superlock.databinding.FragmentSetPinBinding
 
-class SafeZonesFragment : Fragment() {
+class SetPinFragment : Fragment() {
 
-    private lateinit var binding: FragmentSafeZonesBinding
+    private lateinit var binding: FragmentSetPinBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSafeZonesBinding.inflate(inflater, container, false)
+        binding = FragmentSetPinBinding.inflate(inflater, container, false)
         val view = binding.root
-
 
         return view
     }
