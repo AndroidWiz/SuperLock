@@ -10,7 +10,7 @@
     <FrameLayout
         android:id="@+id/fl_header_image"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="260dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,9 +29,10 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/transparent"
                 app:cardCornerRadius="35dp">
 
                 <ImageView
@@ -53,20 +54,32 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/keypad_button_text_size" />
         </LinearLayout>
-
-
     </FrameLayout>
 
-    <LinearLayout
+    <com.sk.superlock.util.CustomTextViewBold
+        android:id="@+id/tv_pin"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:text="1234"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fl_header_image" />
+
+    <LinearLayout
+        android:id="@+id/keypad_layout"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="@color/colorPrimaryDark"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_next_or_confirm_pin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fl_header_image"
+        app:layout_constraintTop_toBottomOf="@id/tv_pin"
         tools:ignore="NestedWeights">
 
         <View
@@ -232,27 +245,18 @@
                 android:text="0"
                 android:textSize="@dimen/keypad_button_text_size" />
 
-            <!-- <com.sk.superlock.util.CustomButton
-                 android:id="@+id/btn_submit"
-                 android:layout_width="0dp"
-                 android:layout_height="match_parent"
-                 android:layout_margin="1dp"
-                 android:layout_weight="1"
-                 android:background="@color/white"
-                 android:foreground="?attr/selectableItemBackground"
-                 android:gravity="center"
-                 android:text=""
-                 android:textSize="@dimen/keypad_button_text_size" />-->
             <ImageView
                 android:id="@+id/btn_backspace"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:padding="10dp"
                 android:background="@color/white"
+                android:clickable="true"
+                android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
+                android:padding="10dp"
                 android:src="@drawable/ic_backspace"
                 android:textSize="@dimen/keypad_button_text_size" />
         </LinearLayout>
@@ -261,8 +265,25 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorPrimaryDark" />
-
     </LinearLayout>
+
+    <com.sk.superlock.util.CustomTextViewBold
+        android:id="@+id/tv_next_or_confirm_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/et_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="@dimen/et_padding"
+        android:text="NEXT"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/et_textSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:textAllCaps="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
