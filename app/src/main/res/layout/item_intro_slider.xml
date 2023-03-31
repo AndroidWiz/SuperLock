@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_slider"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+<!--    android:background="@color/colorPrimaryDark">-->
+
+    <com.sk.superlock.util.CustomTextViewBold
+        android:id="@+id/tv_slider_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Slide 1"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/iv_slider"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/tv_slider_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:padding="10dp"
+        android:src="@drawable/logo" />
+
+    <com.sk.superlock.util.CustomTextView
+        android:id="@+id/tv_slider_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_slider"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Slider Description"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</RelativeLayout>
