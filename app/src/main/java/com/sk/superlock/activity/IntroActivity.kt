@@ -25,15 +25,13 @@ class IntroActivity : BaseActivity() {
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // change status bar color
-//        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
-
         viewpager = binding.introViewPager
         indicatorTextViews = listOf(binding.tvSlide1, binding.tvSlide2, binding.tvSlide3)
 
         // button skip takes to MainActivity
         binding.btnSkipIntro.setOnClickListener {
-            startActivity(Intent(this@IntroActivity, MainActivity::class.java))
+//            startActivity(Intent(this@IntroActivity, MainActivity::class.java))
+            startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
         }
 
         // add dummy data

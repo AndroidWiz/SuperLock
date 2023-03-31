@@ -82,8 +82,8 @@
             android:text="Skip"
             android:textAllCaps="false"
             android:textColor="@color/white" />
-<!--        android:backgroundTint="@color/colorPrimaryDark"-->
-<!--        android:textColor="@color/white"-->
+        <!--        android:backgroundTint="@color/colorPrimaryDark"-->
+        <!--        android:textColor="@color/white"-->
     </LinearLayout>
 
 </RelativeLayout>
