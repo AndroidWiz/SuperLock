@@ -76,6 +76,8 @@ class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
     override fun onResume() {
         super.onResume()
 
+        allAppList.clear()
+
         allAppList.add(Applications("WhatsApp"))
         allAppList.add(Applications("Twitter"))
         allAppList.add(Applications("Facebook"))

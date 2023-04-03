@@ -64,6 +64,10 @@
     <string name="protected_apps">Protected Apps</string>
     <string name="auto_start">Auto Start</string>
     <string name="lock_image">lock image</string>
+    <string name="image">image</string>
+    <string name="password_type">Password type</string>
+    <string name="fingerprint_unlock">Fingerprint unlock</string>
+    <string name="change_pin">Change PIN</string>
 
 
 </resources>

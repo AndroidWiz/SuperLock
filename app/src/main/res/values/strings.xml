@@ -65,5 +65,9 @@
     <string name="lock_image">lock image</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image">image</string>
+    <string name="password_type">Password type</string>
+    <string name="fingerprint_unlock">Fingerprint unlock</string>
+    <string name="change_pin">Change PIN</string>
 
 </resources>

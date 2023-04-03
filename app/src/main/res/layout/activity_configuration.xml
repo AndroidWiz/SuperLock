@@ -53,7 +53,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/image"
                     android:src="@drawable/ic_password_type"
                     app:tint="@color/colorPrimaryDark" />
 
@@ -62,8 +63,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/iv_pass_type"
-                    android:text="Password type"
-                    android:textSize="14sp" />
+                    android:text="@string/password_type"
+                    android:textSize="14sp"
+                    tools:ignore="RelativeOverlap" />
 
                 <com.sk.superlock.util.CustomTextView
                     android:id="@+id/dropdown_password_type"
@@ -91,7 +93,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/image"
                     android:src="@drawable/ic_fingerprint"
                     app:tint="@color/colorPrimaryDark" />
 
@@ -100,8 +103,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/iv_fingerprint"
-                    android:text="Fingerprint unlock"
-                    android:textSize="14sp" />
+                    android:text="@string/fingerprint_unlock"
+                    android:textSize="14sp"
+                    tools:ignore="RelativeOverlap" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_fingerprint"
@@ -119,12 +123,12 @@
                 android:background="@color/colorPrimaryLight" />
 
             <RelativeLayout
-                android:clickable="true"
-                android:focusable="true"
                 android:id="@+id/rl_change_pin"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/iv_change_pin"
@@ -132,7 +136,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/image"
                     android:src="@drawable/ic_change_pass"
                     app:tint="@color/colorPrimaryDark" />
 
@@ -141,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/iv_change_pin"
-                    android:text="Change PIN"
+                    android:text="@string/change_pin"
                     android:textSize="14sp" />
             </RelativeLayout>
 
