@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="5dp"
     android:background="@color/transparent"
     android:backgroundTint="@color/transparent"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="160dp"
-        android:layout_height="200dp">
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
 
         <ImageView
             android:id="@+id/iv_intruder_img"
@@ -35,14 +35,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_app_logo_IIP"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/app_logo"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                app:shapeAppearance="@style/roundedImageView" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
