@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityLoginBinding
-import com.sk.superlock.fragment.LoginCameraFragment
+import com.sk.superlock.fragment.CameraLoginFragment
 import com.sk.superlock.fragment.LoginUsernameFragment
 
 class LoginActivity : BaseActivity() {
@@ -27,7 +27,8 @@ class LoginActivity : BaseActivity() {
                     showLoginFragment(LoginUsernameFragment())
                 }
                 R.id.login_by_camera -> {
-                    showLoginFragment(LoginCameraFragment())
+//                    showLoginFragment(LoginCameraFragment())
+                    showLoginFragment(CameraLoginFragment())
                 }
             }
         }

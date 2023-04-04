@@ -1,7 +1,6 @@
 package com.sk.superlock.fragment
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.ImageFormat
 import android.hardware.camera2.*
@@ -9,6 +8,9 @@ import android.media.ImageReader
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.sk.superlock.databinding.FragmentLoginCameraBinding
 
@@ -34,11 +36,11 @@ class LoginCameraFragment : Fragment() {
 
         override fun onError(camera: CameraDevice, error: Int) {
             camera.close()
-            activity?.supportFragmentManager?.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 
-    @SuppressLint("MissingPermission", "NewApi")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,17 +48,18 @@ class LoginCameraFragment : Fragment() {
         binding = FragmentLoginCameraBinding.inflate(inflater, container, false)
         val view = binding.root
 
-//        requestPermissions(arrayOf(android.Manifest.permission.CAMERA), 1)
         val requiredPermissions = arrayOf(Manifest.permission.CAMERA)
-        if (requiredPermissions.all { activity?.checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED }) {
+        if (requiredPermissions.all { ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED }) {
             // Permission is granted
+            startCameraPreview()
+           Toast.makeText(requireContext(), "Permission Granted Already", Toast.LENGTH_SHORT).show()
         } else {
             // Permission is not granted, request it
-            requestPermissions(requiredPermissions, 1)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), 1)
+//            requestPermissions(arrayOf(Manifest.permission.CAMERA), 1)
         }
 
-        val manager =
-            context?.getSystemService(android.content.Context.CAMERA_SERVICE) as CameraManager
+        val manager = requireContext().getSystemService(android.content.Context.CAMERA_SERVICE) as CameraManager
         val cameraId = manager.cameraIdList[0]
 
         manager.openCamera(cameraId, stateCallback, null)
@@ -68,7 +71,7 @@ class LoginCameraFragment : Fragment() {
 
         // cancel button
         binding.cancelButton.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
 
@@ -77,8 +80,6 @@ class LoginCameraFragment : Fragment() {
 
     // open camera and start preview
     private fun startCameraPreview() {
-//        val previewSurfaceTexture = binding.cameraPreviewContainer.surfaceTexture
-//        val previewSurfaceTexture = TextureView(requireContext(), binding.cameraPreviewContainer).surfaceTexture
         val previewSurfaceTexture = TextureView(requireContext()).surfaceTexture
         previewSurfaceTexture?.setDefaultBufferSize(
             binding.cameraPreviewContainer.width,
@@ -156,7 +157,7 @@ class LoginCameraFragment : Fragment() {
                 // Permission granted
             } else {
                 // Permission denied
-                activity?.supportFragmentManager?.popBackStack()
+                requireActivity().supportFragmentManager.popBackStack()
             }
         }
     }

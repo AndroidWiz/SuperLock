@@ -83,7 +83,5 @@
     <string name="protect">Protect</string>
     <string name="app_lock">App Lock</string>
     <string name="no_apps_needs_protection">10 apps needs protection</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

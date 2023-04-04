@@ -9,7 +9,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/camera_preview_card"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         android:layout_margin="24dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
@@ -55,15 +55,3 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <!-- <com.sk.superlock.util.CustomTextViewBold
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Open camera here"
-         android:textColor="@color/textColorSecondary"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent" />-->
