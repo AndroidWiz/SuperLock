@@ -6,5 +6,6 @@ object Constants {
     const val ADDED_APP_LIST: String = "added_app_list"
     const val READ_STORAGE_PERMISSION_CODE = 2
     const val PICK_IMAGE_REQUEST_CODE = 1
+    const val USER_ID: String = "user_id"
 
 }

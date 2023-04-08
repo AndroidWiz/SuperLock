@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -19,14 +20,14 @@ import com.sk.superlock.data.model.User
 import com.sk.superlock.databinding.ActivityRegisterBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.GlideLoader
+import kotlinx.android.synthetic.main.activity_register.*
 import java.io.IOException
+import java.util.*
 
 class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    //    private val db = UserDatabase.getDatabase(applicationContext)
-//    private val userDao = db.userDao()
     private lateinit var db: UserDatabase
     private lateinit var userDao: UserDao
     private var profileImageUri: Uri? = null
@@ -45,17 +46,18 @@ class RegisterActivity : BaseActivity() {
 
         // image chooser
         binding.ivUploadUserImage.setOnClickListener {
-//            val imageChooserIntent = Intent()
-//            imageChooserIntent.type = "image/*"
-//            imageChooserIntent.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(
-//                Intent.createChooser(imageChooserIntent, "Select Profile Image"),
-//                1
-//            )
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 imageChooser()
-            }else{
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), Constants.READ_STORAGE_PERMISSION_CODE)
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    Constants.READ_STORAGE_PERMISSION_CODE
+                )
             }
         }
 
@@ -68,6 +70,7 @@ class RegisterActivity : BaseActivity() {
         // button continue
         binding.btnContinue.setOnClickListener {
             registerUser()
+            db.close()
         }
     }
 
@@ -114,7 +117,6 @@ class RegisterActivity : BaseActivity() {
                 false
             }
             else -> {
-//                showErrorSnackBar(resources.getString(R.string.registry_successful), false)
                 true
             }
         }
@@ -124,39 +126,59 @@ class RegisterActivity : BaseActivity() {
     private fun registerUser() {
         // checking validations
         if (validateRegisterDetails()) {
-            showProgressDialog(resources.getString(R.string.please_wait))
 
-//            val imagePath: String = getRealPathFromURI(profileImageUri!!)
-            val imagePath: String = mProfileImageUrl
             val userName: String = binding.etUsername.text.toString().trim { it <= ' ' }
             val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
             val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
+            val formattedUserName = userName.replace(" ", "-")
+            mProfileImageUrl = String.format(
+                "%s-%s.%s",
+                formattedUserName,
+                System.currentTimeMillis(),
+                getFileExtension(profileImageUri)
+            )
+            val imageUrl = mProfileImageUrl
+
             val user = User(
-                profilePicture = imagePath,
+                profilePicture = imageUrl,
                 userName = userName,
                 email = email,
                 password = password
             )
 
             // inserting user into database
-            userDao.insertUser(user)
+            Thread {
+                userDao.insertUser(user)
+                Log.d("registeredUser", "User: $user")
 
-            hideProgressDialog()
+                runOnUiThread {
+                    registrationSuccessful()
+                }
+            }.start()
 
-            showErrorSnackBar(resources.getString(R.string.registry_successful), false)
-
-            // redirect to login
-            startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
-            finish()
         }
     }
 
+    // registration successful
+    private fun registrationSuccessful() {
+        showErrorSnackBar(resources.getString(R.string.registry_successful), false)
+        // redirect to login
+        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+        finish()
+    }
+
     // image chooser
-    private fun imageChooser(){
+    private fun imageChooser() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         @Suppress("DEPRECATION")
         startActivityForResult(galleryIntent, Constants.PICK_IMAGE_REQUEST_CODE)
+    }
+
+    // image file extension
+    private fun getFileExtension(uri: Uri?): String? {
+        return MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(contentResolver.getType(uri!!))
     }
 
     // request read storage permission
@@ -166,57 +188,38 @@ class RegisterActivity : BaseActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == Constants.READ_STORAGE_PERMISSION_CODE){
+        if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             // if permission granted
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imageChooser()
-            }else{
+            } else {
                 Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
 
-        /*if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.data != null) {
-            val imageUri: Uri = data.data!!
-            val imagePath = getRealPathFromURI(imageUri)
-            // use image path in your registration logic
-        }*/
-        if(resultCode == Activity.RESULT_OK){
-            if(resultCode == Constants.PICK_IMAGE_REQUEST_CODE){
-                if(data != null){
-                    profileImageUri = data.data!!
-                    try{
-                        GlideLoader(this).loadUserPicture(profileImageUri!!, binding.ivUploadUserImage)
-                    }catch (e: IOException){
-                       e.printStackTrace()
-                       Toast.makeText(this@RegisterActivity, "Image selection Failed!", Toast.LENGTH_SHORT).show()
-                    }
+        if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                profileImageUri = data.data!!
+                try {
+                    GlideLoader(this).loadUserPicture(profileImageUri!!, iv_upload_user_image)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Image selection Failed!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-        }else if (resultCode == Activity.RESULT_CANCELED){
+        } else if (resultCode == Activity.RESULT_CANCELED) {
             Log.e("Image Request Cancelled", "Image selection cancelled by user.")
         }
     }
-
-    // get image path
-    /*private fun getRealPathFromURI(uri: Uri): String {
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = contentResolver.query(uri, projection, null, null, null)
-        if (cursor != null) {
-            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            val path = cursor.getString(columnIndex)
-            cursor.close()
-            return path
-        }
-        return ""
-    }*/
-
 
 }
