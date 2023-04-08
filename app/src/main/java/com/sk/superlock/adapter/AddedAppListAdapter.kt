@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ItemAvailableAppBinding
-import com.sk.superlock.model.Applications
+import com.sk.superlock.data.model.Applications
 
 class AddedAppListAdapter(
     private val context: Context,

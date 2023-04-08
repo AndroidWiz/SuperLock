@@ -11,7 +11,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sk.superlock.adapter.AllAppListAdapter
 import com.sk.superlock.databinding.FragmentAllAppsBinding
-import com.sk.superlock.model.Applications
+import com.sk.superlock.data.model.Applications
 import com.sk.superlock.util.Constants
 
 class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {

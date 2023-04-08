@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -70,5 +71,11 @@ dependencies {
     // open cv
 //    implementation 'org.opencv:opencv-android:3.4.1'
     implementation 'org.opencv:opencv-android:1.0.1'
+
+    // room database
+    def room_version = "2.4.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
 }

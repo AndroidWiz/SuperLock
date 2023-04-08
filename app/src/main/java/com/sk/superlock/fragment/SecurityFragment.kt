@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.sk.superlock.R
 import com.sk.superlock.adapter.IntruderListAdapter
 import com.sk.superlock.databinding.FragmentSecurityBinding
-import com.sk.superlock.model.Intruder
+import com.sk.superlock.data.model.Intruder
 
 class SecurityFragment : Fragment() {
 

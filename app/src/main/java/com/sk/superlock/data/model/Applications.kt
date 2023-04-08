@@ -1,4 +1,4 @@
-package com.sk.superlock.model
+package com.sk.superlock.data.model
 
 data class Applications(
 //    val packageName: String,

@@ -39,6 +39,16 @@
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/layout_padding">
 
+            <ImageView
+                android:id="@+id/iv_upload_user_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/et_margin"
+                android:contentDescription="@string/user_image"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_user" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_username"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"

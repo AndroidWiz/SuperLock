@@ -8,7 +8,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.sk.superlock.R
 import com.sk.superlock.adapter.SliderAdapter
 import com.sk.superlock.databinding.ActivityIntroBinding
-import com.sk.superlock.model.SliderData
+import com.sk.superlock.data.model.SliderData
 import com.sk.superlock.util.CustomTextViewBold
 
 @Suppress("DEPRECATION")

@@ -1,4 +1,4 @@
-package com.sk.superlock.model
+package com.sk.superlock.data.model
 
 import android.graphics.drawable.Drawable
 

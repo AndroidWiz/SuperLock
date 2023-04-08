@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.R
-import com.sk.superlock.model.SliderData
+import com.sk.superlock.data.model.SliderData
 import com.sk.superlock.util.CustomTextView
 import com.sk.superlock.util.CustomTextViewBold
 

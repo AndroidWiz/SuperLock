@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.databinding.ItemIntruderPhotoBinding
-import com.sk.superlock.model.Intruder
+import com.sk.superlock.data.model.Intruder
 
 class IntruderListAdapter(private val context: Context, private val intruderList: ArrayList<Intruder>): RecyclerView.Adapter<IntruderListAdapter.MyHolder>() {
 

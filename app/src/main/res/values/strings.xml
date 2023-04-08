@@ -7,7 +7,8 @@
 
     <string name="loading">Loading</string>
     <string name="user_image">user image</string>
-    <string name="username">Username</string>
+<!--    <string name="username">Username</string>-->
+    <string name="username">Full Name</string>
     <string name="user_email">deyvi@company.com</string>
     <string name="nav_title_home">Home</string>
     <string name="nav_title_security">Security</string>
@@ -83,5 +84,16 @@
     <string name="protect">Protect</string>
     <string name="app_lock">App Lock</string>
     <string name="no_apps_needs_protection">10 apps needs protection</string>
+
+
+    <string name="err_msg_enter_full_name">Please enter your Full Name.</string>
+    <string name="err_msg_enter_email">Please enter email.</string>
+    <string name="err_msg_enter_password">Please enter password.</string>
+    <string name="err_msg_enter_repeat_password">Please enter repeat password.</string>
+    <string name="err_msg_password_and_repeat_password_mismatch">Password and repeat password do not match.</string>
+    <string name="err_msg_agree_terms_and_condition">Please agree terms and condition.</string>
+    <string name="err_msg_select_profile_image">Please select an image.</string>
+    <string name="registry_successful">Thanks for registering with us.</string>
+    <string name="please_wait">Please Wait&#8230;</string>
 
 </resources>
