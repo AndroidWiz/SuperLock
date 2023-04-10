@@ -53,23 +53,22 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    //glide for image
+    // glide for image
     implementation 'com.github.bumptech.glide:glide:4.13.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.1'
 
-    //for storing objects in shared preferences
+    // for storing objects in shared preferences
     implementation 'com.google.code.gson:gson:2.8.9'
 
+
+    // CameraX core library
     def camerax_version = "1.2.0"
-    // CameraX core library using camera2 implementation
     implementation "androidx.camera:camera-camera2:$camerax_version"
-    // CameraX Lifecycle Library
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
-    // CameraX View class
     implementation "androidx.camera:camera-view:1.2.0"
 
     // open cv
-//    implementation 'org.opencv:opencv-android:3.4.1'
+    //implementation 'org.opencv:opencv-android:3.4.1'
     implementation 'org.opencv:opencv-android:1.0.1'
 
     // room database
@@ -78,4 +77,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
+    // ML kit
+//    implementation 'com.google.mlkit:face-detection:16.1.5'
+    implementation 'com.google.android.gms:play-services-mlkit-face-detection:17.1.0'
+//    implementation 'com.google.android.gms:play-services-vision-common:19.1.3'
 }

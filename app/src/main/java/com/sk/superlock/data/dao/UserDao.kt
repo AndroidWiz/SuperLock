@@ -18,4 +18,8 @@ interface UserDao {
 
 //    @Query("SELECT * FROM users WHERE id = :id")
 //    fun getUserById(id: String): User?
+
+    @Query("SELECT * FROM users WHERE profilePicture = :profilePicture")
+    fun getUserByProfilePicture(profilePicture: String): User?
+
 }

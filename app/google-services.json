@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "712844145385",
+    "project_id": "keyface-d8956",
+    "storage_bucket": "keyface-d8956.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712844145385:android:5a0e3033316038e0077678",
+        "android_client_info": {
+          "package_name": "com.sk.superlock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712844145385-isfdn2iigihc28hsfpntp0gu10lddrbh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl5weyZ1s-EHMbrXpvg3Ad9SWagrPABP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712844145385-isfdn2iigihc28hsfpntp0gu10lddrbh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

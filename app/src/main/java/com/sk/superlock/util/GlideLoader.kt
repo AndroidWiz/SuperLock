@@ -23,4 +23,22 @@ class GlideLoader(val context: Context) {
             e.printStackTrace()
         }
     }
+
+    fun capturedPicture(image: Any, imageView: ImageView) {
+        try {
+            // Load the user image in the ImageView.
+            Glide
+                .with(context)
+                .load(image) // URI of the image
+                .centerCrop() // Scale type of the image.
+                .placeholder(R.drawable.ic_user) // A default place holder if image is failed to load.
+                .into(imageView) // the view in which the image will be loaded.
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    /*
+    * I have a LoginActivity with a fragment where I am capturing image using front camera. I have a button in my Login Activity which is used to validate and let user login to the app. In my fragment I have a variable named 'savedUri', which I want to compare with the
+    * */
 }

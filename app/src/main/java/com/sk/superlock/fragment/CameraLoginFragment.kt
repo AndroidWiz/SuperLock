@@ -18,6 +18,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.sk.superlock.util.GlideLoader
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.fragment_camera_login.*
 import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
@@ -42,6 +44,15 @@ class CameraLoginFragment : Fragment() {
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
+
+    companion object {
+        val TAG = "CameraLoginFragment"
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        internal const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        var isOffline = false // prevent app crash when goes offline
+        var savedUri: Uri? = null
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -129,7 +140,7 @@ class CameraLoginFragment : Fragment() {
         // Create timestamped output file to hold the image
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis()) + ".jpg"
+            SimpleDateFormat(FILENAME_FORMAT, Locale.getDefault()).format(System.currentTimeMillis()) + ".jpg"
         )
 
         // Create output options object which contains file + metadata
@@ -145,10 +156,16 @@ class CameraLoginFragment : Fragment() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
-                    val msg = "Photo capture succeeded: $savedUri"
-                    Toast.makeText(safeContext, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                    savedUri = Uri.fromFile(photoFile)
+                    cam_preview.visibility = View.GONE
+                    cam_captured_preview.visibility = View.VISIBLE
+                    capture_button.setOnClickListener {
+                        capture_button.isEnabled = false
+                        Toast.makeText(safeContext, "You cannot take another picture", Toast.LENGTH_SHORT).show()
+                    }
+                    GlideLoader(safeContext).capturedPicture(savedUri!!, cam_captured_preview)
+                    Toast.makeText(safeContext, "Photo capture succeeded: $savedUri", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Photo capture succeeded: $savedUri")
                 }
             })
     }
@@ -188,22 +205,12 @@ class CameraLoginFragment : Fragment() {
     }
 
     private fun getOutputDirectory(): File {
-//        val mediaDir = requireActivity().externalMediaDirs?.firstOrNull()?.let {
         val mediaDir = requireContext().externalMediaDirs?.firstOrNull()?.let {
             File(it, resources.getString(com.sk.superlock.R.string.app_name)).apply { mkdirs() }
         }
         return if (mediaDir != null && mediaDir.exists()) mediaDir else requireContext().filesDir!!
-//        return if (mediaDir != null && mediaDir.exists()) mediaDir else requireActivity().filesDir!!
     }
 
-
-    companion object {
-        val TAG = "CameraLoginFragment"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-        internal const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        var isOffline = false // prevent app crash when goes offline
-    }
 
  private class CornerAnalyzer(private val listener: CornersListener) : ImageAnalysis.Analyzer {
 

@@ -7,7 +7,7 @@
 
     <string name="loading">Loading</string>
     <string name="user_image">user image</string>
-<!--    <string name="username">Username</string>-->
+    <!--    <string name="username">Username</string>-->
     <string name="username">Full Name</string>
     <string name="user_email">deyvi@company.com</string>
     <string name="nav_title_home">Home</string>
@@ -95,5 +95,7 @@
     <string name="err_msg_select_profile_image">Please select an image.</string>
     <string name="registry_successful">Thanks for registering with us.</string>
     <string name="please_wait">Please Wait&#8230;</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

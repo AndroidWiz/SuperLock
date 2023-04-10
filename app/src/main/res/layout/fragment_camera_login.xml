@@ -23,6 +23,12 @@
                 android:id="@+id/cam_preview"
                 android:layout_width="200dp"
                 android:layout_height="200dp" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/cam_captured_preview"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="gone" />
         </com.google.android.material.card.MaterialCardView>
 
 

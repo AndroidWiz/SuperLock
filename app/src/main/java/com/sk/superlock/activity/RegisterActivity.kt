@@ -2,8 +2,10 @@ package com.sk.superlock.activity
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -152,12 +154,35 @@ class RegisterActivity : BaseActivity() {
                 userDao.insertUser(user)
                 Log.d("registeredUser", "User: $user")
 
+                // get file path to profile picture
+                val imagePath = profileImageUri?.let { getDataColumn(this, it, null, null) }
+                Log.d("savedImagePath", imagePath.toString())
+//                /storage/emulated/0/DCIM/Camera/IMG_20230411_025525_728.jpg
+
+
                 runOnUiThread {
                     registrationSuccessful()
                 }
             }.start()
 
         }
+    }
+
+    // get file path from URI
+    fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+        var cursor: Cursor? = null
+        val column = "_data"
+        val projection = arrayOf(column)
+        try {
+            cursor = uri?.let { context.contentResolver.query(it, projection, selection, selectionArgs, null) }
+            if (cursor != null && cursor.moveToFirst()) {
+                val index: Int = cursor.getColumnIndexOrThrow(column)
+                return cursor.getString(index)
+            }
+        } finally {
+            cursor?.close()
+        }
+        return null
     }
 
     // registration successful
