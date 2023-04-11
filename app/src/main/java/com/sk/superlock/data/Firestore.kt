@@ -136,36 +136,4 @@ class Firestore {
     }
 
 
-    // download all images from cloud firestore
-//    fun getAllImagesFromCloudStorage(){
-//        val storageRef: StorageReference = FirebaseStorage.getInstance().reference.child(Constants.USER_IMAGES_PATH)
-//    }
-//    fun downloadUserImages(activity: LoginActivity): List<File> {
-//        val storageRef = Firebase.storage.reference
-//
-//        // construct a reference to the "user-images/" folder
-//        val userImagesRef = storageRef.child(Constants.USER_IMAGES_PATH)
-//
-//        // list all the items (images) in the "user-images/" folder
-//        userImagesRef.listAll().addOnSuccessListener { listResult ->
-//            // loop through each item and download it to the cache directory
-//            listResult.items.forEach { item ->
-//                // construct a reference to the local file to save the image to
-//                val localFile = File.createTempFile(item.name, "jpg", activity.cacheDir)
-//
-//                // download the image to the local file
-//                item.getFile(localFile).addOnSuccessListener {
-//                    Log.d(activity.javaClass.simpleName, "Image downloaded to ${localFile.absolutePath}")
-//                    // add the downloaded file to the list of downloaded images
-//                    userImages.add(localFile)
-//                }.addOnFailureListener { exception ->
-//                    Log.e(activity.javaClass.simpleName, "Image download failed: ${exception.message}", exception)
-//                }
-//            }
-//        }.addOnFailureListener { exception ->
-//            Log.e(activity.javaClass.simpleName, "List items failed: ${exception.message}", exception)
-//        }
-//        return userImages
-//    }
-
 }

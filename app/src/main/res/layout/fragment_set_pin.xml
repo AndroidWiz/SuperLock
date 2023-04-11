@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
-                android:text="SET PIN"
+                android:text="@string/set_pin"
                 android:textColor="@color/white"
                 android:textSize="@dimen/keypad_button_text_size" />
         </LinearLayout>
@@ -277,7 +277,7 @@
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:padding="@dimen/et_padding"
-        android:text="NEXT"
+        android:text="@string/btn_next"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/et_textSize"
         app:layout_constraintBottom_toBottomOf="parent"

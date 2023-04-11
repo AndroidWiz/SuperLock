@@ -167,7 +167,6 @@ class LoginActivity : BaseActivity() {
         return emptyList()
     }
 
-
     //get all images from cloud
     private fun compareCapturedImageWithUserImages(capturedImageUri: Uri) {
         val faceDetectorOptions = FirebaseVisionFaceDetectorOptions.Builder()

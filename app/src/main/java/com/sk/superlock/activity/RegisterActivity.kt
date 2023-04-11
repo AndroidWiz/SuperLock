@@ -185,11 +185,11 @@ class RegisterActivity : BaseActivity() {
                             registerUser()
                         } else if (face.size > 1) {
                             hideProgressDialog()
-                            showErrorSnackBar("More than one face detected. Please try again", true)
+                            showErrorSnackBar(resources.getString(R.string.more_than_1_face_detected), true)
                             Log.d(TAG, "More faces detected")
                         } else {
                             hideProgressDialog()
-                            showErrorSnackBar("No face face detected. Please try again", true)
+                            showErrorSnackBar(resources.getString(R.string.no_face_detected_try_again), true)
                             Log.d(TAG, "No faces detected")
                         }
                     }
@@ -208,7 +208,7 @@ class RegisterActivity : BaseActivity() {
 
     fun userProfileUpdated() {
         hideProgressDialog()
-        Toast.makeText(this, "Profile updated with image", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, resources.getString(R.string.profile_updated_with_image), Toast.LENGTH_SHORT).show()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
@@ -226,7 +226,7 @@ class RegisterActivity : BaseActivity() {
 
     fun userRegistrationSuccess() {
         hideProgressDialog()
-        Toast.makeText(this, "You are registered successfully", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, resources.getString(R.string.registration_successful), Toast.LENGTH_SHORT).show()
     }
 
     // image chooser
@@ -248,7 +248,7 @@ class RegisterActivity : BaseActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 imageChooser()
             } else {
-                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -265,11 +265,7 @@ class RegisterActivity : BaseActivity() {
                     GlideLoader(this).loadUserPicture(profileImageUri!!, iv_upload_user_image)
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Image selection Failed!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@RegisterActivity, resources.getString(R.string.img_selection_failed), Toast.LENGTH_SHORT).show()
                 }
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {

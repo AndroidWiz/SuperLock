@@ -195,25 +195,6 @@
                         android:layout_height="wrap_content"
                         android:background="#F5F5F5">
 
-                        <!-- <com.google.android.material.imageview.ShapeableImageView
-                             android:layout_width="100dp"
-                             android:layout_height="200dp"
-                             android:src="@color/colorPrimaryDark"
-                             app:layout_constraintBottom_toBottomOf="parent"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:shapeAppearance="@style/roundedImageView" />
-
-                         <com.google.android.material.imageview.ShapeableImageView
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:src="@drawable/ic_storage"
-                             app:layout_constraintBottom_toBottomOf="parent"
-                             app:layout_constraintEnd_toEndOf="parent"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:shapeAppearance="@style/roundedImageView" />-->
-
                         <FrameLayout
                             android:id="@+id/fl_img_app_lock"
                             android:layout_width="100dp"
@@ -290,25 +271,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#F5F5F5">
-
-                        <!-- <com.google.android.material.imageview.ShapeableImageView
-                             android:layout_width="100dp"
-                             android:layout_height="200dp"
-                             android:src="@color/colorPrimaryDark"
-                             app:layout_constraintBottom_toBottomOf="parent"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:shapeAppearance="@style/roundedImageView" />
-
-                         <com.google.android.material.imageview.ShapeableImageView
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:src="@drawable/ic_storage"
-                             app:layout_constraintBottom_toBottomOf="parent"
-                             app:layout_constraintEnd_toEndOf="parent"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:shapeAppearance="@style/roundedImageView" />-->
 
                         <FrameLayout
                             android:id="@+id/fl_img_memory"
@@ -399,25 +361,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#F5F5F5">
-
-                        <!-- <com.google.android.material.imageview.ShapeableImageView
-                             android:layout_width="100dp"
-                             android:layout_height="200dp"
-                             android:src="@color/colorPrimaryDark"
-                             app:layout_constraintBottom_toBottomOf="parent"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:shapeAppearance="@style/roundedImageView" />
-
-                         <com.google.android.material.imageview.ShapeableImageView
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:src="@drawable/ic_storage"
-                             app:layout_constraintBottom_toBottomOf="parent"
-                             app:layout_constraintEnd_toEndOf="parent"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:shapeAppearance="@style/roundedImageView" />-->
 
                         <FrameLayout
                             android:id="@+id/fl_img_storage"

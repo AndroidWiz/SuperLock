@@ -96,6 +96,17 @@
     <string name="registry_successful">Thanks for registering with us.</string>
     <string name="please_wait">Please Wait&#8230;</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_sent_to_retrieve_password">Email send successfully to reset your password!</string>
+    <string name="more_than_1_face_detected">More than one face detected. Please try again</string>
+    <string name="no_face_detected_try_again">No face detected. Please try again</string>
+    <string name="profile_updated_with_image">Profile updated with image</string>
+    <string name="registration_successful">You are registered successfully</string>
+    <string name="permission_denied">Permission Denied!</string>
+    <string name="img_selection_failed">Image selection Failed!</string>
+    <string name="btn_skip">Skip</string>
+    <string name="capture">capture</string>
+    <string name="btn_cancel">cancel</string>
+    <string name="set_pin">SET PIN</string>
+    <string name="btn_next">NEXT</string>
 
 </resources>

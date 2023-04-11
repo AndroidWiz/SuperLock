@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragment.LoginCameraFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -27,7 +27,6 @@
             android:visibility="gone" />
     </com.google.android.material.card.MaterialCardView>
 
-
     <LinearLayout
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
@@ -45,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryDark"
-            android:text="capture"
+            android:text="@string/capture"
             android:textColor="@color/white"
             android:textSize="12sp" />
 
@@ -54,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:text="cancel"
+            android:text="@string/btn_cancel"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
     </LinearLayout>
