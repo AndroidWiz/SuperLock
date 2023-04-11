@@ -9,10 +9,8 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
@@ -69,21 +67,12 @@ class LoginActivity : BaseActivity() {
         binding.btnLogin.setOnClickListener {
             when (loginMode) {
                 LoginMode.EMAIL_PASSWORD -> {
+                    if(validateLoginDetails()){
+
                     showProgressDialog("Please wait")
 
                     val email: String = et_email.text.toString().trim()
                     val password: String = et_password.text.toString().trim()
-
-                    // check if text views are empty
-                    if (TextUtils.isEmpty(email)) {
-                        showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
-                    }
-                    if (TextUtils.isEmpty(password)) {
-                        showErrorSnackBar(
-                            resources.getString(R.string.err_msg_enter_password),
-                            true
-                        )
-                    }
 
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
@@ -94,33 +83,34 @@ class LoginActivity : BaseActivity() {
                                 showErrorSnackBar(task.exception!!.message.toString(), true)
                             }
                         }
+                    }
                 }
                 LoginMode.CAMERA -> {
                     /*Thread {
 
                     }.start()*/
-                    val auth = FirebaseAuth.getInstance()
-                    val user = auth.currentUser
+                    /* val auth = FirebaseAuth.getInstance()
+                     val user = auth.currentUser
 
-                    if (user != null) {
-                        user.getIdToken(true)
-                            .addOnCompleteListener { task: Task<GetTokenResult> ->
-                                if (task.isSuccessful) {
-                                    val token = task.result.token
-                                    // use the token
-                                } else {
-                                    // handle the error
-                                }
-                            }
-                    } else {
-                        val capturedImageUri = LoginCameraFragment.savedUri
-                        capturedImageUri?.let { it ->
-                            compareCapturedImageWithUserImages(
-                                it
-                            )
-                        }
-                    }
-
+                     if (user != null) {
+                         user.getIdToken(true)
+                             .addOnCompleteListener { task: Task<GetTokenResult> ->
+                                 if (task.isSuccessful) {
+                                     val token = task.result.token
+                                     // use the token
+                                 } else {
+                                     // handle the error
+                                 }
+                             }
+                     } else {
+                         val capturedImageUri = LoginCameraFragment.savedUri
+                         capturedImageUri?.let { it ->
+                             compareCapturedImageWithUserImages(
+                                 it
+                             )
+                         }
+                     }*/
+                    Toast.makeText(this, "Please use email and password to login", Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -136,6 +126,24 @@ class LoginActivity : BaseActivity() {
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         }
 
+    }
+
+    // validate login details
+    private fun validateLoginDetails(): Boolean {
+        return when {
+            TextUtils.isEmpty(et_email.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
+                false
+            }
+            TextUtils.isEmpty(et_password.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_password), true)
+                false
+            }
+            else -> {
+                // valid details process login
+                true
+            }
+        }
     }
 
     private fun downloadUserImages(): List<File> {

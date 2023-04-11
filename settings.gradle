@@ -18,5 +18,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "SuperLock"
 include ':app'
-include ':openCVLibrary343'
-include ':openCVLibrary343'

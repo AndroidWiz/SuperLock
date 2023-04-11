@@ -108,5 +108,6 @@
     <string name="btn_cancel">cancel</string>
     <string name="set_pin">SET PIN</string>
     <string name="btn_next">NEXT</string>
+    <string name="do_you_really_want_to_logout">Do you want to logout?</string>
 
 </resources>

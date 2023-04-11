@@ -107,5 +107,6 @@
     <string name="btn_cancel">Cancelar</string>
     <string name="set_pin">ESTABLECER PIN</string>
     <string name="btn_next">PRÓXIMO</string>
+    <string name="do_you_really_want_to_logout">Do you want to logout?</string>
 
 </resources>

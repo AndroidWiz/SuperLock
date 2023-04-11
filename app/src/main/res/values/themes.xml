@@ -22,6 +22,10 @@
         <item name="cornerSizeTopRight">16dp</item>
     </style>
 
+    <style name="CustomAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/exit_app_dialog_bg</item>
+    </style>
+
     <style name="Theme.SuperLock.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SuperLock.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

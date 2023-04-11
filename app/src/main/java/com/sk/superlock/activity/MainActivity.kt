@@ -12,19 +12,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityMainBinding
 import com.sk.superlock.fragment.*
-import com.sk.superlock.util.Constants
-import com.sk.superlock.util.CustomTextView
-import com.sk.superlock.util.CustomTextViewBold
-import com.sk.superlock.util.GlideLoader
+import com.sk.superlock.util.*
 
 class MainActivity : BaseActivity() {
 
@@ -76,6 +75,9 @@ class MainActivity : BaseActivity() {
         hUsername.text = username
         hEmail.text = email
         GlideLoader(this@MainActivity).loadUserPicture(profileImage, hProfilePic)
+        hProfilePic.setOnClickListener {
+            showLogoutAlertDialog()
+        }
 
         setUpNavBar()
         setFragment(HomeFragment())
@@ -114,6 +116,28 @@ class MainActivity : BaseActivity() {
             }
             true
         }
+    }
+
+    private fun showLogoutAlertDialog(){
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog).create()
+        val view: View = layoutInflater.inflate(R.layout.exit_dialog, null)
+        val yes = view.findViewById<CustomButton>(R.id.btn_yes)
+        val no = view.findViewById<CustomButton>(R.id.btn_no)
+        builder.setView(view)
+        yes.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            builder.dismiss()
+        }
+        no.setOnClickListener {
+            Toast.makeText(this, "No Clicked", Toast.LENGTH_SHORT).show()
+            builder.dismiss()
+        }
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
     }
 
     // setup custom bottom sheet dialog
