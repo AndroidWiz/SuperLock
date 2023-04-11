@@ -22,4 +22,9 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE profilePicture = :profilePicture")
     fun getUserByProfilePicture(profilePicture: String): User?
 
+
+    // get all profilePictures
+    @Query("SELECT * FROM users WHERE profilePicture IS NOT NULL")
+    fun getUsersWithProfilePictures(): List<User>
+
 }

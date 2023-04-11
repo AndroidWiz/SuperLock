@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,8 +25,13 @@ import com.sk.superlock.databinding.ActivityRegisterBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.GlideLoader
 import kotlinx.android.synthetic.main.activity_register.*
+import org.opencv.android.Utils
+import org.opencv.core.Mat
+import org.opencv.core.MatOfRect
+import org.opencv.objdetect.CascadeClassifier
 import java.io.IOException
 import java.util.*
+
 
 class RegisterActivity : BaseActivity() {
 
@@ -32,8 +39,13 @@ class RegisterActivity : BaseActivity() {
 
     private lateinit var db: UserDatabase
     private lateinit var userDao: UserDao
-    private var profileImageUri: Uri? = null
+//    private var profileImageUri: Uri? = null
     private var mProfileImageUrl: String = ""
+
+    companion object{
+        var profileImageUri: Uri? = null
+        var mSavedPathUri: Uri? = null
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -169,7 +181,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     // get file path from URI
-    fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+    private fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
         var cursor: Cursor? = null
         val column = "_data"
         val projection = arrayOf(column)
@@ -183,6 +195,34 @@ class RegisterActivity : BaseActivity() {
             cursor?.close()
         }
         return null
+    }
+
+    // detect face in selected image
+    private fun detectFace(selectedImagePath: Uri){
+        // load selected image
+        val selectedImage: Bitmap = BitmapFactory.decodeFile(selectedImagePath.toString())
+
+        // covert image to mat object
+        val imageMat = Mat()
+        Utils.bitmapToMat(selectedImage, imageMat)
+
+        // detect face using OpenCV
+        val faceDetector = CascadeClassifier()
+        faceDetector.load("haarcascade_frontalface_alt.xml") // load the face detection model
+
+        val faceDetections = MatOfRect()
+        faceDetector.detectMultiScale(imageMat, faceDetections)
+
+        // check if any faces are detected
+//        if (faceDetections.toArray().length == 0) {
+//            // no face detected, ask user to select a different image
+//            // show an error message or prompt the user to select a different image
+//
+//        } else {
+//            // at least one face detected, register the user
+//            // save the image file path in the database and other user details
+//            // you can use the code from part 1 to insert the user into the database
+//        }
     }
 
     // registration successful

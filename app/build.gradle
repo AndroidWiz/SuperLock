@@ -70,6 +70,7 @@ dependencies {
     // open cv
     //implementation 'org.opencv:opencv-android:3.4.1'
     implementation 'org.opencv:opencv-android:1.0.1'
+//    implementation 'org.opencv:opencv-android:3.4.3'
 
     // room database
     def room_version = "2.4.0"
