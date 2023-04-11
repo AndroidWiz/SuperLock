@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="170dp"
     android:layout_marginTop="80dp"
@@ -8,12 +9,17 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_user_img_nav_header"
+        style="@style/circleImageView"
+        android:layout_width="50dp"
+        android:padding="1dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/user_image"
-        android:paddingTop="15dp"
-        android:src="@drawable/ic_user" />
+        android:src="@drawable/ic_user"
+        app:shapeAppearance="@style/circleImageView"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="1dp" />
 
     <com.sk.superlock.util.CustomTextViewBold
         android:id="@+id/tv_username_nav_header"

@@ -109,6 +109,8 @@ class Firestore {
 
                 val editor: SharedPreferences.Editor = sharedPreferences.edit()
                 editor.putString(Constants.LOGGED_IN_USERNAME, "${user.userName}")
+                editor.putString(Constants.LOGGED_IN_USER_EMAIL, "${user.email}")
+                editor.putString(Constants.LOGGED_IN_USER_IMAGE, "${user.profilePicture}")
                 editor.apply()
 
                 when (activity) {

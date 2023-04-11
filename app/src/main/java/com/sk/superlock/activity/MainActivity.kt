@@ -1,5 +1,6 @@
 package com.sk.superlock.activity
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,15 +9,22 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.firebase.FirebaseApp
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityMainBinding
 import com.sk.superlock.fragment.*
+import com.sk.superlock.util.Constants
+import com.sk.superlock.util.CustomTextView
+import com.sk.superlock.util.CustomTextViewBold
+import com.sk.superlock.util.GlideLoader
 
 class MainActivity : BaseActivity() {
 
@@ -29,6 +37,8 @@ class MainActivity : BaseActivity() {
         // initialising view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        FirebaseApp.initializeApp(this)
 
         // navigation drawer
         toggle = ActionBarDrawerToggle(this, binding.root, R.string.open_drawer, R.string.close_drawer)
@@ -52,6 +62,21 @@ class MainActivity : BaseActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
+        // show user details to the navigation header
+        val sharedPrefs = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE)
+        val username = sharedPrefs.getString(Constants.LOGGED_IN_USERNAME, "")!!
+        val email = sharedPrefs.getString(Constants.LOGGED_IN_USER_EMAIL, "")!!
+        val profileImage = sharedPrefs.getString(Constants.LOGGED_IN_USER_IMAGE, "")!!
+
+        val navView = binding.navBarView
+        val header: View = navView.getHeaderView(0)
+        val hUsername = header.findViewById<CustomTextViewBold>(R.id.tv_username_nav_header)
+        val hEmail = header.findViewById<CustomTextView>(R.id.tv_user_email_nav_header)
+        val hProfilePic = header.findViewById<ShapeableImageView>(R.id.iv_user_img_nav_header)
+        hUsername.text = username
+        hEmail.text = email
+        GlideLoader(this@MainActivity).loadUserPicture(profileImage, hProfilePic)
+
         setUpNavBar()
         setFragment(HomeFragment())
         showBottomSheetDialog()
@@ -60,7 +85,6 @@ class MainActivity : BaseActivity() {
         binding.btnNavConfiguration.setOnClickListener {
             startActivity(Intent(this, ConfigurationActivity::class.java))
         }
-
     }
 
     // side navigation bar
