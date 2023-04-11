@@ -20,14 +20,14 @@ class Firestore {
     private val mFireStore = FirebaseFirestore.getInstance()
 
     // register user
-    fun registerUser(activity: RegisterActivity, userInfo: User){
+    fun registerUser(activity: RegisterActivity, userInfo: User) {
         mFireStore.collection(Constants.USERS)
             .document(userInfo.id)
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegistrationSuccess()
             }
-            .addOnFailureListener{ e ->
+            .addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while registering the user", e)
             }
@@ -35,12 +35,20 @@ class Firestore {
     }
 
     // upload image to cloud storage
-    fun uploadImageToStorage(activity: RegisterActivity, imageFileUrl: Uri?, imageType: String){
-        val storageRef : StorageReference = FirebaseStorage.getInstance().reference.child(imageType + System.currentTimeMillis() + "." + Constants.getFileExtension(activity, imageFileUrl))
+    fun uploadImageToStorage(activity: RegisterActivity, imageFileUrl: Uri?, imageType: String) {
+        val storageRef: StorageReference = FirebaseStorage.getInstance().reference.child(
+            Constants.USER_IMAGES_PATH + imageType + System.currentTimeMillis() + "." + Constants.getFileExtension(
+                activity,
+                imageFileUrl
+            )
+        )
 
         storageRef.putFile(imageFileUrl!!)
             .addOnSuccessListener { taskSnapshot ->
-                Log.e("Firebase Image URL", taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
+                Log.e(
+                    "Firebase Image URL",
+                    taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
+                )
 
                 taskSnapshot.metadata!!.reference!!.downloadUrl
                     .addOnSuccessListener { uri ->
@@ -48,7 +56,7 @@ class Firestore {
                         activity.imageUploadSuccess(uri.toString())
                     }
             }
-            .addOnFailureListener{e ->
+            .addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.d(activity.javaClass.simpleName, e.message, e)
             }
@@ -56,14 +64,14 @@ class Firestore {
 
 
     // update profile with image
-    fun updateUserProfileData(activity: RegisterActivity, userHashMap: HashMap<String, Any>){
+    fun updateUserProfileData(activity: RegisterActivity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .update(userHashMap)
             .addOnSuccessListener {
                 activity.userProfileUpdated()
             }
-            .addOnFailureListener {e ->
+            .addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while updating image", e)
             }
@@ -71,11 +79,11 @@ class Firestore {
 
 
     // get current user id
-    fun getCurrentUserId(): String{
+    fun getCurrentUserId(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         var currentUserId = ""
-        if (currentUser != null){
+        if (currentUser != null) {
             currentUserId = currentUser.uid
         }
 
@@ -100,8 +108,6 @@ class Firestore {
                 )
 
                 val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                //Key: logged_in_username
-                //value: firstname and lastName
                 editor.putString(Constants.LOGGED_IN_USERNAME, "${user.userName}")
                 editor.apply()
 
@@ -129,37 +135,37 @@ class Firestore {
 
     }
 
-    /*fun registerUser(activity: RegisterActivity, userInfo: User, imageUri: Uri){
-        val storageRef: StorageReference = FirebaseStorage.getInstance().reference.child("${Constants.USERS}/${userInfo.id}.jpg")
-        val uploadTask = storageRef.putFile(imageUri)
-        uploadTask.continueWithTask { task ->
-            if(!task.isSuccessful){
-                task.exception?.let{
-                    throw it
-                }
-            }
-            storageRef.downloadUrl
-        }.addOnCompleteListener { task ->
-            if (task.isSuccessful){
-                val downloadUri = task.result.toString()
 
-                // add image download URL to user info
-                userInfo.profilePicture = downloadUri
+    // download all images from cloud firestore
+//    fun getAllImagesFromCloudStorage(){
+//        val storageRef: StorageReference = FirebaseStorage.getInstance().reference.child(Constants.USER_IMAGES_PATH)
+//    }
+//    fun downloadUserImages(activity: LoginActivity): List<File> {
+//        val storageRef = Firebase.storage.reference
+//
+//        // construct a reference to the "user-images/" folder
+//        val userImagesRef = storageRef.child(Constants.USER_IMAGES_PATH)
+//
+//        // list all the items (images) in the "user-images/" folder
+//        userImagesRef.listAll().addOnSuccessListener { listResult ->
+//            // loop through each item and download it to the cache directory
+//            listResult.items.forEach { item ->
+//                // construct a reference to the local file to save the image to
+//                val localFile = File.createTempFile(item.name, "jpg", activity.cacheDir)
+//
+//                // download the image to the local file
+//                item.getFile(localFile).addOnSuccessListener {
+//                    Log.d(activity.javaClass.simpleName, "Image downloaded to ${localFile.absolutePath}")
+//                    // add the downloaded file to the list of downloaded images
+//                    userImages.add(localFile)
+//                }.addOnFailureListener { exception ->
+//                    Log.e(activity.javaClass.simpleName, "Image download failed: ${exception.message}", exception)
+//                }
+//            }
+//        }.addOnFailureListener { exception ->
+//            Log.e(activity.javaClass.simpleName, "List items failed: ${exception.message}", exception)
+//        }
+//        return userImages
+//    }
 
-                mFireStore.collection(Constants.USERS)
-                    .document(userInfo.id)
-                    .set(userInfo, SetOptions.merge())
-                    .addOnSuccessListener {
-                        activity.userRegistrationSuccess()
-                    }
-                    .addOnFailureListener { e ->
-                        activity.hideProgressDialog()
-                        Log.e(activity.javaClass.simpleName, "Error while registering the user", e)
-                    }
-            }else{
-                activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error uploading profile image", task.exception)
-            }
-        }
-    }*/
 }

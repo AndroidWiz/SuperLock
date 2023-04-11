@@ -15,6 +15,9 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import com.sk.superlock.R
 import com.sk.superlock.data.Firestore
 import com.sk.superlock.data.model.User
@@ -32,7 +35,8 @@ class RegisterActivity : BaseActivity() {
 
     private var mProfileImageUrl: String = ""
 
-    companion object{
+    companion object {
+        val TAG = "RegisterActivity"
         var profileImageUri: Uri? = null
         var mSavedPathUri: Uri? = null
     }
@@ -46,7 +50,6 @@ class RegisterActivity : BaseActivity() {
         setUpToolbar(binding.toolbarRegisterActivity)
 
         FirebaseApp.initializeApp(this)
-
 
         // image chooser
         binding.ivUploadUserImage.setOnClickListener {
@@ -73,7 +76,8 @@ class RegisterActivity : BaseActivity() {
 
         // button continue
         binding.btnContinue.setOnClickListener {
-            registerUser()
+//            registerUser()
+            detectFaceInImage()
         }
     }
 
@@ -127,19 +131,15 @@ class RegisterActivity : BaseActivity() {
 
     // register user
     private fun registerUser() {
-        // checking validations
-        if (validateRegisterDetails()) {
+        val userName: String = binding.etUsername.text.toString().trim { it <= ' ' }
+        val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
+        val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
-            showProgressDialog("Please wait...")
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
 
-            val userName: String = binding.etUsername.text.toString().trim { it <= ' ' }
-            val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
-            val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
-
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful){
-
-                    val firebaseUser : FirebaseUser = task.result!!.user!!
+                    val firebaseUser: FirebaseUser = task.result!!.user!!
 
                     val user = User(
                         id = firebaseUser.uid,
@@ -151,30 +151,72 @@ class RegisterActivity : BaseActivity() {
                 }
             }
 
-            if(profileImageUri != null){
-                Firestore().uploadImageToStorage(this, profileImageUri, Constants.USER_PROFILE_IMAGE)
-            }else{
-                addImageToUser()
+        if (profileImageUri != null) {
+            Firestore().uploadImageToStorage(
+                this,
+                profileImageUri,
+                Constants.USER_PROFILE_IMAGE
+            )
+        } else {
+            addImageToUser()
+        }
+    }
+
+    private fun detectFaceInImage() {
+        // checking validations
+        if (validateRegisterDetails()) {
+
+            showProgressDialog("Please wait...")
+            if (profileImageUri != null) {
+                val image = FirebaseVisionImage.fromFilePath(this, profileImageUri!!)
+                val options = FirebaseVisionFaceDetectorOptions.Builder()
+                    .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
+                    .setLandmarkMode(FirebaseVisionFaceDetectorOptions.NO_LANDMARKS)
+                    .setClassificationMode(FirebaseVisionFaceDetectorOptions.NO_CLASSIFICATIONS)
+                    .setMinFaceSize(0.15f)
+                    .build()
+
+                val detector = FirebaseVision.getInstance()
+                    .getVisionFaceDetector(options)
+
+                detector.detectInImage(image)
+                    .addOnSuccessListener { face ->
+                        if (face.size == 1) {
+                            registerUser()
+                        } else if (face.size > 1) {
+                            hideProgressDialog()
+                            showErrorSnackBar("More than one face detected. Please try again", true)
+                            Log.d(TAG, "More faces detected")
+                        } else {
+                            hideProgressDialog()
+                            showErrorSnackBar("No face face detected. Please try again", true)
+                            Log.d(TAG, "No faces detected")
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        hideProgressDialog()
+                        Log.e(TAG, "Error detecting face", e)
+                    }
             }
         }
     }
 
-    fun imageUploadSuccess(imageUrl: String){
+    fun imageUploadSuccess(imageUrl: String) {
         mProfileImageUrl = imageUrl
         addImageToUser()
     }
 
-    fun userProfileUpdated(){
+    fun userProfileUpdated() {
         hideProgressDialog()
         Toast.makeText(this, "Profile updated with image", Toast.LENGTH_SHORT).show()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 
-    private fun addImageToUser(){
+    private fun addImageToUser() {
         val userHashMap = HashMap<String, Any>()
 
-        if(mProfileImageUrl.isNotEmpty()){
+        if (mProfileImageUrl.isNotEmpty()) {
             userHashMap["profilePicture"] = mProfileImageUrl
         }
 
@@ -182,7 +224,7 @@ class RegisterActivity : BaseActivity() {
     }
 
 
-    fun userRegistrationSuccess(){
+    fun userRegistrationSuccess() {
         hideProgressDialog()
         Toast.makeText(this, "You are registered successfully", Toast.LENGTH_SHORT).show()
     }
@@ -193,7 +235,6 @@ class RegisterActivity : BaseActivity() {
         @Suppress("DEPRECATION")
         startActivityForResult(galleryIntent, Constants.PICK_IMAGE_REQUEST_CODE)
     }
-
 
     // request read storage permission
     override fun onRequestPermissionsResult(

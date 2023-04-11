@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseApp
+import com.sk.superlock.data.Firestore
 import com.sk.superlock.databinding.ActivitySplashBinding
 
 @SuppressLint("CustomSplashScreen")
@@ -28,8 +30,11 @@ class SplashActivity : AppCompatActivity() {
             )
         }*/
 
-       /* Handler().postDelayed({
+//        FirebaseApp.initializeApp(this)
+
+        Handler().postDelayed({
             // check current logged in user
+            FirebaseApp.initializeApp(this)
             val currentUserId = Firestore().getCurrentUserId()
 
             if(currentUserId.isNotEmpty()){
@@ -41,11 +46,11 @@ class SplashActivity : AppCompatActivity() {
             }
             finish()
         },
-        2500)*/
+        2500)
 
-        Handler().postDelayed({
+/*        Handler().postDelayed({
 //            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
             startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
-        }, 2500)
+        }, 2500)*/
     }
 }

@@ -29,12 +29,43 @@
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
+    <FrameLayout
+        android:id="@+id/settings_fragment_host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/login_activity_margin"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/login_activity_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_configuration_activity" />
+
+    <com.sk.superlock.util.CustomButton
+        android:id="@+id/btn_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/login_activity_margin"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="@dimen/login_activity_margin"
+        android:background="@drawable/button_background_red"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingTop="@dimen/btn_padding"
+        android:paddingBottom="@dimen/btn_padding"
+        android:text="Check"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/settings_fragment_host"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_textSize" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_configuration_activity">
+        app:layout_constraintTop_toBottomOf="@id/btn_check">
 
         <LinearLayout
             android:layout_width="match_parent"

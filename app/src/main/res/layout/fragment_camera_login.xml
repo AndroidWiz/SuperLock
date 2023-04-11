@@ -3,64 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.CameraLoginFragment">
+    android:layout_height="match_parent">
+<!--    tools:context=".fragment.CameraLoginFragment">-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cardCornerRadius="10dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/button_layout"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <androidx.camera.view.PreviewView
-                android:id="@+id/cam_preview"
-                android:layout_width="200dp"
-                android:layout_height="200dp" />
+<!--            <androidx.camera.view.PreviewView-->
+<!--                android:id="@+id/cam_preview"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="200dp" />-->
 
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/cam_captured_preview"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:visibility="gone" />
-        </com.google.android.material.card.MaterialCardView>
+<!--            <androidx.constraintlayout.utils.widget.ImageFilterView-->
+<!--                android:id="@+id/cam_captured_preview"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:visibility="gone" />-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
 
 
-        <LinearLayout
-            android:id="@+id/button_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/button_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="16dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
 
-            <com.sk.superlock.util.CustomButton
-                android:id="@+id/capture_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:background="@color/colorPrimaryDark"
-                android:text="capture"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+<!--            <com.sk.superlock.util.CustomButton-->
+<!--                android:id="@+id/capture_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:background="@color/colorPrimaryDark"-->
+<!--                android:text="capture"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="12sp" />-->
 
-            <com.sk.superlock.util.CustomButton
-                android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:text="cancel"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            <com.sk.superlock.util.CustomButton-->
+<!--                android:id="@+id/cancel_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/white"-->
+<!--                android:text="cancel"-->
+<!--                android:textColor="@color/colorPrimary"-->
+<!--                android:textSize="12sp" />-->
+<!--        </LinearLayout>-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </ScrollView>

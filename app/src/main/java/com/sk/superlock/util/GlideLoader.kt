@@ -38,7 +38,4 @@ class GlideLoader(val context: Context) {
         }
     }
 
-    /*
-    * I have a LoginActivity with a fragment where I am capturing image using front camera. I have a button in my Login Activity which is used to validate and let user login to the app. In my fragment I have a variable named 'savedUri', which I want to compare with the
-    * */
 }

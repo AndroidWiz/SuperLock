@@ -17,6 +17,8 @@ object Constants {
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
     const val OPEN_CAMERA_PERMISSION_CODE = 3
 
+    const val USER_IMAGES_PATH: String = "user-images/"
+
     // image file extension
     fun getFileExtension(activity: Activity, uri: Uri?): String? {
         return MimeTypeMap.getSingleton()
