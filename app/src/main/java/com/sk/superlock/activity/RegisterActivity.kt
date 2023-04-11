@@ -2,33 +2,26 @@ package com.sk.superlock.activity
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.sk.superlock.R
-import com.sk.superlock.data.dao.UserDao
-import com.sk.superlock.data.database.UserDatabase
+import com.sk.superlock.data.Firestore
 import com.sk.superlock.data.model.User
 import com.sk.superlock.databinding.ActivityRegisterBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.GlideLoader
 import kotlinx.android.synthetic.main.activity_register.*
-import org.opencv.android.Utils
-import org.opencv.core.Mat
-import org.opencv.core.MatOfRect
-import org.opencv.objdetect.CascadeClassifier
 import java.io.IOException
 import java.util.*
 
@@ -37,9 +30,6 @@ class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    private lateinit var db: UserDatabase
-    private lateinit var userDao: UserDao
-//    private var profileImageUri: Uri? = null
     private var mProfileImageUrl: String = ""
 
     companion object{
@@ -53,10 +43,10 @@ class RegisterActivity : BaseActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = UserDatabase.getDatabase(this)
-        userDao = db.userDao()
-
         setUpToolbar(binding.toolbarRegisterActivity)
+
+        FirebaseApp.initializeApp(this)
+
 
         // image chooser
         binding.ivUploadUserImage.setOnClickListener {
@@ -84,7 +74,6 @@ class RegisterActivity : BaseActivity() {
         // button continue
         binding.btnContinue.setOnClickListener {
             registerUser()
-            db.close()
         }
     }
 
@@ -141,96 +130,61 @@ class RegisterActivity : BaseActivity() {
         // checking validations
         if (validateRegisterDetails()) {
 
+            showProgressDialog("Please wait...")
+
             val userName: String = binding.etUsername.text.toString().trim { it <= ' ' }
             val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
             val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
-            val formattedUserName = userName.replace(" ", "-")
-            mProfileImageUrl = String.format(
-                "%s-%s.%s",
-                formattedUserName,
-                System.currentTimeMillis(),
-                getFileExtension(profileImageUri)
-            )
-            val imageUrl = mProfileImageUrl
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                if (task.isSuccessful){
 
-            val user = User(
-                profilePicture = imageUrl,
-                userName = userName,
-                email = email,
-                password = password
-            )
+                    val firebaseUser : FirebaseUser = task.result!!.user!!
 
-            // inserting user into database
-            Thread {
-                userDao.insertUser(user)
-                Log.d("registeredUser", "User: $user")
+                    val user = User(
+                        id = firebaseUser.uid,
+                        userName = userName,
+                        email = email,
+                    )
 
-                // get file path to profile picture
-                val imagePath = profileImageUri?.let { getDataColumn(this, it, null, null) }
-                Log.d("savedImagePath", imagePath.toString())
-//                /storage/emulated/0/DCIM/Camera/IMG_20230411_025525_728.jpg
-
-
-                runOnUiThread {
-                    registrationSuccessful()
+                    Firestore().registerUser(this, user)
                 }
-            }.start()
-
-        }
-    }
-
-    // get file path from URI
-    private fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
-        var cursor: Cursor? = null
-        val column = "_data"
-        val projection = arrayOf(column)
-        try {
-            cursor = uri?.let { context.contentResolver.query(it, projection, selection, selectionArgs, null) }
-            if (cursor != null && cursor.moveToFirst()) {
-                val index: Int = cursor.getColumnIndexOrThrow(column)
-                return cursor.getString(index)
             }
-        } finally {
-            cursor?.close()
+
+            if(profileImageUri != null){
+                Firestore().uploadImageToStorage(this, profileImageUri, Constants.USER_PROFILE_IMAGE)
+            }else{
+                addImageToUser()
+            }
         }
-        return null
     }
 
-    // detect face in selected image
-    private fun detectFace(selectedImagePath: Uri){
-        // load selected image
-        val selectedImage: Bitmap = BitmapFactory.decodeFile(selectedImagePath.toString())
-
-        // covert image to mat object
-        val imageMat = Mat()
-        Utils.bitmapToMat(selectedImage, imageMat)
-
-        // detect face using OpenCV
-        val faceDetector = CascadeClassifier()
-        faceDetector.load("haarcascade_frontalface_alt.xml") // load the face detection model
-
-        val faceDetections = MatOfRect()
-        faceDetector.detectMultiScale(imageMat, faceDetections)
-
-        // check if any faces are detected
-//        if (faceDetections.toArray().length == 0) {
-//            // no face detected, ask user to select a different image
-//            // show an error message or prompt the user to select a different image
-//
-//        } else {
-//            // at least one face detected, register the user
-//            // save the image file path in the database and other user details
-//            // you can use the code from part 1 to insert the user into the database
-//        }
+    fun imageUploadSuccess(imageUrl: String){
+        mProfileImageUrl = imageUrl
+        addImageToUser()
     }
 
-    // registration successful
-    private fun registrationSuccessful() {
-        showErrorSnackBar(resources.getString(R.string.registry_successful), false)
-        // redirect to login
-        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+    fun userProfileUpdated(){
+        hideProgressDialog()
+        Toast.makeText(this, "Profile updated with image", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
+    }
+
+    private fun addImageToUser(){
+        val userHashMap = HashMap<String, Any>()
+
+        if(mProfileImageUrl.isNotEmpty()){
+            userHashMap["profilePicture"] = mProfileImageUrl
+        }
+
+        Firestore().updateUserProfileData(this, userHashMap)
+    }
+
+
+    fun userRegistrationSuccess(){
+        hideProgressDialog()
+        Toast.makeText(this, "You are registered successfully", Toast.LENGTH_SHORT).show()
     }
 
     // image chooser
@@ -240,11 +194,6 @@ class RegisterActivity : BaseActivity() {
         startActivityForResult(galleryIntent, Constants.PICK_IMAGE_REQUEST_CODE)
     }
 
-    // image file extension
-    private fun getFileExtension(uri: Uri?): String? {
-        return MimeTypeMap.getSingleton()
-            .getExtensionFromMimeType(contentResolver.getType(uri!!))
-    }
 
     // request read storage permission
     override fun onRequestPermissionsResult(
