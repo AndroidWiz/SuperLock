@@ -22,7 +22,7 @@
     <string name="home_fragment">Inicio fragmento</string>
     <string name="safe_zones_fragment">Zonas seguras fragmento</string>
     <string name="security_fragment">Seguridad fragmento</string>
-    <string name="clicked">Hizo clic</string>
+    <string name="clicked"> Hizo clic</string>
     <string name="create_a_new_account">Crear Nueva cuenta</string>
     <string name="password">Contraseña</string>
     <string name="repeat_password">Repetir Contraseña</string>
@@ -86,7 +86,8 @@
     <string name="no_apps_needs_protection">10 aplicaciones necesitan protección</string>
 
 
-    <string name="err_msg_enter_full_name">Por favor ingresa tu nombre completo.</string>
+    <string name="err_msg_enter_first_name">Please enter your First Name.</string>
+    <string name="err_msg_enter_last_name">Please enter your Last Name.</string>
     <string name="err_msg_enter_email">Por favor ingrese el correo electrónico.</string>
     <string name="err_msg_enter_password">Por favor, ingrese contraseña.</string>
     <string name="err_msg_enter_repeat_password">Por favor repita la contraseña.</string>
@@ -100,6 +101,7 @@
     <string name="no_face_detected_try_again">No se detectó ningún rostro. Inténtalo de nuevo</string>
     <string name="profile_updated_with_image">Perfil actualizado con imagen</string>
     <string name="registration_successful">Estás registrado con éxito</string>
+    <string name="registration_unsuccessful">Something went wrong while registering</string>
     <string name="permission_denied">¡Permiso denegado!</string>
     <string name="img_selection_failed">¡Selección de imagen fallida!</string>
     <string name="btn_skip">Saltar</string>
@@ -107,6 +109,10 @@
     <string name="btn_cancel">Cancelar</string>
     <string name="set_pin">ESTABLECER PIN</string>
     <string name="btn_next">PRÓXIMO</string>
-    <string name="do_you_really_want_to_logout">Do you want to logout?</string>
+    <string name="do_you_really_want_to_logout">¿Quieres cerrar sesión?</string>
+    <string name="no">No</string>
+    <string name="yes">Sí</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 
 </resources>

@@ -1,8 +1,6 @@
 package com.sk.superlock.activity
 
 import android.os.Bundle
-import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityForgotPasswordBinding
 
@@ -28,15 +26,7 @@ class ForgotPasswordActivity : BaseActivity() {
             showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
         }else{
             showProgressDialog(resources.getString(R.string.please_wait))
-            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
-                .addOnCompleteListener{task ->
-                    if(task.isSuccessful){
-                        Toast.makeText(this@ForgotPasswordActivity, resources.getString(R.string.email_sent_to_retrieve_password), Toast.LENGTH_SHORT).show()
-                        finish()
-                    }else{
-                        showErrorSnackBar(task.exception!!.message.toString(), true)
-                    }
-                }
+
         }
     }
 }

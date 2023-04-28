@@ -18,8 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.imageview.ShapeableImageView
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityMainBinding
 import com.sk.superlock.fragment.*
@@ -36,8 +34,6 @@ class MainActivity : BaseActivity() {
         // initialising view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        FirebaseApp.initializeApp(this)
 
         // navigation drawer
         toggle = ActionBarDrawerToggle(this, binding.root, R.string.open_drawer, R.string.close_drawer)
@@ -125,7 +121,7 @@ class MainActivity : BaseActivity() {
         val no = view.findViewById<CustomButton>(R.id.btn_no)
         builder.setView(view)
         yes.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
+
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -133,7 +129,7 @@ class MainActivity : BaseActivity() {
             builder.dismiss()
         }
         no.setOnClickListener {
-            Toast.makeText(this, "No Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getString(R.string.no) + resources.getString(R.string.clicked), Toast.LENGTH_SHORT).show()
             builder.dismiss()
         }
         builder.setCanceledOnTouchOutside(false)

@@ -44,17 +44,17 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:padding="1dp"
-                android:src="@drawable/ic_user"
-                app:shapeAppearance="@style/circleImageView"
                 android:layout_marginTop="@dimen/et_margin"
                 android:contentDescription="@string/user_image"
+                android:padding="1dp"
                 android:scaleType="fitXY"
+                android:src="@drawable/ic_user"
+                app:shapeAppearance="@style/circleImageView"
                 app:strokeColor="@color/colorPrimaryDark"
                 app:strokeWidth="2dp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_username"
+                android:id="@+id/til_firstName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,17 +62,43 @@
                 android:layout_marginTop="@dimen/et_margin"
                 android:layout_marginEnd="@dimen/et_margin"
                 android:background="@color/transparent"
-                android:hint="@string/username"
+                android:hint="@string/first_name"
                 android:paddingBottom="@dimen/layout_padding"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:boxBackgroundColor="@color/transparent"
                 app:hintTextColor="@color/colorPrimaryDark">
 
                 <com.sk.superlock.util.CustomEditText
-                    android:id="@+id/et_username"
+                    android:id="@+id/et_firstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username"
+                    android:hint="@string/first_name"
+                    android:inputType="text"
+                    android:textColor="@color/textColorPrimary"
+                    android:textColorHint="@color/transparent"
+                    android:textSize="@dimen/et_textSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_lastName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/et_margin"
+                android:layout_marginTop="@dimen/et_margin"
+                android:layout_marginEnd="@dimen/et_margin"
+                android:background="@color/transparent"
+                android:hint="@string/last_name"
+                android:paddingBottom="@dimen/layout_padding"
+                android:textColorHint="@color/colorPrimaryDark"
+                app:boxBackgroundColor="@color/transparent"
+                app:hintTextColor="@color/colorPrimaryDark">
+
+                <com.sk.superlock.util.CustomEditText
+                    android:id="@+id/et_lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/last_name"
                     android:inputType="text"
                     android:textColor="@color/textColorPrimary"
                     android:textColorHint="@color/transparent"

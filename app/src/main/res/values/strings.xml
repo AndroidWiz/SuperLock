@@ -21,7 +21,7 @@
     <string name="home_fragment">Home Fragment</string>
     <string name="safe_zones_fragment">Safe Zones Fragment</string>
     <string name="security_fragment">Security Fragment</string>
-    <string name="clicked">Clicked</string>
+    <string name="clicked"> Clicked</string>
     <string name="create_a_new_account">Create a new account</string>
     <string name="password">Password</string>
     <string name="repeat_password">Repeat Password</string>
@@ -86,7 +86,8 @@
     <string name="no_apps_needs_protection">10 apps needs protection</string>
 
 
-    <string name="err_msg_enter_full_name">Please enter your Full Name.</string>
+    <string name="err_msg_enter_first_name">Please enter your First Name.</string>
+    <string name="err_msg_enter_last_name">Please enter your Last Name.</string>
     <string name="err_msg_enter_email">Please enter email.</string>
     <string name="err_msg_enter_password">Please enter password.</string>
     <string name="err_msg_enter_repeat_password">Please enter repeat password.</string>
@@ -101,6 +102,7 @@
     <string name="no_face_detected_try_again">No face detected. Please try again</string>
     <string name="profile_updated_with_image">Profile updated with image</string>
     <string name="registration_successful">You are registered successfully</string>
+    <string name="registration_unsuccessful">Something went wrong while registering</string>
     <string name="permission_denied">Permission Denied!</string>
     <string name="img_selection_failed">Image selection Failed!</string>
     <string name="btn_skip">Skip</string>
@@ -109,5 +111,9 @@
     <string name="set_pin">SET PIN</string>
     <string name="btn_next">NEXT</string>
     <string name="do_you_really_want_to_logout">Do you want to logout?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 
 </resources>

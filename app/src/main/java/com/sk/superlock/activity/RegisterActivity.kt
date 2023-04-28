@@ -12,19 +12,23 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import com.sk.superlock.R
-import com.sk.superlock.data.Firestore
+import com.sk.superlock.data.model.TokenResponse
 import com.sk.superlock.data.model.User
+import com.sk.superlock.data.services.ApiClient
+import com.sk.superlock.data.services.ApiInterface
 import com.sk.superlock.databinding.ActivityRegisterBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.GlideLoader
+import com.sk.superlock.util.PrefManager
 import kotlinx.android.synthetic.main.activity_register.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
 import java.io.IOException
 import java.util.*
 
@@ -33,7 +37,9 @@ class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    private var mProfileImageUrl: String = ""
+//    private var mProfileImageUrl: String = ""
+    private var mProfileImageUrl: File? = null
+    private lateinit var apiInterface: ApiInterface
 
     companion object {
         val TAG = "RegisterActivity"
@@ -49,7 +55,7 @@ class RegisterActivity : BaseActivity() {
 
         setUpToolbar(binding.toolbarRegisterActivity)
 
-        FirebaseApp.initializeApp(this)
+        apiInterface = ApiClient.getClient(this@RegisterActivity).create(ApiInterface::class.java)
 
         // image chooser
         binding.ivUploadUserImage.setOnClickListener {
@@ -76,8 +82,9 @@ class RegisterActivity : BaseActivity() {
 
         // button continue
         binding.btnContinue.setOnClickListener {
-//            registerUser()
-            detectFaceInImage()
+            if(validateRegisterDetails()){
+                registerUser()
+            }
         }
     }
 
@@ -88,8 +95,12 @@ class RegisterActivity : BaseActivity() {
                 showErrorSnackBar(resources.getString(R.string.err_msg_select_profile_image), true)
                 false
             }
-            TextUtils.isEmpty(binding.etUsername.text.toString().trim { it <= ' ' }) -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_enter_full_name), true)
+            TextUtils.isEmpty(binding.etFirstName.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_first_name), true)
+                false
+            }
+            TextUtils.isEmpty(binding.etLastName.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_last_name), true)
                 false
             }
             TextUtils.isEmpty(binding.etEmail.text.toString().trim { it <= ' ' }) -> {
@@ -131,103 +142,76 @@ class RegisterActivity : BaseActivity() {
 
     // register user
     private fun registerUser() {
-        val userName: String = binding.etUsername.text.toString().trim { it <= ' ' }
+        val firstName: String = binding.etFirstName.text.toString().trim { it <= ' ' }
+        val lastName: String = binding.etLastName.text.toString().trim { it <= ' ' }
         val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
         val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+        val user = User(
+//            id = null,
+            name = firstName,
+            lastname = lastName,
+            email = email,
+            password = password,
+//            files = mProfileImageUrl
+            files = null
+        )
 
-                    val firebaseUser: FirebaseUser = task.result!!.user!!
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("name", user.name)
+            .addFormDataPart("lastname", user.lastname)
+            .addFormDataPart("email", user.email)
+            .addFormDataPart("password", user.password)
 
-                    val user = User(
-                        id = firebaseUser.uid,
-                        userName = userName,
-                        email = email,
-                    )
-
-                    Firestore().registerUser(this, user)
-                }
-            }
-
-        if (profileImageUri != null) {
-            Firestore().uploadImageToStorage(
-                this,
-                profileImageUri,
-                Constants.USER_PROFILE_IMAGE
+        if (user.files != null) {
+            requestBody.addFormDataPart(
+                "files",
+                user.files!!.name,
+                RequestBody.create(MediaType.parse("image/*"), user.files!!)
             )
-        } else {
-            addImageToUser()
         }
-    }
 
-    private fun detectFaceInImage() {
-        // checking validations
-        if (validateRegisterDetails()) {
+        // complete the part
+        apiInterface.createUser(requestBody.build())
+            .enqueue(object: Callback<TokenResponse>{
+                override fun onResponse(
+                    call: Call<TokenResponse>,
+                    response: Response<TokenResponse>
+                ) {
+                    if(response.isSuccessful){
+                        val tokenResponse: TokenResponse? = response.body()
+                        val accessToken = tokenResponse?.payload?.data?.accessToken
+                        val refreshToken = tokenResponse?.payload?.data?.refreshToken
 
-            showProgressDialog("Please wait...")
-            if (profileImageUri != null) {
-                val image = FirebaseVisionImage.fromFilePath(this, profileImageUri!!)
-                val options = FirebaseVisionFaceDetectorOptions.Builder()
-                    .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
-                    .setLandmarkMode(FirebaseVisionFaceDetectorOptions.NO_LANDMARKS)
-                    .setClassificationMode(FirebaseVisionFaceDetectorOptions.NO_CLASSIFICATIONS)
-                    .setMinFaceSize(0.15f)
-                    .build()
-
-                val detector = FirebaseVision.getInstance()
-                    .getVisionFaceDetector(options)
-
-                detector.detectInImage(image)
-                    .addOnSuccessListener { face ->
-                        if (face.size == 1) {
-                            registerUser()
-                        } else if (face.size > 1) {
-                            hideProgressDialog()
-                            showErrorSnackBar(resources.getString(R.string.more_than_1_face_detected), true)
-                            Log.d(TAG, "More faces detected")
-                        } else {
-                            hideProgressDialog()
-                            showErrorSnackBar(resources.getString(R.string.no_face_detected_try_again), true)
-                            Log.d(TAG, "No faces detected")
+                        // save tokens to sharedPrefs
+                        if(!accessToken.isNullOrEmpty()){
+                            PrefManager(this@RegisterActivity).setAccessToken(accessToken)
+                            Log.d(TAG, "accessToken: $accessToken")
                         }
+                        if(!refreshToken.isNullOrEmpty()){
+                            PrefManager(this@RegisterActivity).setRefreshToken(refreshToken)
+                            Log.d(TAG, "refreshToken: $refreshToken")
+                        }
+
+                        Toast.makeText(this@RegisterActivity, resources.getString(R.string.registration_successful), Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                    }else{
+                        val errorMsg = response.errorBody()?.string()
+                        val statusCode = response.code()
+                        Log.e(TAG, "Something went wrong. Error message: $errorMsg. Status code: $statusCode")
+                        Toast.makeText(this@RegisterActivity, resources.getString(R.string.registration_unsuccessful), Toast.LENGTH_SHORT).show()
                     }
-                    .addOnFailureListener { e ->
-                        hideProgressDialog()
-                        Log.e(TAG, "Error detecting face", e)
-                    }
-            }
-        }
+                }
+
+                override fun onFailure(call: Call<TokenResponse>, t: Throwable) {
+                    Toast.makeText(this@RegisterActivity, resources.getString(R.string.registration_unsuccessful), Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "RegistrationFailed", t)
+                }
+
+            })
     }
 
-    fun imageUploadSuccess(imageUrl: String) {
-        mProfileImageUrl = imageUrl
-        addImageToUser()
-    }
-
-    fun userProfileUpdated() {
-        hideProgressDialog()
-        Toast.makeText(this, resources.getString(R.string.profile_updated_with_image), Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
-    }
-
-    private fun addImageToUser() {
-        val userHashMap = HashMap<String, Any>()
-
-        if (mProfileImageUrl.isNotEmpty()) {
-            userHashMap["profilePicture"] = mProfileImageUrl
-        }
-
-        Firestore().updateUserProfileData(this, userHashMap)
-    }
-
-
-    fun userRegistrationSuccess() {
-        hideProgressDialog()
-        Toast.makeText(this, resources.getString(R.string.registration_successful), Toast.LENGTH_SHORT).show()
-    }
 
     // image chooser
     private fun imageChooser() {

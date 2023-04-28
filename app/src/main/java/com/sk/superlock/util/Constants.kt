@@ -20,6 +20,7 @@ object Constants {
     const val OPEN_CAMERA_PERMISSION_CODE = 3
 
     const val USER_IMAGES_PATH: String = "user-images/"
+    const val USER: String = "user"
 
     // image file extension
     fun getFileExtension(activity: Activity, uri: Uri?): String? {

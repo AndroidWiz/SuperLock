@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:gravity="center"
-            android:text="No"
+            android:text="@string/no"
             android:textAllCaps="false"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/et_textSize" />
@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:gravity="center"
-            android:text="Yes"
+            android:text="@string/yes"
             android:textAllCaps="false"
             android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/et_textSize" />
