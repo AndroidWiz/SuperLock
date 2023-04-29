@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.R
-import com.sk.superlock.databinding.ItemAvailableAppBinding
 import com.sk.superlock.data.model.Applications
+import com.sk.superlock.databinding.ItemAvailableAppBinding
 
 class AllAppListAdapter(
     private val context: Context,
@@ -44,6 +44,7 @@ class AllAppListAdapter(
         val model = allAppList[position]
 
         holder.appName.text = model.appName
+        holder.appIcon.setImageDrawable(model.appIcon)
 
         // check if app has already been added
         if (addedAppList.contains(model)) {
@@ -53,6 +54,7 @@ class AllAppListAdapter(
         }
 
         // add the app to use lock and unlock method
+        holder.appStatus.isEnabled = false
         holder.appStatus.setOnClickListener {
             if (addedAppList.contains(model)) {
                 // remove app from addedAppList

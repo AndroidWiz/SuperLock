@@ -1,6 +1,7 @@
 package com.sk.superlock.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -37,7 +38,6 @@ import java.util.*
 class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private var mProfileImageUrl: String = ""
     private lateinit var apiInterface: ApiInterface
     companion object {
         val TAG = "RegisterActivity"
@@ -170,6 +170,8 @@ class RegisterActivity : BaseActivity() {
 
 
     // image chooser
+    @Suppress("DEPRECATION")
+    @SuppressLint("QueryPermissionsNeeded")
     private fun imageChooser() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (cameraIntent.resolveActivity(packageManager) != null) {
@@ -192,6 +194,7 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         @Suppress("DEPRECATION")
@@ -215,6 +218,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     // get image uri to show in the imageview
+    @Suppress("DEPRECATION")
     private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)

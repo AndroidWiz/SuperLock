@@ -1,7 +1,8 @@
 package com.sk.superlock.data.model
 
+import android.graphics.drawable.Drawable
+
 data class Applications(
-//    val packageName: String,
     val appName: String,
-//    val icon: Drawable
+    val appIcon: Drawable
 )

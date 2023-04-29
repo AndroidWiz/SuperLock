@@ -1,6 +1,8 @@
 package com.sk.superlock.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sk.superlock.adapter.AllAppListAdapter
-import com.sk.superlock.databinding.FragmentAllAppsBinding
 import com.sk.superlock.data.model.Applications
+import com.sk.superlock.databinding.FragmentAllAppsBinding
 import com.sk.superlock.util.Constants
 
+@Suppress("DEPRECATION")
 class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
 
     private lateinit var binding: FragmentAllAppsBinding
@@ -31,9 +34,31 @@ class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
         binding = FragmentAllAppsBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        setupRecyclerView(allAppList)
-
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        allAppList = getAllInstalledApps()
+        setupRecyclerView(allAppList)
+    }
+
+    // list of all available apps in phone
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun getAllInstalledApps(): MutableList<Applications> {
+        val packageManager = requireContext().packageManager
+        val apps = mutableListOf<Applications>()
+        val intent = Intent(Intent.ACTION_MAIN, null)
+        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val activities = packageManager.queryIntentActivities(intent, 0)
+        for (activity in activities) {
+            val appName = activity.loadLabel(packageManager).toString()
+            val appIcon = activity.loadIcon(packageManager)
+            apps.add(Applications(appName, appIcon))
+        }
+        apps.sortBy { it.appName }
+        return apps
     }
 
     // set up recyclerview for list of application
@@ -71,22 +96,6 @@ class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
                 object : TypeToken<List<Applications>>() {}.type
             )
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        allAppList.clear()
-
-        allAppList.add(Applications("WhatsApp"))
-        allAppList.add(Applications("Twitter"))
-        allAppList.add(Applications("Facebook"))
-        allAppList.add(Applications("Messenger"))
-        allAppList.add(Applications("WeChat"))
-        allAppList.add(Applications("Fiverr"))
-        allAppList.add(Applications("Upwork"))
-
-        appsAdapter.notifyDataSetChanged()
     }
 
 

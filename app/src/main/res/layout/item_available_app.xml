@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/recycler_view_item_margin"
@@ -15,18 +16,21 @@
         android:src="@drawable/ic_available_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/app_name" />
 
     <com.sk.superlock.util.CustomTextView
         android:id="@+id/tv_available_app_name"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/recycler_view_item_margin"
-        android:gravity="center"
+        android:gravity="center_vertical"
+        android:maxLines="1"
         android:text="@string/available_app_name"
-        android:textSize="@dimen/et_textSize"
         android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/et_textSize"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_available_app_status"
         app:layout_constraintStart_toEndOf="@id/iv_available_app"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,7 +44,8 @@
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
