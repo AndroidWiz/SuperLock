@@ -16,7 +16,7 @@ data class User(
 ) : Parcelable
 
 
-data class CreateUserResponse(
+data class UserResponse(
     @SerializedName("traceId") val traceId: String,
     @SerializedName("payload") val payload: Payload
 )

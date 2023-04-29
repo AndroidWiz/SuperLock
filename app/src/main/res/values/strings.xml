@@ -116,5 +116,6 @@
     <string name="yes">Yes</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="camera_unavailable">Camera Unavailable</string>
 
 </resources>

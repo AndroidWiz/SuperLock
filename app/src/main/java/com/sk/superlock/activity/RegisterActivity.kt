@@ -2,23 +2,20 @@ package com.sk.superlock.activity
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.sk.superlock.R
-import com.sk.superlock.data.model.CreateUserResponse
+import com.sk.superlock.data.model.UserResponse
 import com.sk.superlock.data.services.ApiClient
 import com.sk.superlock.data.services.ApiInterface
 import com.sk.superlock.databinding.ActivityRegisterBinding
@@ -32,6 +29,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -40,7 +38,6 @@ import java.util.*
 class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-
     private var mProfileImageUrl: String = ""
     private lateinit var apiInterface: ApiInterface
     companion object {
@@ -105,26 +102,19 @@ class RegisterActivity : BaseActivity() {
                 false
             }
             TextUtils.isEmpty(binding.etRepeatPassword.text.toString().trim { it <= ' ' }) -> {
-                showErrorSnackBar(
-                    resources.getString(R.string.err_msg_enter_repeat_password),
-                    true
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_repeat_password), true
                 )
                 false
             }
             binding.etPassword.text.toString()
                 .trim { it <= ' ' } != binding.etRepeatPassword.text.toString()
                 .trim { it <= ' ' } -> {
-                showErrorSnackBar(
-                    resources.getString(R.string.err_msg_password_and_repeat_password_mismatch),
-                    true
+                showErrorSnackBar(resources.getString(R.string.err_msg_password_and_repeat_password_mismatch), true
                 )
                 false
             }
             !binding.cbTermsAndCondition.isChecked -> {
-                showErrorSnackBar(
-                    resources.getString(R.string.err_msg_agree_terms_and_condition),
-                    true
-                )
+                showErrorSnackBar(resources.getString(R.string.err_msg_agree_terms_and_condition), true)
                 false
             }
             else -> {
@@ -135,29 +125,30 @@ class RegisterActivity : BaseActivity() {
 
     // register user
     private fun registerUser() {
-        val firstName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etFirstName.text.toString().trim { it <= ' ' })
-        val lastName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etLastName.text.toString().trim { it <= ' ' })
-        val email: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etEmail.text.toString().trim { it <= ' ' })
-        val password: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etPassword.text.toString().trim { it <= ' ' })
+        val firstName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etFirstName.text.toString().trim())
+        val lastName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etLastName.text.toString().trim())
+        val email: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etEmail.text.toString().trim())
+        val password: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etPassword.text.toString().trim())
         val roles: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "2")
 
         val profileImage: MultipartBody.Part? = if (mProfileImageUrl.isNotEmpty()) {
             val file = File(mProfileImageUrl)
-            val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+//            val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+            val requestFile = RequestBody.create(MediaType.parse("image/png"), file)
             MultipartBody.Part.createFormData("files", file.name, requestFile)
         } else {
             null
         }
 
-        apiInterface.createUser(firstName, lastName, email, password, profileImage, roles)
-            .enqueue(object: Callback<CreateUserResponse>{
+        apiInterface.createUser(name = firstName, lastname = lastName, email = email, password = password, files = profileImage, roles = roles)
+            .enqueue(object: Callback<UserResponse>{
                 override fun onResponse(
-                    call: Call<CreateUserResponse>,
-                    response: Response<CreateUserResponse>
+                    call: Call<UserResponse>,
+                    response: Response<UserResponse>
                 ) {
-//                    if(response.isSuccessful && response.code()== 201){
-                    if(response.isSuccessful){
-                        val tokenResponse: CreateUserResponse? = response.body()
+                    if(response.isSuccessful && response.code()== 201){
+//                    if(response.isSuccessful){
+                        val tokenResponse: UserResponse? = response.body()
                         Log.d(TAG, "createUserTokenResponse: $tokenResponse")
                         val accessToken = tokenResponse?.payload?.data?.accessToken
                         val refreshToken = tokenResponse?.payload?.data?.refreshToken
@@ -182,7 +173,7 @@ class RegisterActivity : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<CreateUserResponse>, t: Throwable) {
+                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                     Toast.makeText(this@RegisterActivity, resources.getString(R.string.registration_unsuccessful), Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "RegistrationFailed", t)
                 }
@@ -194,10 +185,10 @@ class RegisterActivity : BaseActivity() {
     // image chooser
     private fun imageChooser() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (cameraIntent.resolveActivity(this.packageManager) != null) {
+        if (cameraIntent.resolveActivity(packageManager) != null) {
             startActivityForResult(cameraIntent, Constants.OPEN_CAMERA_PERMISSION_CODE)
         } else {
-            Toast.makeText(requireContext(), resources.getString(R.string.camera_unavailable), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@RegisterActivity, resources.getString(R.string.camera_unavailable), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -221,10 +212,9 @@ class RegisterActivity : BaseActivity() {
 
         if (requestCode == Constants.OPEN_CAMERA_PERMISSION_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null && data.extras != null) {
-                profileImageUri = data.data!!
-//                mProfileImageUrl = profileImageUri.toString()
-                mProfileImageUrl = profileImageUri?.path ?: ""
-                binding.ivUploadUserImage.setImageURI(profileImageUri)
+                val imageBitmap = data.extras!!.get("data") as Bitmap
+                profileImageUri = getImageUri(this@RegisterActivity, imageBitmap)
+//                binding.ivUploadUserImage.setImageURI(profileImageUri)
                 try {
                     GlideLoader(this).loadUserPicture(profileImageUri!!, iv_upload_user_image)
                 } catch (e: IOException) {
@@ -235,5 +225,17 @@ class RegisterActivity : BaseActivity() {
         } else if (resultCode == Activity.RESULT_CANCELED) {
             Log.e("Image Request Cancelled", "Image selection cancelled by user.")
         }
+    }
+
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(
+            inContext.contentResolver,
+            inImage,
+            "User Profile Image",
+            null
+        )
+        return Uri.parse(path)
     }
 }

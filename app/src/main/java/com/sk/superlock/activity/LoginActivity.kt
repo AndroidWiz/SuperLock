@@ -6,6 +6,8 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
+import com.sk.superlock.data.services.ApiClient
+import com.sk.superlock.data.services.ApiInterface
 import com.sk.superlock.databinding.ActivityLoginBinding
 import com.sk.superlock.fragment.LoginCameraFragment
 import com.sk.superlock.fragment.LoginUsernameFragment
@@ -20,6 +22,7 @@ class LoginActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var loginMode: LoginMode? = null
     private val userImagesList = CopyOnWriteArrayList<File>()
+    private lateinit var apiInterface: ApiInterface
 
     companion object {
         val TAG = "LoginActivity"
@@ -31,6 +34,7 @@ class LoginActivity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        apiInterface = ApiClient.getClient(this@LoginActivity).create(ApiInterface::class.java)
 
         // default fragment
         showLoginFragment(LoginUsernameFragment())
@@ -54,10 +58,9 @@ class LoginActivity : BaseActivity() {
                 LoginMode.EMAIL_PASSWORD -> {
                     if(validateLoginDetails()){
 
-                    showProgressDialog("Please wait")
-
                     val email: String = et_email.text.toString().trim()
                     val password: String = et_password.text.toString().trim()
+
 
 
                     }
@@ -80,6 +83,9 @@ class LoginActivity : BaseActivity() {
         }
 
     }
+
+    // perform login
+
 
     // validate login details
     private fun validateLoginDetails(): Boolean {

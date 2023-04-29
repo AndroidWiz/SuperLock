@@ -1,6 +1,7 @@
 package com.sk.superlock.data.services
 
 import android.content.Context
+import com.sk.superlock.util.PrefManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,7 +15,7 @@ class ApiClient {
 
         fun getClient(context: Context): Retrofit {
             val client: OkHttpClient = OkHttpClient().newBuilder()
-//                .addInterceptor(AccessTokenInterceptor(PrefManager(context).getAccessToken()))
+                .addInterceptor(AccessTokenInterceptor(PrefManager(context).getAccessToken()))
                 .connectTimeout(100, TimeUnit.SECONDS)
                 .readTimeout(100, TimeUnit.SECONDS)
                 .build()
