@@ -108,8 +108,9 @@ class LoginActivity : BaseActivity() {
                             PrefManager(this@LoginActivity).setAccessToken(refreshToken)
                             Log.d(TAG, "accessToken: $accessToken, refreshToken: $refreshToken")
 
-                            // decode user data
+                            // decode user data and save to sharedPrefs
                             val user = decodeAccessToken(accessToken)
+                            PrefManager(this@LoginActivity).setUser(user)
                             Log.d(TAG, "DecodedUser = $user")
 
                             Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()

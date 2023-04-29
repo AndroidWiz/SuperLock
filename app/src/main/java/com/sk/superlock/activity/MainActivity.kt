@@ -1,6 +1,5 @@
 package com.sk.superlock.activity
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -27,6 +27,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var toggle: ActionBarDrawerToggle
+    private val TAG: String = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,19 +59,21 @@ class MainActivity : BaseActivity() {
         }
 
         // show user details to the navigation header
-        val sharedPrefs = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE)
-        val username = sharedPrefs.getString(Constants.LOGGED_IN_USERNAME, "")!!
-        val email = sharedPrefs.getString(Constants.LOGGED_IN_USER_EMAIL, "")!!
-        val profileImage = sharedPrefs.getString(Constants.LOGGED_IN_USER_IMAGE, "")!!
+        val loggedInUser = PrefManager(this@MainActivity).getUser()
+        Log.d(TAG, "loggedInUser = $loggedInUser")
 
         val navView = binding.navBarView
         val header: View = navView.getHeaderView(0)
         val hUsername = header.findViewById<CustomTextViewBold>(R.id.tv_username_nav_header)
         val hEmail = header.findViewById<CustomTextView>(R.id.tv_user_email_nav_header)
         val hProfilePic = header.findViewById<ShapeableImageView>(R.id.iv_user_img_nav_header)
-        hUsername.text = username
-        hEmail.text = email
-        GlideLoader(this@MainActivity).loadUserPicture(profileImage, hProfilePic)
+        hUsername.text = buildString {
+            append(loggedInUser.name)
+            append(" ")
+            append(loggedInUser.lastname)
+        }
+        hEmail.text = loggedInUser.email
+        GlideLoader(this@MainActivity).loadUserPicture(loggedInUser.imageURL, hProfilePic)
         hProfilePic.setOnClickListener {
             showLogoutAlertDialog()
         }
@@ -121,6 +124,10 @@ class MainActivity : BaseActivity() {
         val no = view.findViewById<CustomButton>(R.id.btn_no)
         builder.setView(view)
         yes.setOnClickListener {
+            // delete accessToken and refreshToken from SharedPreferences to logout
+//            PrefManager(this@MainActivity).setAccessToken("")
+//            PrefManager(this@MainActivity).setRefreshToken("")
+            PrefManager(this@MainActivity).clearSession()
 
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.sk.superlock.databinding.ActivitySplashBinding
+import com.sk.superlock.util.PrefManager
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -18,20 +19,13 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         @Suppress("DEPRECATION")
-        // checking device OS and setting flags to full screen window
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }*/
-
-
         Handler().postDelayed({
-//            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
+            if (PrefManager(this@SplashActivity).hasAccessToken()){
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            }else{
+                startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
+            }
+            finish()
         }, 2500)
     }
 }
