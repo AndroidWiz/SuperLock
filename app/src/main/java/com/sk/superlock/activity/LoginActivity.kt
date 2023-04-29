@@ -6,8 +6,10 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.auth0.android.jwt.JWT
 import com.sk.superlock.R
 import com.sk.superlock.data.model.Credentials
+import com.sk.superlock.data.model.User
 import com.sk.superlock.data.model.UserResponse
 import com.sk.superlock.data.services.ApiClient
 import com.sk.superlock.data.services.ApiInterface
@@ -72,7 +74,11 @@ class LoginActivity : BaseActivity() {
                     }
                 }
                 LoginMode.CAMERA -> {
-                    Toast.makeText(this, "Please use email and password to login", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Please use email and password to login",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 else -> {}
             }
@@ -108,11 +114,16 @@ class LoginActivity : BaseActivity() {
                             PrefManager(this@LoginActivity).setAccessToken(refreshToken)
                             Log.d(TAG, "accessToken: $accessToken, refreshToken: $refreshToken")
 
+                            // decode user data
+                            val user = decodeAccessToken(accessToken)
+                            Log.d(TAG, "DecodedUser = $user")
+
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
                         }
                     } else {
-                        Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT)
+                            .show()
                         Log.e("login", "Login failed")
                     }
                 }
@@ -124,6 +135,52 @@ class LoginActivity : BaseActivity() {
             })
     }
 
+    // jwt decoder
+    fun decodeAccessToken(accessToken: String): User? {
+        val jwt = JWT(accessToken)
+
+        val id = jwt.getClaim("id").asInt()
+        val name = jwt.getClaim("name").asString()
+        val lastname = jwt.getClaim("lastname").asString()
+        val email = jwt.getClaim("email").asString()
+        val imageURL = jwt.getClaim("imageURL").asString()
+        val roles = jwt.getClaim("roles").asList(String::class.java)
+
+        return User(
+            id = id!!,
+            name = name!!,
+            lastname = lastname!!,
+            email = email!!,
+            imageURL = imageURL!!,
+            roles = roles
+        )
+    }
+
+    /*  fun decodeAccessToken(userResponse: UserResponse): User? {
+          val accessToken = userResponse.payload.data.accessToken
+          if (accessToken == null) {
+              Log.e(TAG, "Access token is null")
+              return null
+          }
+          val jwt = JWT(accessToken)
+          val claims = Gson().fromJson(jwt.getClaim("payload").asString(), JsonObject::class.java)
+
+          val id = claims.getAsJsonObject("data").get("id").asInt
+          val name = claims.getAsJsonObject("data").get("name").asString
+          val lastname = claims.getAsJsonObject("data").get("lastname").asString
+          val email = claims.getAsJsonObject("data").get("email").asString
+          val imageURL = claims.getAsJsonObject("data").get("imageURL").asString
+          val roles = claims.getAsJsonObject("data").getAsJsonArray("roles").map { it.asString }
+
+          return User(
+              id = id,
+              name = name,
+              lastname = lastname,
+              email = email,
+              imageURL = imageURL,
+              roles = roles
+          )
+      }*/
 
     // validate login details
     private fun validateLoginDetails(): Boolean {

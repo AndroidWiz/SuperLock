@@ -66,6 +66,9 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:1.2.0"
 
+    // jwt decoder
+    implementation 'com.auth0.android:jwtdecode:2.0.2'
+
     // open cv
 //    implementation 'org.opencv:opencv-android:1.0.1'
 }
