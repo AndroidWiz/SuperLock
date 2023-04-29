@@ -10,7 +10,6 @@ import retrofit2.http.*
 interface ApiInterface {
 
     // register user
-    @Headers("Content-Type:application/json")
     @Multipart
     @POST("/users")
     fun createUser(

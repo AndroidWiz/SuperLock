@@ -53,12 +53,14 @@ class RegisterActivity : BaseActivity() {
 
         apiInterface = ApiClient.getClient(this@RegisterActivity).create(ApiInterface::class.java)
 
-        // image chooser
+        // check if camera permission is available
         binding.ivUploadUserImage.setOnClickListener {
+            // if permission is granted, open camera
             if (ContextCompat.checkSelfPermission(this@RegisterActivity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
             ) {
                 imageChooser()
             } else {
+            // ask permission if camera access not granted
                 ActivityCompat.requestPermissions(this@RegisterActivity, arrayOf(Manifest.permission.CAMERA), Constants.OPEN_CAMERA_PERMISSION_CODE)
             }
         }
@@ -148,6 +150,7 @@ class RegisterActivity : BaseActivity() {
                         Log.d(TAG, "createUserTokenResponse: $tokenResponse")
 
                         Toast.makeText(this@RegisterActivity, resources.getString(R.string.registration_successful), Toast.LENGTH_SHORT).show()
+                        // registration successful, go to LoginActivity to let the user login
                         startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                     }else{
                         val errorMsg = response.errorBody()?.string()
@@ -225,25 +228,6 @@ class RegisterActivity : BaseActivity() {
     }
 
     // get the real path from a content uri
-//    private fun getRealPathFromUri(contentUri: Uri): String {
-//        val filePath: String?
-//        val wholeID = DocumentsContract.getDocumentId(contentUri)
-//        val id = wholeID.split(":")[1]
-//        val column = arrayOf(MediaStore.Images.Media.DATA)
-//        val sel = MediaStore.Images.Media._ID + "=?"
-//        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, sel, arrayOf(id), null)
-//        if (cursor != null) {
-//            val columnIndex = cursor.getColumnIndex(column[0])
-//            if (cursor.moveToFirst()) {
-//                filePath = cursor.getString(columnIndex)
-//            }
-//            cursor.close()
-//        } else {
-//            filePath = contentUri.path
-//        }
-//        return filePath ?: ""
-//    }
-
     private fun getRealPathFromUri(uri: Uri): String {
         val filePath: String
         val cursor = contentResolver.query(uri, null, null, null, null)
