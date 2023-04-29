@@ -1,6 +1,7 @@
 package com.sk.superlock.data.services
 
-import com.sk.superlock.data.model.TokenResponse
+import com.sk.superlock.data.model.CreateUserResponse
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Headers
@@ -18,10 +19,10 @@ interface ApiInterface {
         @Part("lastname") lastname: RequestBody,
         @Part("email") email: RequestBody,
         @Part("password") password: RequestBody,
-        @Part("files") files: RequestBody,
+        @Part files: MultipartBody.Part?,
         @Part("roles") roles: RequestBody,
-    ): Call<TokenResponse>
-//    fun createUser(@Body requestBody: RequestBody): Call<TokenResponse>
-//    fun createUser(@Body user: User): Call<TokenResponse>
-//    fun createUser(@Body user: User): Response<TokenResponse>
+    ): Call<CreateUserResponse>
 }
+
+//@Part("files") files: MultipartBody.Part?,
+//@Part("roles") roles: Int = 2,

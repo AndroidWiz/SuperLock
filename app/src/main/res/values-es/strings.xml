@@ -8,7 +8,7 @@
 
     <string name="loading">Cargando</string>
     <string name="user_image">imagen de usuario</string>
-<!--    <string name="username">Nombre de usuario</string>-->
+    <!--    <string name="username">Nombre de usuario</string>-->
     <string name="username">Nombre completo</string>
     <string name="user_email">deyvi@empresa.com</string>
     <string name="nav_title_home">Inicio</string>
@@ -86,8 +86,8 @@
     <string name="no_apps_needs_protection">10 aplicaciones necesitan protección</string>
 
 
-    <string name="err_msg_enter_first_name">Please enter your First Name.</string>
-    <string name="err_msg_enter_last_name">Please enter your Last Name.</string>
+    <string name="err_msg_enter_first_name">Por favor, introduzca su nombre de pila.</string>
+    <string name="err_msg_enter_last_name">Por favor ingrese su apellido.</string>
     <string name="err_msg_enter_email">Por favor ingrese el correo electrónico.</string>
     <string name="err_msg_enter_password">Por favor, ingrese contraseña.</string>
     <string name="err_msg_enter_repeat_password">Por favor repita la contraseña.</string>
@@ -101,7 +101,8 @@
     <string name="no_face_detected_try_again">No se detectó ningún rostro. Inténtalo de nuevo</string>
     <string name="profile_updated_with_image">Perfil actualizado con imagen</string>
     <string name="registration_successful">Estás registrado con éxito</string>
-    <string name="registration_unsuccessful">Something went wrong while registering</string>
+    <string name="registration_unsuccessful">Algo salió mal al registrarse</string>
+    <string name="registration_failed">Registro fallido</string>
     <string name="permission_denied">¡Permiso denegado!</string>
     <string name="img_selection_failed">¡Selección de imagen fallida!</string>
     <string name="btn_skip">Saltar</string>
@@ -112,7 +113,7 @@
     <string name="do_you_really_want_to_logout">¿Quieres cerrar sesión?</string>
     <string name="no">No</string>
     <string name="yes">Sí</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
+    <string name="first_name">Nombre de pila</string>
+    <string name="last_name">Apellido</string>
 
 </resources>

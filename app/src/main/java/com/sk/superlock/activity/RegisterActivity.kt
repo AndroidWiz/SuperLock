@@ -10,11 +10,15 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.sk.superlock.R
-import com.sk.superlock.data.model.TokenResponse
-import com.sk.superlock.data.model.User
+import com.sk.superlock.data.model.CreateUserResponse
 import com.sk.superlock.data.services.ApiClient
 import com.sk.superlock.data.services.ApiInterface
 import com.sk.superlock.databinding.ActivityRegisterBinding
@@ -37,16 +41,12 @@ class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-//    private var mProfileImageUrl: String = ""
-    private var mProfileImageUrl: File? = null
+    private var mProfileImageUrl: String = ""
     private lateinit var apiInterface: ApiInterface
-
     companion object {
         val TAG = "RegisterActivity"
         var profileImageUri: Uri? = null
-        var mSavedPathUri: Uri? = null
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,18 +59,11 @@ class RegisterActivity : BaseActivity() {
 
         // image chooser
         binding.ivUploadUserImage.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED
+            if (ContextCompat.checkSelfPermission(this@RegisterActivity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
             ) {
                 imageChooser()
             } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    Constants.READ_STORAGE_PERMISSION_CODE
-                )
+                ActivityCompat.requestPermissions(this@RegisterActivity, arrayOf(Manifest.permission.CAMERA), Constants.OPEN_CAMERA_PERMISSION_CODE)
             }
         }
 
@@ -142,45 +135,30 @@ class RegisterActivity : BaseActivity() {
 
     // register user
     private fun registerUser() {
-        val firstName: String = binding.etFirstName.text.toString().trim { it <= ' ' }
-        val lastName: String = binding.etLastName.text.toString().trim { it <= ' ' }
-        val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
-        val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
+        val firstName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etFirstName.text.toString().trim { it <= ' ' })
+        val lastName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etLastName.text.toString().trim { it <= ' ' })
+        val email: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etEmail.text.toString().trim { it <= ' ' })
+        val password: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etPassword.text.toString().trim { it <= ' ' })
+        val roles: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "2")
 
-        val user = User(
-//            id = null,
-            name = firstName,
-            lastname = lastName,
-            email = email,
-            password = password,
-//            files = mProfileImageUrl
-            files = null
-        )
-
-        val requestBody = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("name", user.name)
-            .addFormDataPart("lastname", user.lastname)
-            .addFormDataPart("email", user.email)
-            .addFormDataPart("password", user.password)
-
-        if (user.files != null) {
-            requestBody.addFormDataPart(
-                "files",
-                user.files!!.name,
-                RequestBody.create(MediaType.parse("image/*"), user.files!!)
-            )
+        val profileImage: MultipartBody.Part? = if (mProfileImageUrl.isNotEmpty()) {
+            val file = File(mProfileImageUrl)
+            val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+            MultipartBody.Part.createFormData("files", file.name, requestFile)
+        } else {
+            null
         }
 
-        // complete the part
-        apiInterface.createUser(requestBody.build())
-            .enqueue(object: Callback<TokenResponse>{
+        apiInterface.createUser(firstName, lastName, email, password, profileImage, roles)
+            .enqueue(object: Callback<CreateUserResponse>{
                 override fun onResponse(
-                    call: Call<TokenResponse>,
-                    response: Response<TokenResponse>
+                    call: Call<CreateUserResponse>,
+                    response: Response<CreateUserResponse>
                 ) {
+//                    if(response.isSuccessful && response.code()== 201){
                     if(response.isSuccessful){
-                        val tokenResponse: TokenResponse? = response.body()
+                        val tokenResponse: CreateUserResponse? = response.body()
+                        Log.d(TAG, "createUserTokenResponse: $tokenResponse")
                         val accessToken = tokenResponse?.payload?.data?.accessToken
                         val refreshToken = tokenResponse?.payload?.data?.refreshToken
 
@@ -204,7 +182,7 @@ class RegisterActivity : BaseActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<TokenResponse>, t: Throwable) {
+                override fun onFailure(call: Call<CreateUserResponse>, t: Throwable) {
                     Toast.makeText(this@RegisterActivity, resources.getString(R.string.registration_unsuccessful), Toast.LENGTH_SHORT).show()
                     Log.d(TAG, "RegistrationFailed", t)
                 }
@@ -215,17 +193,16 @@ class RegisterActivity : BaseActivity() {
 
     // image chooser
     private fun imageChooser() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        @Suppress("DEPRECATION")
-        startActivityForResult(galleryIntent, Constants.PICK_IMAGE_REQUEST_CODE)
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (cameraIntent.resolveActivity(this.packageManager) != null) {
+            startActivityForResult(cameraIntent, Constants.OPEN_CAMERA_PERMISSION_CODE)
+        } else {
+            Toast.makeText(requireContext(), resources.getString(R.string.camera_unavailable), Toast.LENGTH_SHORT).show()
+        }
     }
 
     // request read storage permission
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             // if permission granted
@@ -242,9 +219,12 @@ class RegisterActivity : BaseActivity() {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
+        if (requestCode == Constants.OPEN_CAMERA_PERMISSION_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null && data.extras != null) {
                 profileImageUri = data.data!!
+//                mProfileImageUrl = profileImageUri.toString()
+                mProfileImageUrl = profileImageUri?.path ?: ""
+                binding.ivUploadUserImage.setImageURI(profileImageUri)
                 try {
                     GlideLoader(this).loadUserPicture(profileImageUri!!, iv_upload_user_image)
                 } catch (e: IOException) {
@@ -256,5 +236,4 @@ class RegisterActivity : BaseActivity() {
             Log.e("Image Request Cancelled", "Image selection cancelled by user.")
         }
     }
-
 }

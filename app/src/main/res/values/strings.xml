@@ -103,6 +103,7 @@
     <string name="profile_updated_with_image">Profile updated with image</string>
     <string name="registration_successful">You are registered successfully</string>
     <string name="registration_unsuccessful">Something went wrong while registering</string>
+    <string name="registration_failed">Registration Failed</string>
     <string name="permission_denied">Permission Denied!</string>
     <string name="img_selection_failed">Image selection Failed!</string>
     <string name="btn_skip">Skip</string>

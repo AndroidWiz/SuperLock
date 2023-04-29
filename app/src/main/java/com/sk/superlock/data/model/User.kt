@@ -3,28 +3,20 @@ package com.sk.superlock.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import java.io.File
 
 @Parcelize
 data class User(
-//    val id: String?,
+    val id: Int,
     val name: String,
     val lastname: String,
-    var email: String,
-    var password: String,
-//    var files: MultipartBody.Part? = null,// image type file
-    var files: File?,// image type file
-    var roles: Int = 2
+    val email: String,
+    val imageURL: String,
+    val imageName: String,
+    val roles: List<String>
 ) : Parcelable
 
-//@Parcelize
-//data class TokenResponse(
-//    var accessToken: String?,
-//    var refreshToken: String?
-//) : Parcelable
 
-
-data class TokenResponse(
+data class CreateUserResponse(
     @SerializedName("traceId") val traceId: String,
     @SerializedName("payload") val payload: Payload
 )
