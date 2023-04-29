@@ -35,7 +35,6 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         val TAG = "LoginActivity"
-//        val userImagesList = listOf<File>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +54,6 @@ class LoginActivity : BaseActivity() {
                     showLoginFragment(LoginUsernameFragment())
                 }
                 R.id.login_by_camera -> {
-//                    showLoginFragment(CameraLoginFragment())
                     showLoginFragment(LoginCameraFragment())
                 }
             }
@@ -66,7 +64,6 @@ class LoginActivity : BaseActivity() {
             when (loginMode) {
                 LoginMode.EMAIL_PASSWORD -> {
                     if (validateLoginDetails()) {
-
                         val email: String = et_email.text.toString().trim()
                         val password: String = et_password.text.toString().trim()
 
@@ -74,11 +71,7 @@ class LoginActivity : BaseActivity() {
                     }
                 }
                 LoginMode.CAMERA -> {
-                    Toast.makeText(
-                        this,
-                        "Please use email and password to login",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "Please use email and password to login", Toast.LENGTH_SHORT).show()
                 }
                 else -> {}
             }
@@ -104,7 +97,8 @@ class LoginActivity : BaseActivity() {
                     call: Call<UserResponse>,
                     response: Response<UserResponse>
                 ) {
-                    if (response.isSuccessful && response.code() == 201) {
+//                    if (response.isSuccessful && response.code() == 201) {
+                    if (response.isSuccessful) {
                         val tokenResponse: UserResponse? = response.body()
                         if (tokenResponse != null) {
                             val accessToken = tokenResponse.payload.data.accessToken
@@ -118,12 +112,12 @@ class LoginActivity : BaseActivity() {
                             val user = decodeAccessToken(accessToken)
                             Log.d(TAG, "DecodedUser = $user")
 
+                            Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
                         }
                     } else {
-                        Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
                         Log.e("login", "Login failed")
                     }
                 }
@@ -136,7 +130,7 @@ class LoginActivity : BaseActivity() {
     }
 
     // jwt decoder
-    fun decodeAccessToken(accessToken: String): User? {
+    fun decodeAccessToken(accessToken: String): User {
         val jwt = JWT(accessToken)
 
         val id = jwt.getClaim("id").asInt()
@@ -156,32 +150,6 @@ class LoginActivity : BaseActivity() {
         )
     }
 
-    /*  fun decodeAccessToken(userResponse: UserResponse): User? {
-          val accessToken = userResponse.payload.data.accessToken
-          if (accessToken == null) {
-              Log.e(TAG, "Access token is null")
-              return null
-          }
-          val jwt = JWT(accessToken)
-          val claims = Gson().fromJson(jwt.getClaim("payload").asString(), JsonObject::class.java)
-
-          val id = claims.getAsJsonObject("data").get("id").asInt
-          val name = claims.getAsJsonObject("data").get("name").asString
-          val lastname = claims.getAsJsonObject("data").get("lastname").asString
-          val email = claims.getAsJsonObject("data").get("email").asString
-          val imageURL = claims.getAsJsonObject("data").get("imageURL").asString
-          val roles = claims.getAsJsonObject("data").getAsJsonArray("roles").map { it.asString }
-
-          return User(
-              id = id,
-              name = name,
-              lastname = lastname,
-              email = email,
-              imageURL = imageURL,
-              roles = roles
-          )
-      }*/
-
     // validate login details
     private fun validateLoginDetails(): Boolean {
         return when {
@@ -199,7 +167,6 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
-
 
     // show login fragment view
     private fun showLoginFragment(fragment: Fragment) {
