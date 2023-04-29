@@ -14,18 +14,16 @@ interface ApiInterface {
     @Multipart
     @POST("/users")
     fun createUser(
+        @Part("id") id: Int = 0,
         @Part("name") name: RequestBody,
         @Part("lastname") lastname: RequestBody,
         @Part("email") email: RequestBody,
         @Part("password") password: RequestBody,
-        @Part files: MultipartBody.Part?,
-        @Part("roles") roles: RequestBody,
+        @Part files: List<MultipartBody.Part?>,
+        @Part("roles") roles: Int = 2,
     ): Call<UserResponse>
 
     // login
     @POST("/auth/login")
     fun loginUser(@Body credentials: Credentials): Call<UserResponse>
 }
-
-//@Part("files") files: MultipartBody.Part?,
-//@Part("roles") roles: Int = 2,

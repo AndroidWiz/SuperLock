@@ -21,7 +21,6 @@ import com.sk.superlock.data.services.ApiInterface
 import com.sk.superlock.databinding.ActivityRegisterBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.GlideLoader
-import com.sk.superlock.util.PrefManager
 import kotlinx.android.synthetic.main.activity_register.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -125,43 +124,28 @@ class RegisterActivity : BaseActivity() {
 
     // register user
     private fun registerUser() {
-        val firstName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etFirstName.text.toString().trim())
+        val name: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etFirstName.text.toString().trim())
         val lastName: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etLastName.text.toString().trim())
         val email: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etEmail.text.toString().trim())
         val password: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.etPassword.text.toString().trim())
-        val roles: RequestBody = RequestBody.create(MediaType.parse("text/plain"), "2")
 
-        val profileImage: MultipartBody.Part? = if (mProfileImageUrl.isNotEmpty()) {
-            val file = File(mProfileImageUrl)
-//            val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
-            val requestFile = RequestBody.create(MediaType.parse("image/png"), file)
+        val profileImage: MultipartBody.Part? = if (profileImageUri != null) {
+            val file = File(getRealPathFromUri(profileImageUri!!))
+            val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
             MultipartBody.Part.createFormData("files", file.name, requestFile)
         } else {
             null
         }
 
-        apiInterface.createUser(name = firstName, lastname = lastName, email = email, password = password, files = profileImage, roles = roles)
+        apiInterface.createUser(name = name, lastname = lastName, email = email, password = password, files = arrayListOf(profileImage))
             .enqueue(object: Callback<UserResponse>{
                 override fun onResponse(
                     call: Call<UserResponse>,
                     response: Response<UserResponse>
                 ) {
-                    if(response.isSuccessful && response.code()== 201){
-//                    if(response.isSuccessful){
+                    if(response.isSuccessful){
                         val tokenResponse: UserResponse? = response.body()
                         Log.d(TAG, "createUserTokenResponse: $tokenResponse")
-                        val accessToken = tokenResponse?.payload?.data?.accessToken
-                        val refreshToken = tokenResponse?.payload?.data?.refreshToken
-
-                        // save tokens to sharedPrefs
-                        if(!accessToken.isNullOrEmpty()){
-                            PrefManager(this@RegisterActivity).setAccessToken(accessToken)
-                            Log.d(TAG, "accessToken: $accessToken")
-                        }
-                        if(!refreshToken.isNullOrEmpty()){
-                            PrefManager(this@RegisterActivity).setRefreshToken(refreshToken)
-                            Log.d(TAG, "refreshToken: $refreshToken")
-                        }
 
                         Toast.makeText(this@RegisterActivity, resources.getString(R.string.registration_successful), Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
@@ -227,6 +211,7 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
+    // get image uri to show in the imageview
     private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes)
@@ -237,5 +222,39 @@ class RegisterActivity : BaseActivity() {
             null
         )
         return Uri.parse(path)
+    }
+
+    // get the real path from a content uri
+//    private fun getRealPathFromUri(contentUri: Uri): String {
+//        val filePath: String?
+//        val wholeID = DocumentsContract.getDocumentId(contentUri)
+//        val id = wholeID.split(":")[1]
+//        val column = arrayOf(MediaStore.Images.Media.DATA)
+//        val sel = MediaStore.Images.Media._ID + "=?"
+//        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, sel, arrayOf(id), null)
+//        if (cursor != null) {
+//            val columnIndex = cursor.getColumnIndex(column[0])
+//            if (cursor.moveToFirst()) {
+//                filePath = cursor.getString(columnIndex)
+//            }
+//            cursor.close()
+//        } else {
+//            filePath = contentUri.path
+//        }
+//        return filePath ?: ""
+//    }
+
+    private fun getRealPathFromUri(uri: Uri): String {
+        val filePath: String
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        if (cursor == null) {
+            filePath = uri.path.toString()
+        } else {
+            cursor.moveToFirst()
+            val index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            filePath = cursor.getString(index)
+            cursor.close()
+        }
+        return filePath
     }
 }
