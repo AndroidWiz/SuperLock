@@ -83,7 +83,7 @@
     <string name="storage_space_amount">22.3GB / 64GB</string>
     <string name="protect">Proteger</string>
     <string name="app_lock">Bloqueo de aplicación</string>
-    <string name="no_apps_needs_protection">10 aplicaciones necesitan protección</string>
+    <string name="no_apps_needs_protection"> aplicaciones necesitan protección</string>
 
 
     <string name="err_msg_enter_first_name">Por favor, introduzca su nombre de pila.</string>

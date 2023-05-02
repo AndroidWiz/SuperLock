@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +16,20 @@ import com.sk.superlock.adapter.AllAppListAdapter
 import com.sk.superlock.data.model.Applications
 import com.sk.superlock.databinding.FragmentAllAppsBinding
 import com.sk.superlock.util.Constants
+import com.sk.superlock.util.PrefManager
 
 @Suppress("DEPRECATION")
 class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
 
     private lateinit var binding: FragmentAllAppsBinding
     private lateinit var appsAdapter: AllAppListAdapter
+    lateinit var sharedPref: PrefManager
 
     companion object {
+        val TAG: String = "AllAppsFragment"
         var allAppList: MutableList<Applications> = mutableListOf()
         var addedAppList: MutableList<Applications> = mutableListOf()
+        var allAppsListSize: Int? = 0
     }
 
     override fun onCreateView(
@@ -33,6 +38,8 @@ class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
     ): View? {
         binding = FragmentAllAppsBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        sharedPref = PrefManager(requireContext())
 
         return view
     }
@@ -58,6 +65,10 @@ class AllAppsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
             apps.add(Applications(appName, appIcon))
         }
         apps.sortBy { it.appName }
+
+        allAppsListSize = apps.size
+        sharedPref.saveInt(Constants.AVAILABLE_APPS_SIZE, allAppsListSize!!)
+        Log.d(TAG, "allAppsListSize: $allAppsListSize")
         return apps
     }
 

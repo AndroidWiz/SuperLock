@@ -21,6 +21,7 @@ object Constants {
 
     const val USER_IMAGES_PATH: String = "user-images/"
     const val USER: String = "user"
+    const val AVAILABLE_APPS_SIZE: String = "available_apps_in_device"
 
     // image file extension
     fun getFileExtension(activity: Activity, uri: Uri?): String? {

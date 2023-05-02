@@ -79,4 +79,31 @@ class PrefManager(context: Context) {
         val type = object : TypeToken<User>() {}.type
         return gson.fromJson(pref.getString(Constants.USER, "{}"), type)
     }
+
+    fun saveInt(key: String, value: Int) {
+        editor.putInt(key, value)
+        editor.commit()
+    }
+
+    fun getInt(key: String): Int {
+        return pref.getInt(key, 0)
+    }
+
+    fun saveBool(key: String, value: Boolean) {
+        editor.putBoolean(key, value)
+        editor.commit()
+    }
+
+    fun getBool(key: String): Boolean {
+        return pref.getBoolean(key, false)
+    }
+
+    fun saveString(key: String, value: String) {
+        editor.putString(key, value)
+        editor.commit()
+    }
+
+    fun getString(key: String): String {
+        return pref.getString(key, "")!!
+    }
 }

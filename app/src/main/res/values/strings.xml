@@ -80,10 +80,10 @@
     <string name="memory_space_amount">1.2GB / 1.8GB</string>
     <string name="clear">Clear</string>
     <string name="storage_space">Storage Space</string>
-    <string name="storage_space_amount">22.3GB / 64GB</string>
+    <string name="storage_space_amount">Available space / Total space</string>
     <string name="protect">Protect</string>
     <string name="app_lock">App Lock</string>
-    <string name="no_apps_needs_protection">10 apps needs protection</string>
+    <string name="no_apps_needs_protection"> apps needs protection</string>
 
 
     <string name="err_msg_enter_first_name">Please enter your First Name.</string>

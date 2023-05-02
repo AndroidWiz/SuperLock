@@ -1,6 +1,10 @@
 package com.sk.superlock.fragment
 
+import android.app.ActivityManager
+import android.content.Context.ACTIVITY_SERVICE
 import android.os.Bundle
+import android.os.Environment
+import android.os.StatFs
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +12,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
 import com.sk.superlock.databinding.FragmentHomeBinding
+import com.sk.superlock.util.Constants
+import com.sk.superlock.util.PrefManager
+import java.text.DecimalFormat
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var sharedPref: PrefManager
+
+    companion object {
+        const val TAG: String = "HomeFragment"
+        var appsToLock: Int = 0
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,6 +32,14 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        sharedPref = PrefManager(requireContext())
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // junk cleaner
         binding.junkCleaner.setOnClickListener {
@@ -32,20 +53,105 @@ class HomeFragment : Fragment() {
         binding.booster.setOnClickListener {
             Toast.makeText(requireContext(), "Booster", Toast.LENGTH_SHORT).show()
         }
+
         // app lock
         binding.cvAppLock.setOnClickListener {
             navigateToFragment(ApplicationsFragment())
         }
-        // memory space
-        binding.cvMemorySpace.setOnClickListener {
-            Toast.makeText(requireContext(), "Memory Space", Toast.LENGTH_SHORT).show()
+        appsToLock = sharedPref.getInt(Constants.AVAILABLE_APPS_SIZE)
+        binding.tvAvailableAppsToLock.text = buildString {
+            append(appsToLock)
+            append(" ")
+            append(resources.getString(R.string.no_apps_needs_protection))
         }
-        // storage space
-        binding.cvStorage.setOnClickListener {
-            Toast.makeText(requireContext(), "Storage Space", Toast.LENGTH_SHORT).show()
+        binding.btnProtect.setOnClickListener {
+            navigateToFragment(ApplicationsFragment())
         }
 
-        return view
+        // memory space
+        binding.btnBoost.setOnClickListener {
+            Toast.makeText(requireContext(), "Memory Space boost", Toast.LENGTH_SHORT).show()
+        }
+        val (totalMemory, usedMemory) = getMemoryInfo()
+        binding.tvAvailableMemory.text = buildString {
+            append(usedMemory)
+            append(" GB / ")
+            append(totalMemory)
+            append(" GB")
+        }
+        val memoryPercentage = getMemoryInfoPercentage()
+        binding.progressMemory.progress = memoryPercentage
+
+        // storage space
+        binding.btnClearStorage.setOnClickListener {
+            Toast.makeText(requireContext(), "Clear Storage Space", Toast.LENGTH_SHORT).show()
+        }
+        val (totalSpace, usedSpace) = getStorageInfo()
+        binding.tvAvailableStorage.text = buildString {
+            append(usedSpace)
+            append(" GB / ")
+            append(totalSpace)
+            append(" GB")
+        }
+        val storagePercentage = getStorageInfoPercentage()
+        binding.progressStorage.progress = storagePercentage
+
+    }
+
+    // memory info percentage
+    private fun getMemoryInfoPercentage(): Int {
+        val memoryInfo = ActivityManager.MemoryInfo()
+        val activityManager = requireContext().getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        activityManager.getMemoryInfo(memoryInfo)
+        val totalMemory = memoryInfo.totalMem.toDouble()
+        val availableMemory = memoryInfo.availMem.toDouble()
+        val usedMemory = totalMemory - availableMemory
+        return (usedMemory / totalMemory * 100).toInt()
+    }
+
+
+    // get memory info
+    private fun getMemoryInfo(): Pair<Double, Double>{
+        val activityManager = requireContext().getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val memoryInfo = ActivityManager.MemoryInfo()
+        activityManager.getMemoryInfo(memoryInfo)
+        val totalMemory = memoryInfo.totalMem.toDouble() / (1024.0 * 1024.0 * 1024.0)
+        val availableMemory = memoryInfo.availMem.toDouble() / (1024.0 * 1024.0 * 1024.0)
+        val decimalFormat = DecimalFormat("#.##")
+        val totalGb = decimalFormat.format(totalMemory).toDouble()
+        val usedGb = decimalFormat.format(totalMemory - availableMemory).toDouble()
+
+        return Pair(totalGb, usedGb)
+    }
+
+    // get storage space
+    private fun getStorageInfo(): Pair<Double, Double> {
+        val stat = StatFs(Environment.getDataDirectory().path)
+        val blockSize = stat.blockSizeLong
+        val totalBlocks = stat.blockCountLong
+        val availableBlocks = stat.availableBlocksLong
+        val totalSize = totalBlocks * blockSize.toDouble()
+        val availableSize = availableBlocks * blockSize.toDouble()
+        val usedSize = totalSize - availableSize
+        val gb = 1024.0 * 1024.0 * 1024.0
+        val decimalFormat = DecimalFormat("#.##")
+        val totalGb = decimalFormat.format(totalSize / gb).toDouble()
+        val usedGb = decimalFormat.format(usedSize / gb).toDouble()
+
+        return Pair(totalGb, usedGb)
+    }
+
+    // get storage space in percentage
+    private fun getStorageInfoPercentage(): Int {
+        val stat = StatFs(Environment.getDataDirectory().path)
+        val blockSize = stat.blockSizeLong
+        val totalBlocks = stat.blockCountLong
+        val availableBlocks = stat.availableBlocksLong
+        val totalSize = totalBlocks * blockSize.toDouble()
+        val availableSize = availableBlocks * blockSize.toDouble()
+        val usedSize = totalSize - availableSize
+
+        return ((usedSize / totalSize) * 100).toInt()
     }
 
     // change fragment
