@@ -63,7 +63,7 @@
         android:gravity="center"
         android:inputType="numberPassword"
         android:maxLength="4"
-        android:text="1234"
+        android:text=""
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -98,6 +98,20 @@ class HomeFragment : Fragment() {
 
     }
 
+    // clear cache
+//    fun clearCacheForAllApps(context: Context) {
+//        val packageManager = context.packageManager
+//        val appList = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+//
+//        for (app in appList) {
+//            if (app.packageName != context.packageName) {
+//                val appContext = context.createPackageContext(app.packageName, 0)
+//                appContext.deleteApplicationCacheFiles()
+//            }
+//        }
+//    }
+
+
     // memory info percentage
     private fun getMemoryInfoPercentage(): Int {
         val memoryInfo = ActivityManager.MemoryInfo()

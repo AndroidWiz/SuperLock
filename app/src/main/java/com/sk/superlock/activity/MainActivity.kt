@@ -125,8 +125,6 @@ class MainActivity : BaseActivity() {
         builder.setView(view)
         yes.setOnClickListener {
             // delete accessToken and refreshToken from SharedPreferences to logout
-//            PrefManager(this@MainActivity).setAccessToken("")
-//            PrefManager(this@MainActivity).setRefreshToken("")
             PrefManager(this@MainActivity).clearSession()
 
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
