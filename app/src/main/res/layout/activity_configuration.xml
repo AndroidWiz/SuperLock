@@ -101,12 +101,14 @@
                     tools:ignore="RelativeOverlap" />
 
                 <com.sk.superlock.util.CustomTextView
-                    android:id="@+id/dropdown_password_type"
+                    android:id="@+id/tv_password_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="Password type dropdown"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="0dp"
+                    android:text="Password type"
                     android:textSize="14sp" />
             </RelativeLayout>
 

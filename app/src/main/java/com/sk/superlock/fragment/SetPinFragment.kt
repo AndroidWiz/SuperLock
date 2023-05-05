@@ -39,7 +39,6 @@ class SetPinFragment : Fragment() {
             val currentText = binding.tvPin.text.toString()
             if (currentText.isNotEmpty()) {
                 binding.tvPin.text = currentText.substring(0, currentText.length - 1)
-
             }
         }
 

@@ -69,6 +69,10 @@ dependencies {
     // jwt decoder
     implementation 'com.auth0.android:jwtdecode:2.0.2'
 
+    // biometrics
+    implementation 'androidx.biometric:biometric:1.1.0'
+
+
     // open cv
 //    implementation 'org.opencv:opencv-android:1.0.1'
 }
