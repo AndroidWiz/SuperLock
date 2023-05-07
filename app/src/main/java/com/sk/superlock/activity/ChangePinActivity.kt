@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.sk.superlock.databinding.ActivityChangePinBinding
 import com.sk.superlock.fragment.SetPinFragment
+import com.sk.superlock.util.Constants
 
 class ChangePinActivity : BaseActivity() {
 
@@ -17,7 +18,12 @@ class ChangePinActivity : BaseActivity() {
         setUpToolbar(binding.toolbarChangePinActivity)
         supportActionBar?.title = ""
 
-        showPinChangeFragment(SetPinFragment())
+        val isForConfiguration = true
+        val args = Bundle().apply {
+            putBoolean(Constants.ARGS_IS_CONFIGURATION, isForConfiguration)
+        }
+
+        showPinChangeFragment(SetPinFragment().apply { arguments = args })
     }
 
     // show login fragment view

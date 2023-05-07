@@ -108,7 +108,7 @@
     <string name="img_selection_failed">Image selection Failed!</string>
     <string name="btn_skip">Skip</string>
     <string name="capture">capture</string>
-    <string name="btn_cancel">cancel</string>
+    <string name="btn_cancel">Cancel</string>
     <string name="set_pin">SET PIN</string>
     <string name="btn_next">NEXT</string>
     <string name="do_you_really_want_to_logout">Do you want to logout?</string>
@@ -117,5 +117,9 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="camera_unavailable">Camera Unavailable</string>
+
+
+    <string name="KeyFaceAppLockerDescription">This is the description for KeyFace App Locker.</string>
+
 
 </resources>

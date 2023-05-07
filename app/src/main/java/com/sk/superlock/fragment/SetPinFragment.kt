@@ -1,15 +1,21 @@
 package com.sk.superlock.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.sk.superlock.activity.MainActivity
 import com.sk.superlock.databinding.FragmentSetPinBinding
+import com.sk.superlock.util.Constants
+import com.sk.superlock.util.PrefManager
 
 class SetPinFragment : Fragment() {
 
     private lateinit var binding: FragmentSetPinBinding
+    private var isForConfiguration: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,11 +24,23 @@ class SetPinFragment : Fragment() {
         binding = FragmentSetPinBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        arguments?.let{
+            isForConfiguration = it.getBoolean(Constants.ARGS_IS_CONFIGURATION, false)
+        }
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (isForConfiguration) {
+            binding.tvSetOrEnterPin.text = "SET PIN"
+            binding.tvNextOrConfirmPin.text = "CONFIRM"
+        } else {
+            binding.tvSetOrEnterPin.text = "ENTER PIN"
+            binding.tvNextOrConfirmPin.text = "ENTER PIN"
+        }
 
         binding.btn0.setOnClickListener { onNumberButtonClick(binding.btn0.text.toString()) }
         binding.btn1.setOnClickListener { onNumberButtonClick(binding.btn1.text.toString()) }
@@ -42,6 +60,28 @@ class SetPinFragment : Fragment() {
             }
         }
 
+        binding.tvNextOrConfirmPin.setOnClickListener {
+            val pin = binding.tvPin.text.toString()
+            if(pin.isNotEmpty() && pin.length == 4){
+                if(isForConfiguration){
+                    PrefManager(requireContext()).setPin(pin)
+                    Toast.makeText(requireContext(), "PIN set successfully", Toast.LENGTH_SHORT).show()
+                    requireActivity().onBackPressed()
+                }else{
+                    if(PrefManager(requireContext()).verifyPin(pin)){
+                        Toast.makeText(requireContext(), "PIN verified successfully", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(requireContext(), MainActivity::class.java))
+                        requireActivity().finish()
+                    }else{
+                        Toast.makeText(requireContext(), "Invalid PIN", Toast.LENGTH_LONG).show()
+                        binding.tvPin.text = ""
+                    }
+                }
+            }else{
+                Toast.makeText(requireContext(), "PIN must be of 4 digits", Toast.LENGTH_LONG).show()
+            }
+        }
+
 
     }
 
@@ -54,6 +94,18 @@ class SetPinFragment : Fragment() {
     }
 
 }
+
+//        binding.tvNextOrConfirmPin.setOnClickListener {
+//            val pin = binding.tvPin.text.toString()
+//            if(pin.isNotEmpty() && pin.length == 4){
+//                // pin being saved to shared preferences
+//                PrefManager(requireContext()).saveString(Constants.PIN, pin)
+//                Toast.makeText(requireContext(), "PIN saved successfully", Toast.LENGTH_SHORT).show()
+//                requireActivity().onBackPressed()
+//            }else{
+//                Toast.makeText(requireContext(), "PIN must be of 4 digits", Toast.LENGTH_LONG).show()
+//            }
+//        }
 
 //        var currentText = ""
 /* var currentText = binding.tvPin.text.toString()

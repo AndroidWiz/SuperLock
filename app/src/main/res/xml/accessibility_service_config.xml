@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/KeyFaceAppLockerDescription"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:packageNames="com.sk.superlock"
+    android:settingsActivity="com.sk.superlock.LockActivity"
+    android:canRetrieveWindowContent="true"
+    android:canRequestFilterKeyEvents="true"
+    android:canRequestTouchExplorationMode="true"
+    android:canPerformGestures="true"
+    android:accessibilityFlags="flagIncludeNotImportantViews|flagReportViewIds"
+    android:notificationTimeout="100">
+<!--    android:retrieveInteractiveWindows="true"-->
+<!--    android:feedbackType="feedbackGeneric">-->
+</accessibility-service>

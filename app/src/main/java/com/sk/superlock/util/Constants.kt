@@ -15,6 +15,8 @@ object Constants {
     const val AVAILABLE_APPS_SIZE: String = "available_apps_in_device"
     const val FINGERPRINT_SWITCH_STATE: String = "fingerprint_switch_state"
     const val PASSWORD_TYPE: String = "password_type"
+    const val PIN: String = "pin"
+    const val ARGS_IS_CONFIGURATION: String = "is_for_setting_pin"
 
     // image file extension
     fun getFileExtension(activity: Activity, uri: Uri?): String? {

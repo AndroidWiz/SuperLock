@@ -106,4 +106,23 @@ class PrefManager(context: Context) {
     fun getString(key: String): String {
         return pref.getString(key, "")!!
     }
+
+    fun isPinSet(): Boolean{
+        return pref.contains(Constants.PIN)
+    }
+
+    fun setPin(pin: String){
+        editor.putString(Constants.PIN, pin)
+        editor.commit()
+    }
+
+    fun verifyPin(pin: String): Boolean{
+        val savedPin = pref.getString(Constants.PIN, null)
+        return savedPin == pin
+    }
+
+    fun resetPin(){
+        editor.remove(Constants.PIN)
+        editor.commit()
+    }
 }

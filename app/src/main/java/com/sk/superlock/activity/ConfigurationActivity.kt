@@ -58,9 +58,6 @@ class ConfigurationActivity : BaseActivity() {
             }
         }
 
-//        showFragment()
-//        binding.btnCheck.setOnClickListener {
-//        }
     }
 
     // check fingerprint support for device
@@ -101,10 +98,4 @@ class ConfigurationActivity : BaseActivity() {
         }
     }
 
-
-//    private fun showFragment() {
-//        supportFragmentManager.beginTransaction()
-//            .replace(binding.settingsFragmentHost.id, LoginCameraFragment())
-//            .commit()
-//    }
 }

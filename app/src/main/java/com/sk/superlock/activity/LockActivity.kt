@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityLockBinding
 import com.sk.superlock.fragment.SetPinFragment
+import com.sk.superlock.util.Constants
 
 class LockActivity : AppCompatActivity() {
 
@@ -16,9 +17,12 @@ class LockActivity : AppCompatActivity() {
         binding = ActivityLockBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setFragment(SetPinFragment())
+        val isForConfiguration = false
+        val args = Bundle().apply {
+            putBoolean(Constants.ARGS_IS_CONFIGURATION, isForConfiguration)
+        }
 
-
+        setFragment(SetPinFragment().apply { arguments = args })
     }
 
     // check PIN

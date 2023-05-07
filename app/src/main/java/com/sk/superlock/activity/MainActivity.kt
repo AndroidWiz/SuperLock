@@ -1,8 +1,14 @@
 package com.sk.superlock.activity
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -42,7 +48,19 @@ class MainActivity : BaseActivity() {
         binding.root.addDrawerListener(toggle)
         toggle.syncState()
 
-        // action bar
+        setupActionBar()
+        setUpNavBar()
+        setFragment(HomeFragment())
+        showBottomSheetDialog()
+
+        // button configuration
+        binding.btnNavConfiguration.setOnClickListener {
+            startActivity(Intent(this, ConfigurationActivity::class.java))
+        }
+    }
+
+    // setup action bar
+    private fun setupActionBar(){
         val actionBar = supportActionBar
         if (actionBar != null) {
             val title = resources.getString(R.string.app_name)
@@ -57,8 +75,10 @@ class MainActivity : BaseActivity() {
             actionBar.title = spannableString
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
+    }
 
-        // show user details to the navigation header
+    // show user details to the navigation header
+    private fun showUserData(){
         val loggedInUser = PrefManager(this@MainActivity).getUser()
         Log.d(TAG, "loggedInUser = $loggedInUser")
 
@@ -76,15 +96,6 @@ class MainActivity : BaseActivity() {
         GlideLoader(this@MainActivity).loadUserPicture(loggedInUser.imageURL, hProfilePic)
         hProfilePic.setOnClickListener {
             showLogoutAlertDialog()
-        }
-
-        setUpNavBar()
-        setFragment(HomeFragment())
-        showBottomSheetDialog()
-
-        // button configuration
-        binding.btnNavConfiguration.setOnClickListener {
-            startActivity(Intent(this, ConfigurationActivity::class.java))
         }
     }
 
@@ -142,7 +153,7 @@ class MainActivity : BaseActivity() {
     }
 
     // setup custom bottom sheet dialog
-    private fun showBottomSheetDialog(){
+    private fun showBottomSheetDialog() {
         val bottomSheetDialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialog)
         val dialogView = layoutInflater.inflate(R.layout.permission_bottom_sheet, null)
         bottomSheetDialog.setContentView(dialogView)
@@ -151,6 +162,16 @@ class MainActivity : BaseActivity() {
         val cbAutoStart = dialogView.findViewById<AppCompatCheckBox>(R.id.cb_auto_start)
 
         //TODO:work on updating the preferences to system settings
+        cbProtectedApps.setOnClickListener {
+//            if (!cbProtectedApps.isChecked) {
+                seekPermissionForProtection()
+//            }
+        }
+        cbAutoStart.setOnClickListener {
+//            if (!cbAutoStart.isChecked) {
+                seekPermissionForAutoStart()
+//            }
+        }
 
         bottomSheetDialog.show()
     }
@@ -173,5 +194,31 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         setLocale()
         super.onResume()
+        showUserData()
     }
+
+    // permission for usage access
+    private fun seekPermissionForProtection(){
+        val permission = Manifest.permission.PACKAGE_USAGE_STATS
+        val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
+        val uri = Uri.fromParts("package", applicationContext.packageName, null)
+        intent.data = uri
+        if(ContextCompat.checkSelfPermission(applicationContext, permission) != PackageManager.PERMISSION_GRANTED){
+            startActivity(intent)
+        }
+    }
+
+    // permission for battery heavy load
+    private fun seekPermissionForAutoStart() {
+        val packageName = applicationContext.packageName
+        val pm = this.getSystemService(Context.POWER_SERVICE) as PowerManager
+        val isIgnoringBatteryOptimisations = pm.isIgnoringBatteryOptimizations(packageName)
+        if (isIgnoringBatteryOptimisations) {
+            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+            intent.data = Uri.parse("package:$packageName")
+            startActivity(intent)
+        }
+    }
+
+    //TODO: need permission for accessibility
 }

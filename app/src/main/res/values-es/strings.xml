@@ -117,4 +117,6 @@
     <string name="last_name">Apellido</string>
     <string name="camera_unavailable">Camera Unavailable</string>
 
+    <string name="KeyFaceAppLockerDescription">This is the description for KeyFace App Locker.</string>
+
 </resources>

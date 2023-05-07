@@ -106,8 +106,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:paddingEnd="5dp"
                     android:paddingStart="0dp"
+                    android:paddingEnd="5dp"
                     android:text="Password type"
                     android:textSize="14sp" />
             </RelativeLayout>
