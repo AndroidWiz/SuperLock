@@ -27,13 +27,7 @@ class AllAppListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        return MyHolder(
-            ItemAvailableAppBinding.inflate(
-                LayoutInflater.from(context),
-                parent,
-                false
-            )
-        )
+        return MyHolder(ItemAvailableAppBinding.inflate(LayoutInflater.from(context), parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -54,7 +48,6 @@ class AllAppListAdapter(
         }
 
         // add the app to use lock and unlock method
-        holder.appStatus.isEnabled = false
         holder.appStatus.setOnClickListener {
             if (addedAppList.contains(model)) {
                 // remove app from addedAppList

@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.sk.superlock.R
 import com.sk.superlock.adapter.IntruderListAdapter
-import com.sk.superlock.databinding.FragmentSecurityBinding
 import com.sk.superlock.data.model.Intruder
+import com.sk.superlock.databinding.FragmentSecurityBinding
+import com.sk.superlock.util.PrefManager
 
 class SecurityFragment : Fragment() {
 
@@ -43,11 +43,9 @@ class SecurityFragment : Fragment() {
     }
 
     override fun onResume() {
+        val savedIntruderList = PrefManager(requireContext()).getIntruderList()
         intruderList.clear()
-        intruderList.add(Intruder(resources.getDrawable(R.drawable.logo), "WhatsApp", resources.getDrawable(R.drawable.logo), "02/04/2023 16:44"))
-        intruderList.add(Intruder(resources.getDrawable(R.drawable.logo), "Instagram", resources.getDrawable(R.drawable.logo), "02/04/2023 16:45"))
-        intruderList.add(Intruder(resources.getDrawable(R.drawable.logo), "Key Face", resources.getDrawable(R.drawable.logo), "02/04/2023 16:54"))
-
+        intruderList.addAll(savedIntruderList)
 
         super.onResume()
     }

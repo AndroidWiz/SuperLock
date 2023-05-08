@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.sk.superlock.data.model.Intruder
 import com.sk.superlock.data.model.User
 import org.json.JSONObject
 
@@ -107,22 +108,69 @@ class PrefManager(context: Context) {
         return pref.getString(key, "")!!
     }
 
-    fun isPinSet(): Boolean{
+    fun isPinSet(): Boolean {
         return pref.contains(Constants.PIN)
     }
 
-    fun setPin(pin: String){
+    fun setPin(pin: String) {
         editor.putString(Constants.PIN, pin)
         editor.commit()
     }
 
-    fun verifyPin(pin: String): Boolean{
+    fun verifyPin(pin: String): Boolean {
         val savedPin = pref.getString(Constants.PIN, null)
         return savedPin == pin
     }
 
-    fun resetPin(){
+    fun resetPin() {
         editor.remove(Constants.PIN)
         editor.commit()
+    }
+
+    fun isAppLocked(packageName: String): Boolean {
+        val lockedApps = pref.getStringSet("lockedApps", emptySet()) ?: emptySet()
+        return lockedApps.contains(packageName)
+    }
+
+    fun addLockedApp(packageName: String) {
+        val lockedApps = pref.getStringSet("lockedApps", mutableSetOf()) ?: mutableSetOf()
+        lockedApps.add(packageName)
+        editor.putStringSet("lockedApps", lockedApps)
+        editor.commit()
+    }
+
+    fun removeLockedApp(packageName: String) {
+        val lockedApps = pref.getStringSet("lockedApps", mutableSetOf()) ?: mutableSetOf()
+        lockedApps.remove(packageName)
+        editor.putStringSet("lockedApps", lockedApps)
+        editor.commit()
+    }
+
+    //    fun saveIntruder(intruder: Intruder) {
+//        editor.putString(Constants.INTRUDER, gson.toJson(intruder))
+//        editor.commit()
+//    }
+    fun saveIntruder(intruder: Intruder) {
+        val intruders = getIntruderList().apply {
+            add(intruder)
+        }
+        val json = gson.toJson(intruders)
+        editor.putString(Constants.INTRUDER, json)
+        editor.commit()
+    }
+
+    fun updateIntruderList(intruders: ArrayList<Intruder>) {
+        val json = gson.toJson(intruders)
+        editor.putString(Constants.INTRUDER, json)
+        editor.commit()
+    }
+
+    fun getIntruderList(): ArrayList<Intruder> {
+        val json = pref.getString(Constants.INTRUDER, null)
+        return if (json != null) {
+            gson.fromJson(json, object : TypeToken<ArrayList<Intruder>>() {}.type)
+        } else {
+            arrayListOf()
+        }
     }
 }

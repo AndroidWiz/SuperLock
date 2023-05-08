@@ -2,20 +2,28 @@ package com.sk.superlock.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.fragment.app.Fragment
+import com.sk.superlock.R
 import com.sk.superlock.activity.MainActivity
+import com.sk.superlock.data.model.Intruder
 import com.sk.superlock.databinding.FragmentSetPinBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.PrefManager
+import java.io.File
+import java.util.concurrent.Executors
 
 class SetPinFragment : Fragment() {
 
     private lateinit var binding: FragmentSetPinBinding
     private var isForConfiguration: Boolean = false
+    val TAG = "SetPinFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +43,11 @@ class SetPinFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isForConfiguration) {
-            binding.tvSetOrEnterPin.text = "SET PIN"
-            binding.tvNextOrConfirmPin.text = "CONFIRM"
+            binding.tvSetOrEnterPin.text = resources.getString(R.string.set_pin)
+            binding.tvNextOrConfirmPin.text = resources.getString(R.string.confirm_pin)
         } else {
-            binding.tvSetOrEnterPin.text = "ENTER PIN"
-            binding.tvNextOrConfirmPin.text = "ENTER PIN"
+            binding.tvSetOrEnterPin.text = resources.getString(R.string.enter_pin)
+            binding.tvNextOrConfirmPin.text = resources.getString(R.string.enter_pin)
         }
 
         binding.btn0.setOnClickListener { onNumberButtonClick(binding.btn0.text.toString()) }
@@ -65,23 +73,24 @@ class SetPinFragment : Fragment() {
             if(pin.isNotEmpty() && pin.length == 4){
                 if(isForConfiguration){
                     PrefManager(requireContext()).setPin(pin)
-                    Toast.makeText(requireContext(), "PIN set successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), resources.getString(R.string.pin_set_successful), Toast.LENGTH_SHORT).show()
                     requireActivity().onBackPressed()
                 }else{
                     if(PrefManager(requireContext()).verifyPin(pin)){
-                        Toast.makeText(requireContext(), "PIN verified successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), resources.getString(R.string.pin_verified_successful), Toast.LENGTH_SHORT).show()
                         startActivity(Intent(requireContext(), MainActivity::class.java))
                         requireActivity().finish()
                     }else{
-                        Toast.makeText(requireContext(), "Invalid PIN", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), resources.getString(R.string.invalid_pin), Toast.LENGTH_LONG).show()
                         binding.tvPin.text = ""
+
+                        takeIntruderPhoto()
                     }
                 }
             }else{
-                Toast.makeText(requireContext(), "PIN must be of 4 digits", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), resources.getString(R.string.invalid_pin_length), Toast.LENGTH_LONG).show()
             }
         }
-
 
     }
 
@@ -91,6 +100,30 @@ class SetPinFragment : Fragment() {
             val newText = currentText + number
             binding.tvPin.text = newText
         }
+    }
+
+    // click intruder image
+    private val imageCapture = ImageCapture.Builder()
+        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+        .build()
+
+    private val cameraExecutor = Executors.newSingleThreadExecutor()
+
+    private fun takeIntruderPhoto(){
+        val imageFile = File(requireContext().externalMediaDirs.first(), "intruder_img_${System.currentTimeMillis()}.jpg")
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
+
+        imageCapture.takePicture(outputOptions, cameraExecutor, object: ImageCapture.OnImageSavedCallback{
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                val intruder = Intruder(imageFile.absolutePath, System.currentTimeMillis())
+                PrefManager(requireContext()).saveIntruder(intruder)
+                Toast.makeText(requireContext(), "Image captured intruder", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onError(exception: ImageCaptureException) {
+                Log.e(TAG, "Intruder image capture failed: ${exception.message}", exception)
+            }
+        })
     }
 
 }

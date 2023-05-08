@@ -17,6 +17,7 @@ object Constants {
     const val PASSWORD_TYPE: String = "password_type"
     const val PIN: String = "pin"
     const val ARGS_IS_CONFIGURATION: String = "is_for_setting_pin"
+    const val INTRUDER: String = "intruder"
 
     // image file extension
     fun getFileExtension(activity: Activity, uri: Uri?): String? {

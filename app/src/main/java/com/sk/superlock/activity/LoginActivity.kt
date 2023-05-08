@@ -114,7 +114,8 @@ class LoginActivity : BaseActivity() {
                             Log.d(TAG, "DecodedUser = $user")
 
                             Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+//                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            startActivity(Intent(this@LoginActivity, ConfigurationActivity::class.java))
                             finish()
                         }
                     } else {

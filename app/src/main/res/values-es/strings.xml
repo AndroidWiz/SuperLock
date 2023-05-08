@@ -117,6 +117,13 @@
     <string name="last_name">Apellido</string>
     <string name="camera_unavailable">Camera Unavailable</string>
 
+    <string name="confirm_pin">CONFIRMAR</string>
+    <string name="enter_pin">"INGRESE PIN"</string>
+    <string name="pin_set_successful">PIN establecido con éxito</string>
+    <string name="pin_verified_successful">PIN verificado con éxito</string>
+    <string name="invalid_pin">PIN no válido</string>
+    <string name="invalid_pin_length">El PIN debe ser de 4 dígitos</string>
+
     <string name="KeyFaceAppLockerDescription">This is the description for KeyFace App Locker.</string>
 
 </resources>

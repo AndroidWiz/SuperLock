@@ -20,9 +20,10 @@ class SplashActivity : AppCompatActivity() {
 
         @Suppress("DEPRECATION")
         Handler().postDelayed({
-            if (PrefManager(this@SplashActivity).hasAccessToken()){
-                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            }else{
+            if (PrefManager(this@SplashActivity).hasAccessToken()) {
+//                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                startActivity(Intent(this@SplashActivity, LockActivity::class.java))
+            } else {
                 startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
             }
             finish()

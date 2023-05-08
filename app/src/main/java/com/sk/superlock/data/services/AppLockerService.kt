@@ -5,17 +5,17 @@ import android.content.Intent
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import com.sk.superlock.activity.LockActivity
-import com.sk.superlock.util.Constants
+import com.sk.superlock.util.PrefManager
 
-class AppLockerService: AccessibilityService() {
+class AppLockerService : AccessibilityService() {
     companion object {
         private const val TAG = "AppLockerService"
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        if(event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED){
+        if (event?.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             val packageName = event.packageName?.toString()
-            if(packageName != null && isAppLocked(packageName)){
+            if (packageName != null && PrefManager(applicationContext).isAppLocked(packageName)) {
                 val lockScreenIntent = Intent(applicationContext, LockActivity::class.java)
                 lockScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(lockScreenIntent)
@@ -25,27 +25,27 @@ class AppLockerService: AccessibilityService() {
     }
 
     override fun onInterrupt() {
-        // Handle accessibility service interruption
+        // handle accessibility service interruption
         Log.d(TAG, "AppLockerService interrupted")
     }
-
-    fun isAppLocked(packageName: String): Boolean {
-        val preferences = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE)
-        val lockedApps = preferences.getStringSet("lockedApps", emptySet())
-        return lockedApps!!.contains(packageName)
-    }
-
-    fun addLockedApp(packageName: String) {
-        val preferences = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE)
-        val lockedApps = preferences.getStringSet("lockedApps", mutableSetOf()) ?: mutableSetOf()
-        lockedApps.add(packageName)
-        preferences.edit().putStringSet("lockedApps", lockedApps).apply()
-    }
-
-    fun removeLockedApp(packageName: String) {
-        val preferences = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE)
-        val lockedApps = preferences.getStringSet("lockedApps", mutableSetOf()) ?: mutableSetOf()
-        lockedApps.remove(packageName)
-        preferences.edit().putStringSet("lockedApps", lockedApps).apply()
-    }
 }
+
+/* fun isAppLocked(packageName: String): Boolean {
+     val preferences = applicationContext?.getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE)
+     val lockedApps = preferences?.getStringSet("lockedApps", emptySet())
+     return lockedApps!!.contains(packageName)
+ }
+
+ fun addLockedApp(packageName: String) {
+     val preferences = applicationContext?.getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE)
+     val lockedApps = preferences?.getStringSet("lockedApps", mutableSetOf()) ?: mutableSetOf()
+     lockedApps.add(packageName)
+     preferences?.edit()?.putStringSet("lockedApps", lockedApps)?.apply()
+ }
+
+ fun removeLockedApp(packageName: String) {
+     val preferences = applicationContext?.getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE)
+     val lockedApps = preferences?.getStringSet("lockedApps", mutableSetOf()) ?: mutableSetOf()
+     lockedApps.remove(packageName)
+     preferences?.edit()?.putStringSet("lockedApps", lockedApps)?.apply()
+ }*/

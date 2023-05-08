@@ -4,8 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sk.superlock.databinding.ItemIntruderPhotoBinding
 import com.sk.superlock.data.model.Intruder
+import com.sk.superlock.databinding.ItemIntruderPhotoBinding
+import com.sk.superlock.util.GlideLoader
 
 class IntruderListAdapter(private val context: Context, private val intruderList: ArrayList<Intruder>): RecyclerView.Adapter<IntruderListAdapter.MyHolder>() {
 
@@ -28,9 +29,9 @@ class IntruderListAdapter(private val context: Context, private val intruderList
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val model = intruderList[position]
 
-        holder.photo.setImageDrawable(model.intruderImage)
-        holder.appName.text = model.appName
-        holder.time.text = model.time
-        holder.appIcon.setImageDrawable(model.appImage)
+        GlideLoader(context).loadUserPicture(model.intruderImage, holder.photo)
+//        holder.appName.text = model.appName
+        holder.time.text = model.time.toString()
+//        holder.appIcon.setImageDrawable(model.appImage)
     }
 }
