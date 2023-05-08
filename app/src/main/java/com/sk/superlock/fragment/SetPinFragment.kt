@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
 import com.sk.superlock.activity.MainActivity
@@ -113,18 +116,36 @@ class SetPinFragment : Fragment() {
         val imageFile = File(requireContext().externalMediaDirs.first(), "intruder_img_${System.currentTimeMillis()}.jpg")
         val outputOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
 
-        imageCapture.takePicture(outputOptions, cameraExecutor, object: ImageCapture.OnImageSavedCallback{
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                val intruder = Intruder(imageFile.absolutePath, System.currentTimeMillis())
-                PrefManager(requireContext()).saveIntruder(intruder)
-                Toast.makeText(requireContext(), "Image captured intruder", Toast.LENGTH_LONG).show()
-            }
+        val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+            val imageCapture = ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build()
 
-            override fun onError(exception: ImageCaptureException) {
-                Log.e(TAG, "Intruder image capture failed: ${exception.message}", exception)
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture)
+                imageCapture.takePicture(outputOptions, cameraExecutor, object: ImageCapture.OnImageSavedCallback{
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        val intruder = Intruder(imageFile.absolutePath, System.currentTimeMillis())
+                        PrefManager(requireContext()).saveIntruder(intruder)
+                        requireActivity().runOnUiThread {
+                            Toast.makeText(requireContext(), "Image captured intruder", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        Log.e(TAG, "Intruder image capture failed: ${exception.message}", exception)
+                    }
+                })
+            } catch (exc: Exception) {
+                Log.e(TAG, "Error capturing intruder image: ${exc.message}", exc)
             }
-        })
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
+
 
 }
 
