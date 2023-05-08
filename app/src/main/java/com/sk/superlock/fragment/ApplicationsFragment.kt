@@ -21,10 +21,8 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
 
     private lateinit var binding: FragmentApplicationsBinding
     private lateinit var filteredApList: MutableList<String>
-
     private lateinit var appsAdapter: AllAppListAdapter
     private lateinit var sharedPref: PrefManager
-    private val appLockerService = AppLockerService()
 
     companion object {
         const val TAG: String = "ApplicationsFragment"
@@ -100,6 +98,12 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
         if (!addedAppList.contains(app)) {
             addedAppList.add(app)
             PrefManager(requireContext()).addLockedApp(app.appPackageName)
+
+            // start the service to check if the added app should be locked
+            val intent = Intent(requireContext(), AppLockerService::class.java)
+            intent.putExtra(AppLockerService.PACKAGE_NAME, app.appPackageName)
+            requireContext().startService(intent)
+
             appsAdapter.notifyDataSetChanged()
         }
     }
@@ -107,6 +111,44 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
     override fun onAppRemoved(app: Applications) {
         addedAppList.remove(app)
         PrefManager(requireContext()).removeLockedApp(app.appPackageName)
+
         appsAdapter.notifyDataSetChanged()
     }
 }
+
+
+//override fun onAppAdded(app: Applications) {
+//    if (!ApplicationsFragment.addedAppList.contains(app)) {
+//        ApplicationsFragment.addedAppList.add(app)
+//        PrefManager(requireContext()).addLockedApp(app.appPackageName)
+//
+//        // add the package name to the lockList in the LockService
+//        val lockServiceIntent = Intent(requireContext(), LockService::class.java)
+//        lockServiceIntent.putExtra("package_name", app.appPackageName)
+//        requireContext().startService(lockServiceIntent)
+//
+//        appsAdapter.notifyDataSetChanged()
+//    }
+//}
+//
+//override fun onAppRemoved(app: Applications) {
+//    ApplicationsFragment.addedAppList.remove(app)
+//    PrefManager(requireContext()).removeLockedApp(app.appPackageName)
+//
+//    // remove the package name from the lockList in the LockService
+//    val lockServiceIntent = Intent(requireContext(), LockService::class.java)
+//    lockServiceIntent.putExtra("package_name", app.appPackageName)
+//    requireContext().stopService(lockServiceIntent)
+//
+//    appsAdapter.notifyDataSetChanged()
+//}
+
+//        if (!addedAppList.contains(app)) {
+//            addedAppList.add(app)
+//            PrefManager(requireContext()).addLockedApp(app.appPackageName)
+//            appsAdapter.notifyDataSetChanged()
+//        }
+
+//        addedAppList.remove(app)
+//        PrefManager(requireContext()).removeLockedApp(app.appPackageName)
+//        appsAdapter.notifyDataSetChanged()

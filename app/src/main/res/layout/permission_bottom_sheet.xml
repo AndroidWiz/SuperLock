@@ -65,6 +65,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/bottom_sheet_marginStartEnd">

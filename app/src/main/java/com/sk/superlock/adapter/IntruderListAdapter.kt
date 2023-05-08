@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sk.superlock.data.model.Intruder
 import com.sk.superlock.databinding.ItemIntruderPhotoBinding
 import com.sk.superlock.util.GlideLoader
+import java.text.SimpleDateFormat
+import java.util.*
 
 class IntruderListAdapter(private val context: Context, private val intruderList: ArrayList<Intruder>): RecyclerView.Adapter<IntruderListAdapter.MyHolder>() {
 
     class MyHolder(binding: ItemIntruderPhotoBinding): RecyclerView.ViewHolder(binding.root){
         val photo = binding.ivIntruderImg
-        val appIcon = binding.ivAppLogoIIP
-        val appName = binding.tvAppNameIIP
+//        val appIcon = binding.ivAppLogoIIP
+//        val appName = binding.tvAppNameIIP
         val time = binding.tvTimeIIP
         val root = binding.root
     }
@@ -31,7 +33,9 @@ class IntruderListAdapter(private val context: Context, private val intruderList
 
         GlideLoader(context).loadUserPicture(model.intruderImage, holder.photo)
 //        holder.appName.text = model.appName
-        holder.time.text = model.time.toString()
+        val timeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val timeString = timeFormat.format(Date(model.time))
+        holder.time.text = timeString
 //        holder.appIcon.setImageDrawable(model.appImage)
     }
 }

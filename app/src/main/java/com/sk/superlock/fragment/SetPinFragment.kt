@@ -106,12 +106,7 @@ class SetPinFragment : Fragment() {
     }
 
     // click intruder image
-    private val imageCapture = ImageCapture.Builder()
-        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-        .build()
-
     private val cameraExecutor = Executors.newSingleThreadExecutor()
-
     private fun takeIntruderPhoto(){
         val imageFile = File(requireContext().externalMediaDirs.first(), "intruder_img_${System.currentTimeMillis()}.jpg")
         val outputOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
@@ -131,9 +126,6 @@ class SetPinFragment : Fragment() {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         val intruder = Intruder(imageFile.absolutePath, System.currentTimeMillis())
                         PrefManager(requireContext()).saveIntruder(intruder)
-                        requireActivity().runOnUiThread {
-                            Toast.makeText(requireContext(), "Image captured intruder", Toast.LENGTH_LONG).show()
-                        }
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -148,48 +140,3 @@ class SetPinFragment : Fragment() {
 
 
 }
-
-//        binding.tvNextOrConfirmPin.setOnClickListener {
-//            val pin = binding.tvPin.text.toString()
-//            if(pin.isNotEmpty() && pin.length == 4){
-//                // pin being saved to shared preferences
-//                PrefManager(requireContext()).saveString(Constants.PIN, pin)
-//                Toast.makeText(requireContext(), "PIN saved successfully", Toast.LENGTH_SHORT).show()
-//                requireActivity().onBackPressed()
-//            }else{
-//                Toast.makeText(requireContext(), "PIN must be of 4 digits", Toast.LENGTH_LONG).show()
-//            }
-//        }
-
-//        var currentText = ""
-/* var currentText = binding.tvPin.text.toString()
- binding.btn0.setOnClickListener {
-     if (binding.tvPin.text.length < 4) {
-         currentText += binding.btn0.text
-         binding.tvPin.text = currentText
-     }
- }
- binding.btn1.setOnClickListener {
-     if (binding.tvPin.text.length < 4) {
-         currentText += binding.btn1.text
-         binding.tvPin.text = currentText
-     }
- }
- binding.btn2.setOnClickListener {
-     if (binding.tvPin.text.length < 4) {
-         currentText += binding.btn2.text
-         binding.tvPin.text = currentText
-     }
- }*/
-/*binding.btnBackspace.setOnClickListener {
-    if (currentText.isNotEmpty()) {
-        binding.tvPin.text = currentText.substring(0, currentText.length - 1)
-    }
-}*/
-
-/*binding.btn2.setOnClickListener {
-           binding.tvPin.text = buildString {
-               append(currentText)
-               append(binding.btn2.text)
-           }
-       }*/

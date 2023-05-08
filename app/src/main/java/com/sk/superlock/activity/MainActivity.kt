@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -51,12 +52,15 @@ class MainActivity : BaseActivity() {
         setupActionBar()
         setUpNavBar()
         setFragment(HomeFragment())
-        showBottomSheetDialog()
+        if (!isPermissionsGranted()) {
+            showBottomSheetDialog()
+        }
 
         // button configuration
         binding.btnNavConfiguration.setOnClickListener {
             startActivity(Intent(this, ConfigurationActivity::class.java))
         }
+
     }
 
     // setup action bar
@@ -152,6 +156,12 @@ class MainActivity : BaseActivity() {
         builder.show()
     }
 
+    private fun isPermissionsGranted(): Boolean {
+        val isUsageAccessGranted = checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
+        val isAutoStartGranted = (getSystemService(Context.POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(packageName)
+        return isUsageAccessGranted && isAutoStartGranted
+    }
+
     // setup custom bottom sheet dialog
     private fun showBottomSheetDialog() {
         val bottomSheetDialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialog)
@@ -159,18 +169,11 @@ class MainActivity : BaseActivity() {
         bottomSheetDialog.setContentView(dialogView)
 
         val cbProtectedApps = dialogView.findViewById<AppCompatCheckBox>(R.id.cb_protected_apps)
-        val cbAutoStart = dialogView.findViewById<AppCompatCheckBox>(R.id.cb_auto_start)
 
-        //TODO:work on updating the preferences to system settings
+        cbProtectedApps.isChecked = checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
+
         cbProtectedApps.setOnClickListener {
-//            if (!cbProtectedApps.isChecked) {
-                seekPermissionForProtection()
-//            }
-        }
-        cbAutoStart.setOnClickListener {
-//            if (!cbAutoStart.isChecked) {
-                seekPermissionForAutoStart()
-//            }
+            seekPermissionForProtection()
         }
 
         bottomSheetDialog.show()
@@ -198,27 +201,35 @@ class MainActivity : BaseActivity() {
     }
 
     // permission for usage access
-    private fun seekPermissionForProtection(){
+    private fun seekPermissionForProtection() {
         val permission = Manifest.permission.PACKAGE_USAGE_STATS
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         val uri = Uri.fromParts("package", applicationContext.packageName, null)
         intent.data = uri
-        if(ContextCompat.checkSelfPermission(applicationContext, permission) != PackageManager.PERMISSION_GRANTED){
-            startActivity(intent)
+        if (ContextCompat.checkSelfPermission(applicationContext, permission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(permission), Constants.PERMISSION_REQUEST_USAGE_ACCESS)
         }
     }
 
-    // permission for battery heavy load
-    private fun seekPermissionForAutoStart() {
-        val packageName = applicationContext.packageName
-        val pm = this.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val isIgnoringBatteryOptimisations = pm.isIgnoringBatteryOptimizations(packageName)
-        if (isIgnoringBatteryOptimisations) {
-            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-            intent.data = Uri.parse("package:$packageName")
-            startActivity(intent)
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            Constants.PERMISSION_REQUEST_USAGE_ACCESS -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    seekPermissionForProtection()
+                } else {
+                    // Permission is denied, show a message to the user or handle it in another way
+                }
+            }
         }
     }
 
-    //TODO: need permission for accessibility
+
 }
+
+
+//        if(checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED){
+//            startActivity(intent)
+//        }
+//TODO: need permission for accessibility
