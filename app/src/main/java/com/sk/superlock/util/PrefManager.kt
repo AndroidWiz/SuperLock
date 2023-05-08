@@ -146,20 +146,10 @@ class PrefManager(context: Context) {
         editor.commit()
     }
 
-    //    fun saveIntruder(intruder: Intruder) {
-//        editor.putString(Constants.INTRUDER, gson.toJson(intruder))
-//        editor.commit()
-//    }
     fun saveIntruder(intruder: Intruder) {
         val intruders = getIntruderList().apply {
             add(intruder)
         }
-        val json = gson.toJson(intruders)
-        editor.putString(Constants.INTRUDER, json)
-        editor.commit()
-    }
-
-    fun updateIntruderList(intruders: ArrayList<Intruder>) {
         val json = gson.toJson(intruders)
         editor.putString(Constants.INTRUDER, json)
         editor.commit()

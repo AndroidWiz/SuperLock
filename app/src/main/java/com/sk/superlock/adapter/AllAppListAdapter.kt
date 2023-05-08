@@ -60,4 +60,10 @@ class AllAppListAdapter(
             }
         }
     }
+
+    fun filterList(newList: List<Applications>) {
+        allAppList = mutableListOf()
+        allAppList.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

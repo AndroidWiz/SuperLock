@@ -1,6 +1,10 @@
 package com.sk.superlock.fragment
 
 import android.annotation.SuppressLint
+import android.app.admin.DevicePolicyManager
+import android.content.BroadcastReceiver
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,15 +16,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sk.superlock.adapter.AllAppListAdapter
 import com.sk.superlock.data.model.Applications
+import com.sk.superlock.data.services.AppLockerReceiver
 import com.sk.superlock.data.services.AppLockerService
+import com.sk.superlock.data.services.AppLockerService.Companion.APP_IDS_EXTRA
+import com.sk.superlock.data.services.AppLockerService.Companion.LOCK_APPS_ACTION
+import com.sk.superlock.data.services.AppLockerService.Companion.UNLOCK_APPS_ACTION
 import com.sk.superlock.databinding.FragmentApplicationsBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.PrefManager
+import java.util.*
 
 class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
 
     private lateinit var binding: FragmentApplicationsBinding
-    private lateinit var filteredApList: MutableList<String>
+    private lateinit var filteredApList: MutableList<Applications>
     private lateinit var appsAdapter: AllAppListAdapter
     private lateinit var sharedPref: PrefManager
 
@@ -39,6 +48,8 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
         val view = binding.root
 
         sharedPref = PrefManager(requireContext())
+        requestAdminAccess(requireContext())
+
 
         return view
     }
@@ -51,8 +62,14 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // handle query text changes
                 filteredApList = mutableListOf()
+                if(newText != null){
+                    val userInput = newText.lowercase()
+                    for(app in allAppList){
+                        if(app.appName.lowercase().contains(userInput)) filteredApList.add(app)
+                    }
+                    appsAdapter.filterList(filteredApList)
+                }
                 return true
             }
 
@@ -97,11 +114,12 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
     override fun onAppAdded(app: Applications) {
         if (!addedAppList.contains(app)) {
             addedAppList.add(app)
-            PrefManager(requireContext()).addLockedApp(app.appPackageName)
 
-            // start the service to check if the added app should be locked
+            // start the service to lock the app
+            val appIds = arrayListOf(app.appPackageName)
             val intent = Intent(requireContext(), AppLockerService::class.java)
-            intent.putExtra(AppLockerService.PACKAGE_NAME, app.appPackageName)
+            intent.action = LOCK_APPS_ACTION
+            intent.putStringArrayListExtra(APP_IDS_EXTRA, appIds)
             requireContext().startService(intent)
 
             appsAdapter.notifyDataSetChanged()
@@ -110,45 +128,35 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
 
     override fun onAppRemoved(app: Applications) {
         addedAppList.remove(app)
-        PrefManager(requireContext()).removeLockedApp(app.appPackageName)
 
         appsAdapter.notifyDataSetChanged()
     }
+
+    private fun requestAdminAccess(context: Context) {
+        val componentName = ComponentName(context, AppLockerReceiver::class.java)
+        val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName)
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Please activate device administrator for this app")
+        startActivityForResult(intent, 103)
+    }
+
+
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                LOCK_APPS_ACTION -> {
+                    val appIds = intent.getStringArrayListExtra(APP_IDS_EXTRA)
+                    // TODO: Update the UI to show that the apps are locked
+                }
+                UNLOCK_APPS_ACTION -> {
+                    val appIds = intent.getStringArrayListExtra(APP_IDS_EXTRA)
+                    // TODO: Update the UI to show that the apps are unlocked
+                }
+            }
+        }
+    }
+
 }
 
 
-//override fun onAppAdded(app: Applications) {
-//    if (!ApplicationsFragment.addedAppList.contains(app)) {
-//        ApplicationsFragment.addedAppList.add(app)
-//        PrefManager(requireContext()).addLockedApp(app.appPackageName)
-//
-//        // add the package name to the lockList in the LockService
-//        val lockServiceIntent = Intent(requireContext(), LockService::class.java)
-//        lockServiceIntent.putExtra("package_name", app.appPackageName)
-//        requireContext().startService(lockServiceIntent)
-//
-//        appsAdapter.notifyDataSetChanged()
-//    }
-//}
-//
-//override fun onAppRemoved(app: Applications) {
-//    ApplicationsFragment.addedAppList.remove(app)
-//    PrefManager(requireContext()).removeLockedApp(app.appPackageName)
-//
-//    // remove the package name from the lockList in the LockService
-//    val lockServiceIntent = Intent(requireContext(), LockService::class.java)
-//    lockServiceIntent.putExtra("package_name", app.appPackageName)
-//    requireContext().stopService(lockServiceIntent)
-//
-//    appsAdapter.notifyDataSetChanged()
-//}
-
-//        if (!addedAppList.contains(app)) {
-//            addedAppList.add(app)
-//            PrefManager(requireContext()).addLockedApp(app.appPackageName)
-//            appsAdapter.notifyDataSetChanged()
-//        }
-
-//        addedAppList.remove(app)
-//        PrefManager(requireContext()).removeLockedApp(app.appPackageName)
-//        appsAdapter.notifyDataSetChanged()
+//        startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN)
