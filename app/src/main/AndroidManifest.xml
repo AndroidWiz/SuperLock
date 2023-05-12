@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 
+    <uses-permission android:name="android.permission.LOCK_APPS"/>
+
 
     <application
         android:allowBackup="true"
@@ -101,7 +103,7 @@
             android:theme="@style/Theme.SuperLock"
             tools:ignore="LockedOrientationActivity"/>
 
-        <service android:name=".services.AppLockerService"
+       <!-- <service android:name=".services.AppLockerService"
             android:enabled="true"
             android:exported="false"/>
         <receiver
@@ -121,7 +123,9 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </receiver>
+        </receiver>-->
+        <service android:name=".services.LockService" />
+
 
 
     </application>

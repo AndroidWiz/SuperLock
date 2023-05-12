@@ -6,51 +6,109 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
-import com.sk.superlock.fragment.LockedApp
+import com.sk.superlock.activity.LockActivity
 
 class LockService : Service() {
 
-    private lateinit var lockedApps: MutableList<LockedApp>
+    companion object{
+        const val EXTRA_PACKAGE_NAME = "com.sk.superlock.services"
+        const val ACTION_LOCK_APP = "com.sk.superlock.ACTION_LOCK_APP"
+        const val ACTION_UNLOCK_APP = "com.sk.superlock.ACTION_UNLOCK_APP"
+    }
 
-    // Register a broadcast receiver to listen for changes in the lock status of the apps.
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            // Update the lock status of the apps based on the new lock status.
-            updateLockedApps(intent.getBooleanExtra("lockStatus", false))
+    // Define a mutable set to hold package names of locked apps
+    private val lockedApps: MutableSet<String> = mutableSetOf()
+    private val receiver = object: BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val packageName = intent?.component?.packageName
+
+            if(isAppLocked(packageName)){
+                // app locked, show PIN screen
+                val pinIntent = Intent(context, LockActivity::class.java)
+                pinIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                pinIntent.putExtra("packageName", packageName)
+                context?.startActivity(pinIntent)
+                abortBroadcast()
+            }
         }
     }
 
-    override fun onCreate() {
-        super.onCreate()
-
-        // Initialize the list of locked apps.
-        lockedApps = mutableListOf()
-        registerReceiver(receiver, IntentFilter(Intent.ACTION_USER_PRESENT))
-    }
-
-    override fun onDestroy() {
-        // Unregister the broadcast receiver.
-        unregisterReceiver(this.receiver)
-
-        super.onDestroy()
-    }
-
-    override fun onBind(intent: Intent): IBinder? {
+    override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
-    // Update the lock status of the apps.
-    fun updateLockedApps(lockStatus: Boolean) {
-        // Get the list of all the apps on the device.
-        val packageManager = applicationContext.packageManager
-        val apps = packageManager.getInstalledApplications(0)
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        when (intent?.action) {
+            // Handle the ACTION_LOCK_APP intent
+            ACTION_LOCK_APP -> {
+                val packageNames = intent.getStringArrayExtra(EXTRA_PACKAGE_NAME)
+                if (packageNames != null) {
+                    lockedApps.addAll(packageNames)
+                }
+            }
 
-        // Update the lock status of the apps.
-        for (app in apps) {
-            val packageName = app.packageName
-            val lockedApp = lockedApps.find { it.packageName == packageName }
-            lockedApp?.isLocked = lockStatus
+            // Handle other intents (if any)
+
         }
+
+        // Register a broadcast receiver to listen for app launches
+        val filter = IntentFilter(Intent.ACTION_MAIN)
+        filter.addCategory(Intent.CATEGORY_LAUNCHER)
+
+        registerReceiver(receiver, filter)
+
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    fun isAppLocked(packageName: String?): Boolean {
+        return packageName != null && lockedApps.contains(packageName)
+    }
+
+    override fun onDestroy() {
+        // Unregister the broadcast receiver when the service is destroyed
+        unregisterReceiver(receiver)
+        super.onDestroy()
     }
 
 }
+
+/*class LockService : Service() {
+
+    companion object{
+        const val EXTRA_PACKAGE_NAME = "com.sk.superlock.services"
+        const val ACTION_LOCK_APP = "com.sk.superlock.ACTION_LOCK_APP"
+        const val ACTION_UNLOCK_APP = "com.sk.superlock.ACTION_UNLOCK_APP"
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val filter = IntentFilter(Intent.ACTION_MAIN)
+        filter.addCategory(Intent.CATEGORY_LAUNCHER)
+
+        val receiver = object: BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val packageName = intent?.component?.packageName
+
+                if(isAppLocked(packageName)){
+                    // app locked, show PIN screen
+                    val pinIntent = Intent(context, LockActivity::class.java)
+                    pinIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    pinIntent.putExtra("packageName", packageName)
+                    context?.startActivity(pinIntent)
+                    abortBroadcast()
+                }
+            }
+        }
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    fun isAppLocked(packageName: String?): Boolean{
+        // check if the given app package name is locked or not
+        // return true if locked
+
+    }
+
+}*/
