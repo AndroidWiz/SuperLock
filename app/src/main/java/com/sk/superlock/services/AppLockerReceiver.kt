@@ -1,4 +1,4 @@
-package com.sk.superlock.data.services
+package com.sk.superlock.services
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -22,7 +22,8 @@ class AppLockerReceiver : BroadcastReceiver() {
     private fun startLockService(context: Context?, appIds: List<String>?) {
         val lockIntent = Intent(context, AppLockerService::class.java)
         lockIntent.action = AppLockerService.LOCK_APPS_ACTION
-        lockIntent.putStringArrayListExtra(AppLockerService.APP_IDS_EXTRA,
+        lockIntent.putStringArrayListExtra(
+            AppLockerService.APP_IDS_EXTRA,
             appIds?.let { ArrayList(it) })
         context?.startService(lockIntent)
     }
@@ -30,7 +31,8 @@ class AppLockerReceiver : BroadcastReceiver() {
     private fun startUnlockService(context: Context?, appIds: List<String>?) {
         val unlockIntent = Intent(context, AppLockerService::class.java)
         unlockIntent.action = AppLockerService.UNLOCK_APPS_ACTION
-        unlockIntent.putStringArrayListExtra(AppLockerService.APP_IDS_EXTRA,
+        unlockIntent.putStringArrayListExtra(
+            AppLockerService.APP_IDS_EXTRA,
             appIds?.let { ArrayList(it) })
         context?.startService(unlockIntent)
     }

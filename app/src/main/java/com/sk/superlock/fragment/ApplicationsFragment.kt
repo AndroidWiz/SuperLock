@@ -16,12 +16,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sk.superlock.adapter.AllAppListAdapter
 import com.sk.superlock.data.model.Applications
-import com.sk.superlock.data.services.AppLockerReceiver
-import com.sk.superlock.data.services.AppLockerService
-import com.sk.superlock.data.services.AppLockerService.Companion.APP_IDS_EXTRA
-import com.sk.superlock.data.services.AppLockerService.Companion.LOCK_APPS_ACTION
-import com.sk.superlock.data.services.AppLockerService.Companion.UNLOCK_APPS_ACTION
 import com.sk.superlock.databinding.FragmentApplicationsBinding
+import com.sk.superlock.services.AppLockerReceiver
+import com.sk.superlock.services.AppLockerService
+import com.sk.superlock.services.AppLockerService.Companion.APP_IDS_EXTRA
+import com.sk.superlock.services.AppLockerService.Companion.LOCK_APPS_ACTION
+import com.sk.superlock.services.AppLockerService.Companion.UNLOCK_APPS_ACTION
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.PrefManager
 import java.util.*

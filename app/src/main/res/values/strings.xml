@@ -126,6 +126,8 @@
     <string name="invalid_pin_length">PIN must be of 4 digits</string>
 
     <string name="KeyFaceAppLockerDescription">This is the description for KeyFace App Locker.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

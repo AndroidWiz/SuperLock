@@ -1,4 +1,4 @@
-package com.sk.superlock.data.services
+package com.sk.superlock.services
 
 import android.content.Context
 import com.sk.superlock.util.PrefManager

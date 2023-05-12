@@ -51,6 +51,7 @@ class AllAppListAdapter(
         holder.appStatus.setOnClickListener {
             if (addedAppList.contains(model)) {
                 // remove app from addedAppList
+
                 holder.appStatus.setImageResource(R.drawable.ic_add)
                 onAppAddedListener.onAppRemoved(model)
             } else {

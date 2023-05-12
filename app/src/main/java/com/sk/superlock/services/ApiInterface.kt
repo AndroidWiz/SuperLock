@@ -1,4 +1,4 @@
-package com.sk.superlock.data.services
+package com.sk.superlock.services
 
 import com.sk.superlock.data.model.Credentials
 import com.sk.superlock.data.model.UserResponse

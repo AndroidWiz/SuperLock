@@ -1,4 +1,4 @@
-package com.sk.superlock.data.services
+package com.sk.superlock.services
 
 import okhttp3.Interceptor
 import okhttp3.Request

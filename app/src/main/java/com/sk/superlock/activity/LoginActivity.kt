@@ -11,8 +11,8 @@ import com.sk.superlock.R
 import com.sk.superlock.data.model.Credentials
 import com.sk.superlock.data.model.User
 import com.sk.superlock.data.model.UserResponse
-import com.sk.superlock.data.services.ApiClient
-import com.sk.superlock.data.services.ApiInterface
+import com.sk.superlock.services.ApiClient
+import com.sk.superlock.services.ApiInterface
 import com.sk.superlock.databinding.ActivityLoginBinding
 import com.sk.superlock.fragment.LoginCameraFragment
 import com.sk.superlock.fragment.LoginUsernameFragment

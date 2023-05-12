@@ -1,4 +1,4 @@
-package com.sk.superlock.data.services
+package com.sk.superlock.services
 
 import android.app.Service
 import android.app.admin.DevicePolicyManager

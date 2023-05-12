@@ -17,8 +17,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.sk.superlock.R
 import com.sk.superlock.data.model.UserResponse
-import com.sk.superlock.data.services.ApiClient
-import com.sk.superlock.data.services.ApiInterface
+import com.sk.superlock.services.ApiClient
+import com.sk.superlock.services.ApiInterface
 import com.sk.superlock.databinding.ActivityRegisterBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.GlideLoader
