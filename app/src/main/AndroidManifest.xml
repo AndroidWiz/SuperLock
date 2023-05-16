@@ -124,7 +124,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </receiver>-->
-        <service android:name=".services.LockService" />
+        <service android:name=".services.LockService"
+            android:enabled="true"
+            android:exported="false" />
 
 
 

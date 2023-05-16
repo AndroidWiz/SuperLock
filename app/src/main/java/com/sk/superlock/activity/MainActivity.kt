@@ -97,7 +97,7 @@ class MainActivity : BaseActivity() {
             append(loggedInUser.lastname)
         }
         hEmail.text = loggedInUser.email
-        GlideLoader(this@MainActivity).loadUserPicture(loggedInUser.imageURL, hProfilePic)
+        GlideLoader(this@MainActivity).loadUserPicture(loggedInUser.imageURL!!, hProfilePic)
         hProfilePic.setOnClickListener {
             showLogoutAlertDialog()
         }
@@ -118,6 +118,7 @@ class MainActivity : BaseActivity() {
                 R.id.nav_all_applications -> {
                     Toast.makeText(this@MainActivity, resources.getString(R.string.nav_title_applications) + resources.getString(R.string.clicked), Toast.LENGTH_SHORT).show()
                     setFragment(ApplicationsFragment())
+//                    setFragment(LockCheckFragment())
                 }
                 R.id.nav_safe_zones -> {
                     Toast.makeText(this@MainActivity, resources.getString(R.string.nav_title_safe_zones) + resources.getString(R.string.clicked), Toast.LENGTH_SHORT).show()

@@ -97,6 +97,7 @@
     <string name="registry_successful">Gracias por registrarse con nosotros.</string>
     <string name="please_wait">Espere por favor&#8230;</string>
     <string name="email_sent_to_retrieve_password">¡Envío de correo electrónico con éxito para restablecer su contraseña!</string>
+    <string name="email_sending_failed_to_retrieve_password">¡No se pudo enviar el correo electrónico para restablecer su contraseña!</string>
     <string name="more_than_1_face_detected">Más de una cara detectada. Inténtalo de nuevo</string>
     <string name="no_face_detected_try_again">No se detectó ningún rostro. Inténtalo de nuevo</string>
     <string name="profile_updated_with_image">Perfil actualizado con imagen</string>

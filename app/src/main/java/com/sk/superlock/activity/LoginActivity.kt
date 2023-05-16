@@ -11,11 +11,11 @@ import com.sk.superlock.R
 import com.sk.superlock.data.model.Credentials
 import com.sk.superlock.data.model.User
 import com.sk.superlock.data.model.UserResponse
-import com.sk.superlock.services.ApiClient
-import com.sk.superlock.services.ApiInterface
 import com.sk.superlock.databinding.ActivityLoginBinding
 import com.sk.superlock.fragment.LoginCameraFragment
 import com.sk.superlock.fragment.LoginUsernameFragment
+import com.sk.superlock.services.ApiClient
+import com.sk.superlock.services.ApiInterface
 import com.sk.superlock.util.LoginMode
 import com.sk.superlock.util.PrefManager
 import kotlinx.android.synthetic.main.fragment_login_username.*
@@ -34,7 +34,7 @@ class LoginActivity : BaseActivity() {
     private lateinit var apiInterface: ApiInterface
 
     companion object {
-        val TAG = "LoginActivity"
+        const val TAG = "LoginActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,59 +2,76 @@ package com.sk.superlock.fragment
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
+import android.view.ViewGroup
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
+import com.sk.superlock.services.LockService
 
 class LockCheckFragment : Fragment() {
-    private lateinit var packageManager: PackageManager
-    private val lockedApps = mutableSetOf<String>()
+    private lateinit var lockServiceIntent: Intent
+    private val lockedPackages: MutableSet<String> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lockServiceIntent = Intent(requireContext(), LockService::class.java)
 
-        // Get the package manager.
-        packageManager = requireContext().packageManager
+        requireContext().startService(lockServiceIntent)
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_lock_check, container, false)
 
-        // Set up the list of apps.
-        val listView = view.findViewById<ListView>(R.id.app_list)
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1)
-        for (app in packageManager.getInstalledPackages(0)) {
-            adapter.add(app.packageName)
-        }
-        listView.adapter = adapter
+        val appList = view.findViewById<ListView>(R.id.app_list)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1 , getInstalledApps())
+        appList.adapter = adapter
 
-        // Set up the click listener for the list items.
-        listView.setOnItemClickListener { _, _, position, _ ->
-            // Get the package name of the app.
-            val packageName = adapter.getItem(position)
-
-            // Lock or unlock the app.
-            if (lockedApps.contains(packageName)) {
-                lockedApps.remove(packageName)
-            } else {
-                lockedApps.add(packageName.toString())
-            }
-
-            // Update the list of apps.
-            adapter.clear()
-            for (app in packageManager.getInstalledPackages(0)) {
-                if (lockedApps.contains(app.packageName)) {
-                    adapter.add(app.packageName)
+        appList.setOnItemClickListener { _, _, position, _ ->
+            val app = adapter.getItem(position)
+            if (app != null) {
+                if (lockedPackages.contains(app.packageName)) {
+                    // App is already locked, remove from the list of locked packages
+                    lockedPackages.remove(app.packageName)
+                    Toast.makeText(requireContext(), "App unlocked", Toast.LENGTH_SHORT).show()
+                } else {
+                    // App is not yet locked, add to the list of locked packages
+                    lockedPackages.add(app.packageName)
+                    Toast.makeText(requireContext(), "App locked", Toast.LENGTH_SHORT).show()
                 }
             }
-            listView.adapter = adapter
         }
+
+        return view
+    }
+
+    private fun getInstalledApps(): List<ApplicationInfo> {
+        val pm = requireContext().packageManager
+        return pm.getInstalledApplications(PackageManager.GET_META_DATA)
+            .filter { !isSystemApp(it) }
+            .sortedBy { it.loadLabel(pm).toString() }
+    }
+
+    private fun isSystemApp(applicationInfo: ApplicationInfo): Boolean {
+        return applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Send the selected locked packages to the LockService before the fragment is paused
+        lockServiceIntent.action = LockService.ACTION_LOCK_APP
+        lockServiceIntent.putExtra(LockService.EXTRA_PACKAGE_NAME, lockedPackages.toTypedArray())
+        requireContext().startService(lockServiceIntent)
     }
 
     // Get the PIN.
