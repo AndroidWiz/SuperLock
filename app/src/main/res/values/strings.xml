@@ -131,6 +131,11 @@
     <string name="set_up_FACE_ID">Set your app lock using Face-ID</string>
     <string name="set_location_unlock">Set your desired parameter to unlock your apps</string>
     <string name="login_failed">Login failed</string>
+    <string name="active_device_admin">Please activate device administrator for this app</string>
+    <string name="network_status">network status</string>
+    <string name="upload">upload</string>
+    <string name="download">download</string>
+    <string name="check_network_status">Check Network Status</string>
 
 
 </resources>

@@ -73,6 +73,9 @@ dependencies {
     // biometrics
     implementation 'androidx.biometric:biometric:1.1.0'
 
+    // chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 
     // open cv
 //    implementation 'org.opencv:opencv-android:1.0.1'

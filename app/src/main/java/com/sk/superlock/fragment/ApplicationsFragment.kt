@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sk.superlock.R
 import com.sk.superlock.adapter.AllAppListAdapter
 import com.sk.superlock.data.model.Applications
 import com.sk.superlock.databinding.FragmentApplicationsBinding
@@ -136,7 +137,7 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
         val componentName = ComponentName(context, AppLockerReceiver::class.java)
         val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
         intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName)
-        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Please activate device administrator for this app")
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, resources.getString(R.string.active_device_admin))
         startActivityForResult(intent, 103)
     }
 

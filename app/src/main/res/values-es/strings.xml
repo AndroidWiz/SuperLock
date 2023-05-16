@@ -130,5 +130,7 @@
     <string name="set_up_FACE_ID">Configure el bloqueo de su aplicación usando Face-ID</string>
     <string name="set_location_unlock">Establezca su parámetro deseado para desbloquear sus aplicaciones</string>
     <string name="login_failed">error de inicio de sesion</string>
+    <string name="active_device_admin">Activa el administrador del dispositivo para esta aplicación.</string>
+    <string name="network_status">network status</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.sk.superlock.fragment
 
 import android.app.ActivityManager
 import android.content.Context.ACTIVITY_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.os.StatFs
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
+import com.sk.superlock.activity.NetworkAnalysisActivity
 import com.sk.superlock.databinding.FragmentHomeBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.PrefManager
@@ -47,7 +49,7 @@ class HomeFragment : Fragment() {
         }
         // network analysis
         binding.networkAnalysis.setOnClickListener {
-            Toast.makeText(requireContext(), "Network Analysis", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(),NetworkAnalysisActivity::class.java))
         }
         // booster
         binding.booster.setOnClickListener {
