@@ -33,7 +33,7 @@ interface ApiInterface {
     fun resetUserPassword(@Path("email") email: String): Call<ResetResponse>
 
     // compare image
-    @Headers("Content-Type: application/json;charset=UTF-8")
+//    @Headers("Content-Type: application/json;charset=UTF-8")
     @Multipart
     @POST("/users/compareFace")
     fun compareFace(

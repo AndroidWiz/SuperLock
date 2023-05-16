@@ -21,7 +21,6 @@ import retrofit2.Response
 import java.io.File
 import java.util.concurrent.CopyOnWriteArrayList
 
-
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -78,7 +77,7 @@ class LoginActivity : BaseActivity() {
                             val refreshToken = tokenResponse.payload.data.refreshToken
                             // token stored in shared preferences
                             PrefManager(this@LoginActivity).setAccessToken(accessToken)
-                            PrefManager(this@LoginActivity).setAccessToken(refreshToken)
+                            PrefManager(this@LoginActivity).setRefreshToken(refreshToken)
                             Log.d(TAG, "accessToken: $accessToken, refreshToken: $refreshToken")
 
                             // decode user data and save to sharedPrefs
@@ -86,23 +85,13 @@ class LoginActivity : BaseActivity() {
                             PrefManager(this@LoginActivity).setUser(user)
                             Log.d(TAG, "DecodedUser = $user")
 
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Login successful",
-                                Toast.LENGTH_SHORT
-                            ).show()
-//                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                            startActivity(
-                                Intent(
-                                    this@LoginActivity,
-                                    ConfigurationActivity::class.java
-                                )
-                            )
+                            Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+//                            startActivity(Intent(this@LoginActivity, ConfigurationActivity::class.java))
                             finish()
                         }
                     } else {
-                        Toast.makeText(this@LoginActivity, resources.getString(R.string.login_failed), Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this@LoginActivity, resources.getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                         Log.e(TAG, "Login failed")
                     }
                 }

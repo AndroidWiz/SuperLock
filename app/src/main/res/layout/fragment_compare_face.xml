@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/layout_padding"
     tools:context=".fragment.CompareFaceFragment">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_capture_user_image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/et_margin"
+        android:contentDescription="@string/user_image"
+        android:padding="1dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_face_compare"
+        app:shapeAppearance="@style/roundedImageView"
+        app:strokeColor="@color/colorPrimaryDark"
+        app:strokeWidth="2dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.sk.superlock.util.CustomButton
+        android:id="@+id/btn_continue_CFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_background_red"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingTop="@dimen/btn_padding"
+        android:paddingBottom="@dimen/btn_padding"
+        android:text="@string/btn_continue"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_textSize" />
+
+</LinearLayout>
