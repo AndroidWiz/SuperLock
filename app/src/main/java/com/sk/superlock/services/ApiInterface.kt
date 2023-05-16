@@ -1,6 +1,7 @@
 package com.sk.superlock.services
 
 import com.sk.superlock.data.model.Credentials
+import com.sk.superlock.data.model.FaceResponse
 import com.sk.superlock.data.model.ResetResponse
 import com.sk.superlock.data.model.UserResponse
 import okhttp3.MultipartBody
@@ -30,4 +31,13 @@ interface ApiInterface {
     // forgot password
     @GET("/auth/getEmail/{email}")
     fun resetUserPassword(@Path("email") email: String): Call<ResetResponse>
+
+    // compare image
+    @Headers("Content-Type: application/json;charset=UTF-8")
+    @Multipart
+    @POST("/users/compareFace")
+    fun compareFace(
+        @Header("Authorization") accessToken: String,
+        @Part file: MultipartBody.Part?
+    ): Call<FaceResponse>
 }

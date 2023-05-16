@@ -38,3 +38,16 @@ data class ResetResponse(
 data class ResetPayload(
     @SerializedName("data") val data: User
 )
+
+data class FaceResponse(
+    @SerializedName("traceId") val traceId: String,
+    @SerializedName("payload") val payload: FacePayload
+)
+
+data class FacePayload(
+    @SerializedName("data") val data: Face
+)
+
+data class Face(
+    @SerializedName("Similarity") val similarity: Double
+)

@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -11,6 +13,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityNetworkAnalysisBinding
+import java.util.*
 
 class NetworkAnalysisActivity : BaseActivity() {
 
@@ -31,14 +34,70 @@ class NetworkAnalysisActivity : BaseActivity() {
         binding.chartDownload.init(intArrayOf(5, 30, 65, 50, 100))
 
         binding.btnCheckNetworkStatus.setOnClickListener {
-            val downloadSpeed = getDownloadSpeed()
-            val uploadSpeed = getUploadSpeed()
+            val handler = Handler(Looper.getMainLooper())
+            // create a Runnable to update the download and upload speed every second.
+            val runnable = object : Runnable {
+                override fun run() {
+                    // get the current download and upload speed.
+                    val downloadSpeed = getDownloadSpeed()
+                    val uploadSpeed = getUploadSpeed()
 
-            binding.tvDownload.text = "$downloadSpeed MB/s"
-            binding.tvUpload.text = "$uploadSpeed MB/s"
+                    // set the text of the tvDownload and tvUpload text views.
+                    binding.tvDownload.text = buildString {
+                        append(downloadSpeed)
+                        append(" MB/s")
+                    }
+                    binding.tvUpload.text = buildString {
+                        append(uploadSpeed)
+                        append(" MB/s")
+                    }
+                    // post the runnable again to update the download and upload speed every second.
+                    handler.postDelayed(this, 1000)
+                }
+            }
+            // post the runnable to the Handler.
+            handler.post(runnable)
+
+            val timer = Timer()
+            timer.schedule(object: TimerTask(){
+                override fun run() {
+                    handler.removeCallbacks(runnable)
+
+//                    val networkQuality = checkNetworkQuality()
+                }
+            }, 30000)
         }
     }
 
+   /* fun checkNetworkQuality(): String {
+        val downloadSpeed = getDownloadSpeed()
+        val uploadSpeed = getUploadSpeed()
+        val latency = getLatency()
+        val signalStrength = getSignalStrength()
+        var networkQuality = "Good"
+
+        if (downloadSpeed < 10 && uploadSpeed < 10) {
+            networkQuality = "Bad"
+        }
+        if (latency > 100) {
+            networkQuality = "Bad"
+        }
+        if (signalStrength < 50) {
+            networkQuality = "Bad"
+        }
+
+        return networkQuality
+    }
+
+    fun getLatency(): Int{
+        val pingResult = ping("8.8.8.8", 5)
+        return pingResult.rtt.toInt()
+    }
+
+    fun getSignalStrength(): Int{
+        val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        return telephonyManager.signalStrength.get(TelephonyManager.SIGNAL_STRENGTH_INDEX)
+    }*/
 
     private fun getNetworkCapabilities(): NetworkCapabilities? {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -48,17 +107,15 @@ class NetworkAnalysisActivity : BaseActivity() {
     // download speed
     private fun getDownloadSpeed(): Long {
         val networkCapabilities = getNetworkCapabilities() ?: return 0
-        val downloadSpeed = (networkCapabilities.linkDownstreamBandwidthKbps / 1000).toLong()
 
-        return downloadSpeed
+        return (networkCapabilities.linkDownstreamBandwidthKbps / 1000).toLong()
     }
 
     // upload speed
     private fun getUploadSpeed(): Long {
         val networkCapabilities = getNetworkCapabilities() ?: return 0
-        val uploadSpeed = (networkCapabilities.linkUpstreamBandwidthKbps / 1000).toLong()
 
-        return uploadSpeed
+        return (networkCapabilities.linkUpstreamBandwidthKbps / 1000).toLong()
     }
 
     // line chart

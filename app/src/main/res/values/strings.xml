@@ -136,6 +136,8 @@
     <string name="upload">upload</string>
     <string name="download">download</string>
     <string name="check_network_status">Check Network Status</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
