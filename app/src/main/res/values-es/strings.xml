@@ -116,7 +116,7 @@
     <string name="yes">Sí</string>
     <string name="first_name">Nombre de pila</string>
     <string name="last_name">Apellido</string>
-    <string name="camera_unavailable">Camera Unavailable</string>
+    <string name="camera_unavailable">Cámara no disponible</string>
 
     <string name="confirm_pin">CONFIRMAR</string>
     <string name="enter_pin">"INGRESE PIN"</string>
@@ -126,5 +126,9 @@
     <string name="invalid_pin_length">El PIN debe ser de 4 dígitos</string>
 
     <string name="KeyFaceAppLockerDescription">This is the description for KeyFace App Locker.</string>
+    <string name="fingerprint_not_supported_on_device">La huella digital no es compatible con su dispositivo</string>
+    <string name="set_up_FACE_ID">Configure el bloqueo de su aplicación usando Face-ID</string>
+    <string name="set_location_unlock">Establezca su parámetro deseado para desbloquear sus aplicaciones</string>
+    <string name="login_failed">error de inicio de sesion</string>
 
 </resources>

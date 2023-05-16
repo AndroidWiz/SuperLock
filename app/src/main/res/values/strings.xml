@@ -127,6 +127,10 @@
     <string name="invalid_pin_length">PIN must be of 4 digits</string>
 
     <string name="KeyFaceAppLockerDescription">This is the description for KeyFace App Locker.</string>
+    <string name="fingerprint_not_supported_on_device">Fingerprint not supported on your device</string>
+    <string name="set_up_FACE_ID">Set your app lock using Face-ID</string>
+    <string name="set_location_unlock">Set your desired parameter to unlock your apps</string>
+    <string name="login_failed">Login failed</string>
 
 
 </resources>

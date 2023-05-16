@@ -5,20 +5,16 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
 import com.sk.superlock.R
 import com.sk.superlock.data.model.Credentials
 import com.sk.superlock.data.model.User
 import com.sk.superlock.data.model.UserResponse
 import com.sk.superlock.databinding.ActivityLoginBinding
-import com.sk.superlock.fragment.LoginCameraFragment
-import com.sk.superlock.fragment.LoginUsernameFragment
 import com.sk.superlock.services.ApiClient
 import com.sk.superlock.services.ApiInterface
 import com.sk.superlock.util.LoginMode
 import com.sk.superlock.util.PrefManager
-import kotlinx.android.synthetic.main.fragment_login_username.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,36 +40,13 @@ class LoginActivity : BaseActivity() {
 
         apiInterface = ApiClient.getClient(this@LoginActivity).create(ApiInterface::class.java)
 
-        // default fragment
-        showLoginFragment(LoginUsernameFragment())
-
-        // radio button to show login by modes
-        binding.rgLoginType.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.login_by_email -> {
-                    showLoginFragment(LoginUsernameFragment())
-                }
-                R.id.login_by_camera -> {
-                    showLoginFragment(LoginCameraFragment())
-                }
-            }
-        }
-
         // button login
         binding.btnLogin.setOnClickListener {
-            when (loginMode) {
-                LoginMode.EMAIL_PASSWORD -> {
-                    if (validateLoginDetails()) {
-                        val email: String = et_email.text.toString().trim()
-                        val password: String = et_password.text.toString().trim()
+            if (validateLoginDetails()) {
+                val email: String = binding.etEmail.text.toString().trim()
+                val password: String = binding.etPassword.text.toString().trim()
 
-                        login(email, password)
-                    }
-                }
-                LoginMode.CAMERA -> {
-                    Toast.makeText(this, "Please use email and password to login", Toast.LENGTH_SHORT).show()
-                }
-                else -> {}
+                login(email, password)
             }
         }
 
@@ -113,20 +86,30 @@ class LoginActivity : BaseActivity() {
                             PrefManager(this@LoginActivity).setUser(user)
                             Log.d(TAG, "DecodedUser = $user")
 
-                            Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login successful",
+                                Toast.LENGTH_SHORT
+                            ).show()
 //                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                            startActivity(Intent(this@LoginActivity, ConfigurationActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@LoginActivity,
+                                    ConfigurationActivity::class.java
+                                )
+                            )
                             finish()
                         }
                     } else {
-                        Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
-                        Log.e("login", "Login failed")
+                        Toast.makeText(this@LoginActivity, resources.getString(R.string.login_failed), Toast.LENGTH_SHORT)
+                            .show()
+                        Log.e(TAG, "Login failed")
                     }
                 }
 
                 override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
-                    Log.d("login", "Login failed", t)
+                    Toast.makeText(this@LoginActivity, resources.getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Login failed", t)
                 }
             })
     }
@@ -155,11 +138,11 @@ class LoginActivity : BaseActivity() {
     // validate login details
     private fun validateLoginDetails(): Boolean {
         return when {
-            TextUtils.isEmpty(et_email.text.toString().trim { it <= ' ' }) -> {
+            TextUtils.isEmpty(binding.etEmail.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
                 false
             }
-            TextUtils.isEmpty(et_password.text.toString().trim { it <= ' ' }) -> {
+            TextUtils.isEmpty(binding.etPassword.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_password), true)
                 false
             }
@@ -169,20 +152,5 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
-
-    // show login fragment view
-    private fun showLoginFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(binding.loginFragmentHost.id, fragment)
-            .commit()
-
-        // set login mode based on currently visible fragment
-        loginMode = when (fragment) {
-            is LoginUsernameFragment -> LoginMode.EMAIL_PASSWORD
-            is LoginCameraFragment -> LoginMode.CAMERA
-            else -> null
-        }
-    }
-
 
 }

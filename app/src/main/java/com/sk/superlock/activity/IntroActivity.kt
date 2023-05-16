@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.sk.superlock.R
 import com.sk.superlock.adapter.SliderAdapter
-import com.sk.superlock.databinding.ActivityIntroBinding
 import com.sk.superlock.data.model.SliderData
+import com.sk.superlock.databinding.ActivityIntroBinding
 import com.sk.superlock.util.CustomTextViewBold
 
 @Suppress("DEPRECATION")
@@ -49,7 +49,7 @@ class IntroActivity : BaseActivity() {
                 ),
                 SliderData(
                     "Key Face face-detection",
-                    "Set your app lock using face-ID",
+                    getString(R.string.set_up_FACE_ID),
                     ContextCompat.getDrawable(this@IntroActivity, R.drawable.ic_face)?.apply {
                         setColorFilter(
                             ContextCompat.getColor(this@IntroActivity, R.color.white),
@@ -59,7 +59,7 @@ class IntroActivity : BaseActivity() {
                 ),
                 SliderData(
                     "Key Face geolocation",
-                    "Set your desired parameter to unlock your apps",
+                    getString(R.string.set_location_unlock),
                     ContextCompat.getDrawable(this@IntroActivity, R.drawable.ic_location)?.apply {
                         setColorFilter(
                             ContextCompat.getColor(this@IntroActivity, R.color.white),

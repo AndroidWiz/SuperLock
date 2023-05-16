@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat
+import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityConfigurationBinding
 import com.sk.superlock.util.Constants
 import com.sk.superlock.util.PrefManager
@@ -52,7 +53,7 @@ class ConfigurationActivity : BaseActivity() {
                         checkFingerprintSupport()
                     }
                     else ->{
-                        Toast.makeText(this, "Fingerprint not supported on your device", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.fingerprint_not_supported_on_device), Toast.LENGTH_LONG).show()
                     }
                 }
             }
