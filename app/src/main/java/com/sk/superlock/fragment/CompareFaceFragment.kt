@@ -117,14 +117,6 @@ class CompareFaceFragment : Fragment() {
                         response: Response<FaceResponse>
                     ) {
                         if (response.isSuccessful) {
-                            /*val faceResponse = response.body()
-                            val faceMatch = faceResponse?.payload?.data?.similarity!!
-                            if(faceMatch > 90){
-                                startActivity(Intent(requireContext(), MainActivity::class.java))
-                                Toast.makeText(requireContext(), "Similarity: $faceMatch", Toast.LENGTH_SHORT).show()
-                            }else{
-                                Toast.makeText(requireContext(), "Similarity less than 90%. Please try again.", Toast.LENGTH_LONG).show()
-                            }*/
                             val faceResponse = response.body()
                             if (faceResponse != null && faceResponse.payload != null && faceResponse.payload.data != null) {
                                 val faceMatch = faceResponse.payload.data.similarity

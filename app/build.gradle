@@ -75,6 +75,9 @@ dependencies {
     // chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // for google maps
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
 
     // open cv
 //    implementation 'org.opencv:opencv-android:1.0.1'

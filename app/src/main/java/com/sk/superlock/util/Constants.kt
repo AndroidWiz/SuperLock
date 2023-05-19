@@ -13,6 +13,7 @@ object Constants {
     const val OPEN_CAMERA_PERMISSION_CODE = 3
     const val PERMISSION_REQUEST_USAGE_ACCESS = 100
     const val PERMISSION_REQUEST_AUTO_START = 101
+    const val REQUEST_LOCATION_CODE = 10
     const val USER: String = "user"
     const val AVAILABLE_APPS_SIZE: String = "available_apps_in_device"
     const val FINGERPRINT_SWITCH_STATE: String = "fingerprint_switch_state"
