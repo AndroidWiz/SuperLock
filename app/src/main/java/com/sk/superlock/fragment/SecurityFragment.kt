@@ -14,9 +14,9 @@ import com.sk.superlock.util.PrefManager
 class SecurityFragment : Fragment() {
 
     private lateinit var binding: FragmentSecurityBinding
-    private lateinit var intruderListAdapter : IntruderListAdapter
+    private lateinit var intruderListAdapter: IntruderListAdapter
 
-    companion object{
+    companion object {
         val intruderList: ArrayList<Intruder> = ArrayList()
     }
 
@@ -27,13 +27,26 @@ class SecurityFragment : Fragment() {
         binding = FragmentSecurityBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        setupRecyclerView()
-
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (intruderList.size == 0) {
+            binding.noIntruder.visibility = View.VISIBLE
+            binding.rvIntruder.visibility = View.GONE
+        } else {
+            binding.noIntruder.visibility = View.GONE
+            binding.rvIntruder.visibility = View.VISIBLE
+        }
+
+        setupRecyclerView()
+
+    }
+
     // setup recyclerview
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         binding.rvIntruder.setItemViewCacheSize(20)
         binding.rvIntruder.setHasFixedSize(true)
         binding.rvIntruder.layoutManager = GridLayoutManager(requireContext(), 2)

@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".fragment.SecurityFragment">
 
+    <com.sk.superlock.util.CustomTextViewBold
+        android:id="@+id/no_intruder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Intruder photos will appear here"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_intruder"
         android:layout_width="match_parent"

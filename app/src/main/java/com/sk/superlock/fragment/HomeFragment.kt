@@ -14,7 +14,9 @@ import androidx.fragment.app.Fragment
 import com.sk.superlock.R
 import com.sk.superlock.activity.NetworkAnalysisActivity
 import com.sk.superlock.databinding.FragmentHomeBinding
+import com.sk.superlock.services.Booster
 import com.sk.superlock.util.Constants
+import com.sk.superlock.util.JunkCleaner
 import com.sk.superlock.util.PrefManager
 import java.text.DecimalFormat
 
@@ -45,7 +47,8 @@ class HomeFragment : Fragment() {
 
         // junk cleaner
         binding.junkCleaner.setOnClickListener {
-            Toast.makeText(requireContext(), "Junk Cleaner", Toast.LENGTH_SHORT).show()
+            val junkCleaner = JunkCleaner(requireActivity())
+            junkCleaner.execute()
         }
         // network analysis
         binding.networkAnalysis.setOnClickListener {
@@ -53,7 +56,8 @@ class HomeFragment : Fragment() {
         }
         // booster
         binding.booster.setOnClickListener {
-            Toast.makeText(requireContext(), "Booster", Toast.LENGTH_SHORT).show()
+            val booster = Booster(requireActivity())
+            booster.execute()
         }
 
         // app lock
@@ -175,10 +179,6 @@ class HomeFragment : Fragment() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
 }
