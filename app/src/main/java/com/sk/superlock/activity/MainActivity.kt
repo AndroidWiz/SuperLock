@@ -28,6 +28,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityMainBinding
 import com.sk.superlock.fragment.*
+import com.sk.superlock.services.LockerService
 import com.sk.superlock.util.*
 
 class MainActivity : BaseActivity() {
@@ -60,6 +61,10 @@ class MainActivity : BaseActivity() {
         binding.btnNavConfiguration.setOnClickListener {
             startActivity(Intent(this, ConfigurationActivity::class.java))
         }
+
+
+        val serviceIntent = Intent(this, LockerService::class.java)
+        startService(serviceIntent)
 
     }
 
@@ -117,7 +122,8 @@ class MainActivity : BaseActivity() {
                 }
                 R.id.nav_all_applications -> {
                     Toast.makeText(this@MainActivity, resources.getString(R.string.nav_title_applications) + resources.getString(R.string.clicked), Toast.LENGTH_SHORT).show()
-                    setFragment(ApplicationsFragment())
+                    setFragment(AppListFragment())
+//                    setFragment(ApplicationsFragment())
 //                    setFragment(LockCheckFragment())
                 }
                 R.id.nav_safe_zones -> {
@@ -199,6 +205,9 @@ class MainActivity : BaseActivity() {
         setLocale()
         super.onResume()
         showUserData()
+
+        val serviceIntent = Intent(this, LockerService::class.java)
+        startService(serviceIntent)
     }
 
     // permission for usage access
@@ -224,7 +233,6 @@ class MainActivity : BaseActivity() {
             }
         }
     }
-
 
 }
 

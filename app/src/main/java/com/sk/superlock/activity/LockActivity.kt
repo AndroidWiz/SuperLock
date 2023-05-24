@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityLockBinding
-import com.sk.superlock.fragment.CompareFaceFragment
+import com.sk.superlock.fragment.SetPinFragment
 import com.sk.superlock.util.Constants
 
 class LockActivity : AppCompatActivity() {
@@ -22,8 +22,8 @@ class LockActivity : AppCompatActivity() {
             putBoolean(Constants.ARGS_IS_CONFIGURATION, isForConfiguration)
         }
 
-//        setFragment(SetPinFragment().apply { arguments = args })
-        setFragment(CompareFaceFragment())
+        setFragment(SetPinFragment().apply { arguments = args })
+//        setFragment(CompareFaceFragment())
     }
 
     // check PIN

@@ -73,7 +73,6 @@ class ApplicationsFragment : Fragment(), AllAppListAdapter.OnAppAddedListener {
                 }
                 return true
             }
-
         })
 
         allAppList = getAllInstalledApps()

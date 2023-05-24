@@ -1,7 +1,5 @@
 package com.sk.superlock.fragment
 
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -9,7 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sk.superlock.R
 import com.sk.superlock.services.LockService
@@ -83,6 +83,7 @@ class LockCheckFragment : Fragment() {
 
 }
 
+/*
 data class LockedApp(val packageName: String, var isLocked: Boolean)
 
 data class App(val appName: String, val packageName: String)
@@ -109,4 +110,4 @@ class PinDialog(context: Context) : Dialog(context) {
     fun setOnPinEnteredListener(listener: (pin: String) -> Unit) {
         onPinEnteredListener = listener
     }
-}
+}*/

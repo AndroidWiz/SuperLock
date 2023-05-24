@@ -1,4 +1,4 @@
-package com.sk.superlock.util
+package com.sk.superlock.services
 
 import android.content.Context
 import android.os.AsyncTask

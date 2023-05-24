@@ -15,8 +15,8 @@ import com.sk.superlock.R
 import com.sk.superlock.activity.NetworkAnalysisActivity
 import com.sk.superlock.databinding.FragmentHomeBinding
 import com.sk.superlock.services.Booster
+import com.sk.superlock.services.JunkCleaner
 import com.sk.superlock.util.Constants
-import com.sk.superlock.util.JunkCleaner
 import com.sk.superlock.util.PrefManager
 import java.text.DecimalFormat
 
@@ -62,7 +62,8 @@ class HomeFragment : Fragment() {
 
         // app lock
         binding.cvAppLock.setOnClickListener {
-            navigateToFragment(ApplicationsFragment())
+            navigateToFragment(AppListFragment())
+//            navigateToFragment(ApplicationsFragment())
         }
         appsToLock = sharedPref.getInt(Constants.AVAILABLE_APPS_SIZE)
         binding.tvAvailableAppsToLock.text = buildString {
@@ -71,7 +72,8 @@ class HomeFragment : Fragment() {
             append(resources.getString(R.string.no_apps_needs_protection))
         }
         binding.btnProtect.setOnClickListener {
-            navigateToFragment(ApplicationsFragment())
+            navigateToFragment(AppListFragment())
+//            navigateToFragment(ApplicationsFragment())
         }
 
         // memory space

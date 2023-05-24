@@ -137,6 +137,9 @@
             android:enabled="true"
             android:exported="false" />
 
+        <service android:name=".services.LockerService" />
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBCxy6jl-ozR0pRUKhPIPHUZPdoIGH-tBs" />
