@@ -175,4 +175,13 @@ class PrefManager(context: Context) {
     fun getLockedAppString(){
         pref.getStringSet(Constants.LOCKED_APPS, mutableSetOf())
     }
+
+    fun saveLockedApps(apps: Set<String>) {
+        editor.putStringSet(Constants.LOCKED_APPS, apps)
+        editor.commit()
+    }
+
+    fun getLockedApps(): Set<String> {
+        return pref.getStringSet(Constants.LOCKED_APPS, mutableSetOf()) ?: mutableSetOf()
+    }
 }

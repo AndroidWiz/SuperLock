@@ -22,8 +22,8 @@ class AppListFragment : Fragment(), AppListAdapter.OnAppAddedListener {
     private lateinit var appsAdapter: AppListAdapter
     private lateinit var sharedPref: PrefManager
 
-    //    val lockerService: LockerService = LockerService()
     val appLockService: AppLockService = AppLockService()
+    private lateinit var lockedApps: MutableSet<String>
 
     companion object {
         const val TAG: String = "AppListFragment"
@@ -31,7 +31,6 @@ class AppListFragment : Fragment(), AppListAdapter.OnAppAddedListener {
         var addedAppList: MutableList<Apps> = mutableListOf()
         var allAppsListSize: Int? = 0
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +48,10 @@ class AppListFragment : Fragment(), AppListAdapter.OnAppAddedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lockedApps = sharedPref.getLockedApps().toMutableSet()
+
         appList = getAllInstalledApps()
+        updateAppListLockStatus()
         setupRecyclerView(appList)
     }
 
@@ -75,6 +77,12 @@ class AppListFragment : Fragment(), AppListAdapter.OnAppAddedListener {
         return apps
     }
 
+    private fun updateAppListLockStatus() {
+        for (app in appList) {
+            app.isLocked = lockedApps.contains(app.packageName)
+        }
+    }
+
     private fun setupRecyclerView(appList: MutableList<Apps>) {
         binding.rvAppList.setHasFixedSize(true)
         binding.rvAppList.setItemViewCacheSize(50)
@@ -86,17 +94,22 @@ class AppListFragment : Fragment(), AppListAdapter.OnAppAddedListener {
 
     override fun onAppAdded(app: Apps) {
         addedAppList.add(app)
-        sharedPref.setLockedAppString(app.packageName)
+        lockedApps.add(app.packageName)
+        sharedPref.saveLockedApps(lockedApps)
+        app.isLocked = true
         appsAdapter.notifyDataSetChanged()
         Toast.makeText(requireContext(), "${app.name} locked", Toast.LENGTH_LONG).show()
     }
 
     override fun onAppRemoved(app: Apps) {
         addedAppList.remove(app)
-
+        lockedApps.remove(app.packageName)
+        sharedPref.saveLockedApps(lockedApps)
+        app.isLocked = false
         appsAdapter.notifyDataSetChanged()
         Toast.makeText(requireContext(), "${app.name} removed", Toast.LENGTH_LONG).show()
     }
+
 
 }
 

@@ -40,35 +40,29 @@ class AppListAdapter(
         holder.appName.text = model.name
         holder.appIcon.setImageDrawable(model.icon)
 
-        // check if app has already been added
-        if (addedAppList.contains(model)) {
-            holder.appStatus.setImageResource(R.drawable.ic_added)
-        } else {
-            holder.appStatus.setImageResource(R.drawable.ic_add)
-        }
-
-        // add the app to use lock and unlock method
-        holder.appStatus.setOnClickListener {
-            if (addedAppList.contains(model)) {
-                // remove app from addedAppList
-                holder.appStatus.setImageResource(R.drawable.ic_add)
-                onAppAddedListener.onAppRemoved(model)
-            } else {
-                // add app to addedAppList
-                holder.appStatus.setImageResource(R.drawable.ic_added)
-                onAppAddedListener.onAppAdded(model)
-            }
-        }
-
         // set lock/unlock icon based on the lock status
         if (model.isLocked) {
             holder.appStatus.setImageResource(R.drawable.ic_added)
         } else {
             holder.appStatus.setImageResource(R.drawable.ic_add)
         }
-    }
 
-    fun lockApp(packageName: String) {
+        // add the app to the addedAppList and update the lock status
+        holder.appStatus.setOnClickListener {
+            if (addedAppList.contains(model)) {
+                // Remove app from addedAppList
+                holder.appStatus.setImageResource(R.drawable.ic_add)
+                onAppAddedListener.onAppRemoved(model)
+            } else {
+                // Add app to addedAppList
+                holder.appStatus.setImageResource(R.drawable.ic_added)
+                onAppAddedListener.onAppAdded(model)
+            }
+        }
+    }
+}
+
+/*fun lockApp(packageName: String) {
         val app = addedAppList.find { it.packageName == packageName }
         app?.let {
             it.isLocked = true
@@ -82,8 +76,7 @@ class AppListAdapter(
             it.isLocked = false
             notifyDataSetChanged()
         }
-    }
-}
+    }*/
 
 /* fun lockApp(packageName: String) {
         val app = allAppList.find { it.packageName == packageName }
