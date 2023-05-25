@@ -54,7 +54,7 @@ class LockerService : Service() {
         return START_STICKY
     }
 
-    fun lockOrUnlockApp(packageName: String) {
+    private fun lockOrUnlockApp(packageName: String) {
         val app = getAppByPackageName(packageName)
 
         if (app != null) {
@@ -127,7 +127,7 @@ class LockerService : Service() {
                 // App is locked, show the PIN screen
                 val pinIntent = Intent(context, LockActivity::class.java)
                 pinIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                pinIntent.putExtra("packageName", packageName)
+//                pinIntent.putExtra("packageName", packageName)
                 context?.startActivity(pinIntent)
             } else {
                 // App is not locked, allow it to launch

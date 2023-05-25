@@ -28,7 +28,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.sk.superlock.R
 import com.sk.superlock.databinding.ActivityMainBinding
 import com.sk.superlock.fragment.*
-import com.sk.superlock.services.LockerService
+import com.sk.superlock.services.AppLockService
 import com.sk.superlock.util.*
 
 class MainActivity : BaseActivity() {
@@ -63,7 +63,10 @@ class MainActivity : BaseActivity() {
         }
 
 
-        val serviceIntent = Intent(this, LockerService::class.java)
+//        val serviceIntent = Intent(this, LockerService::class.java)
+//        startService(serviceIntent)
+
+        val serviceIntent = Intent(this, AppLockService::class.java)
         startService(serviceIntent)
 
     }
@@ -206,7 +209,9 @@ class MainActivity : BaseActivity() {
         super.onResume()
         showUserData()
 
-        val serviceIntent = Intent(this, LockerService::class.java)
+//        val serviceIntent = Intent(this, LockerService::class.java)
+//        startService(serviceIntent)
+        val serviceIntent = Intent(this, AppLockService::class.java)
         startService(serviceIntent)
     }
 

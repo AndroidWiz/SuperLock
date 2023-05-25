@@ -163,4 +163,16 @@ class PrefManager(context: Context) {
             arrayListOf()
         }
     }
+
+    fun setLockedAppString(packageName: String){
+        val apps = pref.getStringSet(Constants.LOCKED_APPS, mutableSetOf())
+        apps!!.add(packageName)
+
+        editor.putStringSet(Constants.LOCKED_APPS, apps)
+        editor.commit()
+    }
+
+    fun getLockedAppString(){
+        pref.getStringSet(Constants.LOCKED_APPS, mutableSetOf())
+    }
 }

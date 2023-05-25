@@ -132,12 +132,19 @@
             </intent-filter>
         </receiver>
         -->
-        <service
+    <!--    <service
             android:name=".services.LockService"
             android:enabled="true"
             android:exported="false" />
 
-        <service android:name=".services.LockerService" />
+        <service
+            android:name=".services.LockerService"
+            android:enabled="true"
+            android:exported="true" />-->
+        <service
+            android:name=".services.AppLockService"
+            android:enabled="true"
+            android:exported="true" />
 
 
         <meta-data

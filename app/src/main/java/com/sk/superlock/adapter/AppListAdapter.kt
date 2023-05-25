@@ -59,6 +59,13 @@ class AppListAdapter(
                 onAppAddedListener.onAppAdded(model)
             }
         }
+
+        // set lock/unlock icon based on the lock status
+        if (model.isLocked) {
+            holder.appStatus.setImageResource(R.drawable.ic_added)
+        } else {
+            holder.appStatus.setImageResource(R.drawable.ic_add)
+        }
     }
 
     fun lockApp(packageName: String) {
