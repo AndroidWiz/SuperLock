@@ -27,6 +27,7 @@ class AppLockService : Service() {
     private lateinit var mSharedPrefs: SharedPreferences
     private lateinit var appLaunchReceiver: BroadcastReceiver
     private lateinit var apps: MutableSet<String>
+    private var foregroundAppPackageName: String = ""
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -36,6 +37,7 @@ class AppLockService : Service() {
         super.onCreate()
 
         mSharedPrefs = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE)
+        apps = mSharedPrefs.getStringSet(Constants.LOCKED_APPS, mutableSetOf())!!
 
         startForeground(NOTIFICATION_ID, createNotification())
 
@@ -76,11 +78,15 @@ class AppLockService : Service() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val packageName = intent?.data?.schemeSpecificPart
 
-                if (apps.contains(packageName)) {
-                    val lockActivity = Intent(this@AppLockService, LockActivity::class.java)
-                    lockActivity.putExtra(Intent.EXTRA_PACKAGE_NAME, packageName)
-                    lockActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // flag to start the activity outside of a task
-                    startActivity(lockActivity)
+                getForegroundAppPackageName { foregroundPackageName ->
+                    foregroundAppPackageName = foregroundPackageName
+
+                    if (apps.contains(foregroundPackageName)) {
+                        val lockActivity = Intent(this@AppLockService, LockActivity::class.java)
+                        lockActivity.putExtra(Intent.EXTRA_PACKAGE_NAME, foregroundPackageName)
+                        lockActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // flag to start the activity outside of a task
+                        startActivity(lockActivity)
+                    }
                 }
             }
         }
@@ -90,6 +96,7 @@ class AppLockService : Service() {
 
         return START_STICKY
     }
+
 
 
     private fun createNotification(): Notification {
@@ -127,36 +134,8 @@ class AppLockService : Service() {
         return channelId
     }
 
-    /*private fun getForegroundObservableHigherLollipop(): Flowable<String> {
-        return Flowable.interval(100, TimeUnit.MILLISECONDS)
-            .filter { PermissionChecker.checkUsageAccessPermission(applicationContext) }
-            .flatMap {
-                Flowable.fromCallable {
-                    val mUsageStatsManager = applicationContext.getSystemService(Service.USAGE_STATS_SERVICE) as UsageStatsManager
-                    val time = System.currentTimeMillis()
-
-                    val usageEvents = mUsageStatsManager.queryEvents(time - 1000 * 3600, time)
-                    var usageEvent: UsageEvents.Event? = null
-                    val event = UsageEvents.Event()
-                    while (usageEvents.hasNextEvent()) {
-                        usageEvents.getNextEvent(event)
-                        if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
-                            usageEvent = event
-                        }
-                    }
-                    UsageEventWrapper(usageEvent)
-                }
-            }
-            .filter { it.usageEvent != null }
-            .map { it.usageEvent!! }
-            .filter { it.className != null }
-            .filter { it.className.contains(OverlayValidationActivity::class.java.simpleName).not() }
-            .map { it.packageName }
-            .distinctUntilChanged()
-    }*/
-
     private fun getForegroundAppPackageName(callback: (String) -> Unit) {
-        val usageStatsManager = applicationContext.getSystemService(Service.USAGE_STATS_SERVICE) as UsageStatsManager
+        val usageStatsManager = applicationContext.getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
 
         val handler = Handler(Looper.getMainLooper())
         val delayMillis = 100L
@@ -178,14 +157,11 @@ class AppLockService : Service() {
                             packageName = sortedStats[sortedStats.lastKey()]?.packageName ?: ""
                         }
                     }
-
                     callback(packageName)
                 }
-
                 handler.postDelayed(this, delayMillis)
             }
         }
-
         handler.post(checkPermissionRunnable)
     }
 
@@ -199,17 +175,36 @@ class AppLockService : Service() {
             return false
         }
 
-        try {
+        return try {
             val appOpsManager = applicationContext.getSystemService(Context.APP_OPS_SERVICE) as? AppOpsManager
-            val mode = appOpsManager?.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, packageManager.getApplicationInfo(packageName, 0).uid, packageName)
-            return mode == AppOpsManager.MODE_ALLOWED
+            val mode = appOpsManager?.checkOpNoThrow(
+                AppOpsManager.OPSTR_GET_USAGE_STATS,
+                packageManager.getApplicationInfo(packageName, 0).uid,
+                packageName
+            )
+            mode == AppOpsManager.MODE_ALLOWED
         } catch (e: PackageManager.NameNotFoundException) {
-            return false
+            false
         }
     }
 
+/*private fun checkUsageAccessPermission(): Boolean {
+        val packageName = applicationContext.packageName
+        val packageManager = applicationContext.packageManager
 
+        val appOpsClass = try {
+            Class.forName(AppOpsManager::class.java.name)
+        } catch (e: ClassNotFoundException) {
+            return false
+        }
 
-
+        return try {
+            val appOpsManager = applicationContext.getSystemService(Context.APP_OPS_SERVICE) as? AppOpsManager
+            val mode = appOpsManager?.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, packageManager.getApplicationInfo(packageName, 0).uid, packageName)
+            mode == AppOpsManager.MODE_ALLOWED
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }*/
 
 }
